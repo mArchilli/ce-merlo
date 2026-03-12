@@ -1,7 +1,8 @@
 import QuillEditor from '@/Components/QuillEditor';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, router, useForm, usePage } from '@inertiajs/react';
+import { Head, router, useForm } from '@inertiajs/react';
 import { useRef, useState } from 'react';
+import { toast, Toaster } from 'sonner';
 
 // ─── Iconos ───────────────────────────────────────────────────────────────────
 const IconPlus = () => (
@@ -78,7 +79,12 @@ function ItemModal({ item, onClose, config }) {
         };
         const options = {
             forceFormData: true,
-            onSuccess: () => { reset(); onClose(); },
+            onSuccess: () => {
+                reset();
+                onClose();
+                toast.success(isEdit ? config.msgUpdated : config.msgCreated);
+            },
+            onError: () => toast.error('Error al guardar. Revisá los campos requeridos.'),
         };
         if (isEdit) {
             router.post(route(config.updateRoute, item.id), { ...submitData, _method: 'PUT' }, options);
@@ -332,7 +338,11 @@ function Section({ items, config }) {
 
     const confirmDelete = () => {
         router.delete(route(config.destroyRoute, aEliminar.id), {
-            onSuccess: () => setAEliminar(null),
+            onSuccess: () => {
+                setAEliminar(null);
+                toast.success(config.msgDeleted);
+            },
+            onError: () => toast.error('No se pudo eliminar el elemento.'),
         });
     };
 
@@ -401,6 +411,9 @@ const OBRA_CONFIG = {
     storeRoute:   'infraestructura.store',
     updateRoute:  'infraestructura.update',
     destroyRoute: 'infraestructura.destroy',
+    msgCreated:   'Obra creada correctamente.',
+    msgUpdated:   'Obra actualizada correctamente.',
+    msgDeleted:   'Obra eliminada correctamente.',
 };
 
 const TRABAJO_CONFIG = {
@@ -410,11 +423,13 @@ const TRABAJO_CONFIG = {
     storeRoute:   'trabajos_menores.store',
     updateRoute:  'trabajos_menores.update',
     destroyRoute: 'trabajos_menores.destroy',
+    msgCreated:   'Trabajo menor creado correctamente.',
+    msgUpdated:   'Trabajo menor actualizado correctamente.',
+    msgDeleted:   'Trabajo menor eliminado correctamente.',
 };
 
 // ─── Página principal ─────────────────────────────────────────────────────────
 export default function ObrasIndex({ obras, trabajosMenores }) {
-    const { flash } = usePage().props;
     const [tab, setTab] = useState('obras');
 
     const tabs = [
@@ -423,18 +438,13 @@ export default function ObrasIndex({ obras, trabajosMenores }) {
     ];
 
     return (
+        <>
         <AuthenticatedLayout
             header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Infraestructura</h2>}
         >
             <Head title="Infraestructura" />
 
             <div className="py-8 px-6">
-                {flash?.success && (
-                    <div className="mb-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700">
-                        {flash.success}
-                    </div>
-                )}
-
                 {/* Tabs */}
                 <div className="mb-6 flex gap-1 border-b border-gray-200">
                     {tabs.map((t) => (
@@ -460,5 +470,25 @@ export default function ObrasIndex({ obras, trabajosMenores }) {
                 )}
             </div>
         </AuthenticatedLayout>
+        <Toaster
+            position="top-right"
+            duration={4000}
+            toastOptions={{
+                style: { fontFamily: 'inherit' },
+                classNames: {
+                    toast:       'rounded-xl shadow-lg border border-gray-100 text-sm',
+                    title:       'font-medium text-gray-800',
+                    description: 'text-gray-500',
+                    success:     '!border-l-4 !border-l-amber-400',
+                    error:       '!border-l-4 !border-l-red-500',
+                    warning:     '!border-l-4 !border-l-orange-400',
+                    info:        '!border-l-4 !border-l-sky-500',
+                },
+            }}
+            icons={{
+                success: <span style={{ color: '#FFA101', fontSize: '1rem' }}>&#10003;</span>,
+            }}
+        />
+        </>
     );
 }
