@@ -7,6 +7,12 @@ const IconBuilding = () => (
     </svg>
 );
 
+const IconNewspaper = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l6 6v8a2 2 0 01-2 2zM15 4v5h5M9 12h6M9 16h4" />
+    </svg>
+);
+
 const modules = [
     {
         label: 'Infraestructura',
@@ -14,6 +20,13 @@ const modules = [
         icon: <IconBuilding />,
         color: '#FFA101',
         bgLight: '#FFF7E6',
+    },
+    {
+        label: 'Novedades',
+        href: '/novedades',
+        icon: <IconNewspaper />,
+        color: '#5796C2',
+        bgLight: '#EBF3FA',
     },
 ];
 

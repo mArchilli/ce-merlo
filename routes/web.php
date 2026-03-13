@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NovedadController;
 use App\Http\Controllers\ObraController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrabajoMenorController;
@@ -37,6 +38,13 @@ Route::middleware('auth')->group(function () {
     Route::put('/trabajos-menores/{trabajoMenor}', [TrabajoMenorController::class, 'update'])->name('trabajos_menores.update');
     Route::delete('/trabajos-menores/{trabajoMenor}', [TrabajoMenorController::class, 'destroy'])->name('trabajos_menores.destroy');
     Route::post('/trabajos-menores/{trabajoMenor}/principal', [TrabajoMenorController::class, 'setPrincipal'])->name('trabajos_menores.principal');
+
+    // Novedades
+    Route::get('/novedades', [NovedadController::class, 'index'])->name('novedades.index');
+    Route::post('/novedades', [NovedadController::class, 'store'])->name('novedades.store');
+    Route::put('/novedades/{novedad}', [NovedadController::class, 'update'])->name('novedades.update');
+    Route::delete('/novedades/{novedad}', [NovedadController::class, 'destroy'])->name('novedades.destroy');
+    Route::post('/novedades/{novedad}/principal', [NovedadController::class, 'setPrincipal'])->name('novedades.principal');
 });
 
 require __DIR__.'/auth.php';
