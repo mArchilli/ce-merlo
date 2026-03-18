@@ -430,154 +430,225 @@ export default function Welcome({ auth }) {
                 </section>
 
                 {/* ══════ AUTORIDADES ══════ */}
-                <section id="autoridades" className="py-20 sm:py-24 bg-gray-50">
-                    <div className="max-w-6xl mx-auto px-4 sm:px-6">
-                        <div className="max-w-3xl mx-auto text-center mb-14">
-                            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
-                                Autoridades
-                            </h2>
-                            <div className="mt-3 w-12 h-1 bg-brand-gold-400 mx-auto rounded-full" />
-                        </div>
+                <section id="autoridades" className="relative">
+                    {/* Onda superior — transición desde la sección anterior */}
+                    <div className="bg-brand-blue-50/40">
+                        <svg viewBox="0 0 1440 56" className="w-full block text-brand-blue-800" preserveAspectRatio="none">
+                            <path fill="currentColor" d="M0,32L80,37.3C160,43,320,53,480,53.3C640,53,800,43,960,37.3C1120,32,1280,32,1360,32L1440,32L1440,56L1360,56C1280,56,1120,56,960,56C800,56,640,56,480,56C320,56,160,56,80,56L0,56Z" />
+                        </svg>
+                    </div>
 
-                        {/* Principales */}
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto mb-12">
-                            {AUTORIDADES_PRINCIPALES.map((a, i) => (
-                                <div key={i} className="bg-white rounded-xl border border-gray-100 p-6 text-center">
-                                    <div className="w-16 h-16 rounded-full bg-brand-blue-50 mx-auto mb-4 flex items-center justify-center">
-                                        <svg className="w-7 h-7 text-brand-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                                        </svg>
-                                    </div>
-                                    <p className="text-xs font-semibold text-brand-blue-400 uppercase tracking-wider mb-1">{a.cargo}</p>
-                                    <p className="font-medium text-gray-900 text-sm">{a.nombre}</p>
-                                </div>
-                            ))}
-                        </div>
+                    {/* Contenido sobre fondo oscuro */}
+                    <div className="bg-gradient-to-br from-brand-blue-800 via-brand-blue-700 to-brand-blue-900 relative overflow-hidden">
+                        {/* Patrón sutil */}
+                        <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")'}} />
 
-                        {/* Vocales */}
-                        <div className="max-w-3xl mx-auto">
-                            <h3 className="text-lg font-semibold text-gray-900 text-center mb-6">Vocales</h3>
-                            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                                {VOCALES.map((v, i) => (
-                                    <div key={i} className="bg-white rounded-lg border border-gray-100 px-5 py-3.5 text-sm text-gray-700">
-                                        {v}
+                        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-20 sm:py-24">
+
+                            {/* Encabezado */}
+                            <div className="text-center mb-14">
+                                <p className="text-xs font-semibold text-brand-gold-400 tracking-[0.2em] uppercase mb-4">Equipo de trabajo</p>
+                                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
+                                    Autoridades
+                                </h2>
+                                <div className="mt-5 w-16 h-1 bg-brand-gold-400 mx-auto rounded-full" />
+                            </div>
+
+                            {/* Principales */}
+                            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-16">
+                                {AUTORIDADES_PRINCIPALES.map((a, i) => (
+                                    <div key={i} className="group relative rounded-xl border border-white/10 bg-white/[0.05] backdrop-blur-sm overflow-hidden">
+                                        <div className="h-1 bg-gradient-to-r from-brand-gold-400 to-brand-gold-300" />
+                                        <div className="px-6 py-7">
+                                            <div className="w-12 h-12 rounded-xl bg-brand-gold-400/10 flex items-center justify-center mb-5">
+                                                <svg className="w-6 h-6 text-brand-gold-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                                </svg>
+                                            </div>
+                                            <p className="text-xs font-semibold text-brand-gold-400 uppercase tracking-wider mb-2">{a.cargo}</p>
+                                            <p className="font-medium text-white text-[15px] leading-snug">{a.nombre}</p>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
 
-                            {/* Secretaria Administrativa */}
-                            <div className="mt-6 bg-white rounded-lg border border-gray-100 px-5 py-4 text-center max-w-sm mx-auto">
-                                <p className="text-xs font-semibold text-brand-blue-400 uppercase tracking-wider mb-1">Secretaria Administrativa</p>
-                                <p className="text-sm font-medium text-gray-900">Daniela Ester Escudero</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* ══════ CONTACTO ══════ */}
-                <section id="contacto" className="py-20 sm:py-24">
-                    <div className="max-w-6xl mx-auto px-4 sm:px-6">
-                        <div className="max-w-3xl mx-auto text-center mb-14">
-                            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
-                                Contacto
-                            </h2>
-                            <div className="mt-3 w-12 h-1 bg-brand-gold-400 mx-auto rounded-full" />
-                        </div>
-
-                        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                            {/* Info */}
-                            <div className="space-y-6">
-                                <div>
-                                    <h3 className="font-semibold text-gray-900 mb-1">Consejo Escolar de Merlo</h3>
-                                    <p className="text-gray-500 text-sm">Organismo descentralizado de la Dirección General de Cultura y Educación.</p>
+                            {/* Vocales */}
+                            <div className="max-w-5xl mx-auto">
+                                <h3 className="text-lg font-semibold text-white text-center mb-7">Vocales</h3>
+                                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                    {VOCALES.map((v, i) => (
+                                        <div key={i} className="flex items-center gap-3.5 rounded-xl border border-white/[0.08] bg-white/[0.04] px-5 py-4">
+                                            <div className="w-2.5 h-2.5 rounded-full bg-brand-gold-400/60 shrink-0" />
+                                            <span className="text-[15px] text-brand-blue-100">{v}</span>
+                                        </div>
+                                    ))}
                                 </div>
-                                <div className="space-y-4">
-                                    <div className="flex items-start gap-3">
-                                        <div className="w-9 h-9 rounded-lg bg-brand-blue-50 flex items-center justify-center text-brand-blue-400 shrink-0 mt-0.5">
-                                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+
+                                {/* Secretaria Administrativa */}
+                                <div className="mt-12 flex items-center justify-center gap-5 rounded-xl border border-brand-gold-400/15 bg-brand-gold-400/[0.04] px-8 py-5 max-w-lg mx-auto">
+                                    <div className="w-12 h-12 rounded-xl bg-brand-gold-400/10 flex items-center justify-center shrink-0">
+                                        <svg className="w-6 h-6 text-brand-gold-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p className="text-xs font-semibold text-brand-gold-400 uppercase tracking-wider mb-1">Secretaria Administrativa</p>
+                                        <p className="text-[15px] font-medium text-white">Daniela Ester Escudero</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* ── Separador visual ── */}
+                            <div className="relative max-w-5xl mx-auto my-20 sm:my-24">
+                                <div className="border-t border-white/10" />
+                            </div>
+
+                            {/* ══════ CONTACTO ══════ */}
+                            <div className="max-w-7xl mx-auto" id="contacto">
+
+                                {/* Encabezado */}
+                                <div className="text-center mb-16">
+                                    <p className="text-xs font-semibold text-brand-gold-400 tracking-[0.2em] uppercase mb-4">Encontranos</p>
+                                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
+                                        Contacto
+                                    </h2>
+                                    <div className="mt-5 w-16 h-1 bg-brand-gold-400 mx-auto rounded-full" />
+                                </div>
+
+                                {/* Info cards */}
+                                <div className="grid sm:grid-cols-3 gap-5 max-w-5xl mx-auto mb-10">
+                                    <div className="rounded-xl border border-white/10 bg-white/[0.05] p-6 text-center">
+                                        <div className="w-12 h-12 rounded-xl bg-brand-gold-400/10 flex items-center justify-center mx-auto mb-4">
+                                            <svg className="w-6 h-6 text-brand-gold-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                                             </svg>
                                         </div>
-                                        <div>
-                                            <p className="text-sm font-medium text-gray-900">Dirección</p>
-                                            <p className="text-sm text-gray-500">Avenida Calle Real 208/212, Merlo Centro</p>
-                                        </div>
+                                        <p className="text-xs font-semibold text-brand-gold-400 uppercase tracking-wider mb-2">Dirección</p>
+                                        <p className="text-[15px] text-brand-blue-100 leading-relaxed">Av. Calle Real 208/212<br />Merlo Centro</p>
                                     </div>
-                                    <div className="flex items-start gap-3">
-                                        <div className="w-9 h-9 rounded-lg bg-brand-blue-50 flex items-center justify-center text-brand-blue-400 shrink-0 mt-0.5">
-                                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                    <div className="rounded-xl border border-white/10 bg-white/[0.05] p-6 text-center">
+                                        <div className="w-12 h-12 rounded-xl bg-brand-gold-400/10 flex items-center justify-center mx-auto mb-4">
+                                            <svg className="w-6 h-6 text-brand-gold-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
                                             </svg>
                                         </div>
-                                        <div>
-                                            <p className="text-sm font-medium text-gray-900">Teléfono</p>
-                                            <p className="text-sm text-gray-500">0220-482-5836</p>
-                                        </div>
+                                        <p className="text-xs font-semibold text-brand-gold-400 uppercase tracking-wider mb-2">Teléfono</p>
+                                        <p className="text-[15px] text-brand-blue-100">0220-482-5836</p>
                                     </div>
-                                    <div className="flex items-start gap-3">
-                                        <div className="w-9 h-9 rounded-lg bg-brand-blue-50 flex items-center justify-center text-brand-blue-400 shrink-0 mt-0.5">
-                                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                    <div className="rounded-xl border border-white/10 bg-white/[0.05] p-6 text-center">
+                                        <div className="w-12 h-12 rounded-xl bg-brand-gold-400/10 flex items-center justify-center mx-auto mb-4">
+                                            <svg className="w-6 h-6 text-brand-gold-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                                             </svg>
                                         </div>
-                                        <div>
-                                            <p className="text-sm font-medium text-gray-900">Horario</p>
-                                            <p className="text-sm text-gray-500">Lunes a viernes de 8 a 14 hs</p>
-                                        </div>
+                                        <p className="text-xs font-semibold text-brand-gold-400 uppercase tracking-wider mb-2">Horario</p>
+                                        <p className="text-[15px] text-brand-blue-100">Lunes a viernes<br />de 8 a 14 hs</p>
                                     </div>
+                                </div>
+
+                                {/* Mapa */}
+                                <div className="max-w-5xl mx-auto rounded-2xl overflow-hidden border border-white/10 h-[380px]">
+                                    <iframe
+                                        title="Ubicación Consejo Escolar de Merlo"
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3280.8!2d-58.7276!3d-34.6714!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcbf3a0b1c7b3d%3A0x0!2sAv.%20Calle%20Real%20208%2C%20Merlo%2C%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1"
+                                        className="w-full h-full"
+                                        style={{ border: 0 }}
+                                        allowFullScreen=""
+                                        loading="lazy"
+                                        referrerPolicy="no-referrer-when-downgrade"
+                                    />
                                 </div>
                             </div>
 
-                            {/* Mapa */}
-                            <div className="rounded-xl overflow-hidden border border-gray-200 h-72 md:h-auto min-h-[280px]">
-                                <iframe
-                                    title="Ubicación Consejo Escolar de Merlo"
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3280.8!2d-58.7276!3d-34.6714!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcbf3a0b1c7b3d%3A0x0!2sAv.%20Calle%20Real%20208%2C%20Merlo%2C%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1"
-                                    className="w-full h-full"
-                                    style={{ border: 0 }}
-                                    allowFullScreen=""
-                                    loading="lazy"
-                                    referrerPolicy="no-referrer-when-downgrade"
-                                />
-                            </div>
                         </div>
+                    </div>
+
+                    {/* Onda inferior — transición al footer blanco */}
+                    <div className="bg-gradient-to-br from-brand-blue-800 via-brand-blue-700 to-brand-blue-900">
+                        <svg viewBox="0 0 1440 56" className="w-full block text-white" preserveAspectRatio="none">
+                            <path fill="currentColor" d="M0,32L80,37.3C160,43,320,53,480,53.3C640,53,800,43,960,37.3C1120,32,1280,32,1360,32L1440,32L1440,56L1360,56C1280,56,1120,56,960,56C800,56,640,56,480,56C320,56,160,56,80,56L0,56Z" />
+                        </svg>
                     </div>
                 </section>
 
                 {/* ══════ FOOTER ══════ */}
-                <footer className="bg-gray-900 text-gray-400">
-                    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <footer className="bg-white">
+                    <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-16 pb-8">
+
+                        {/* Fila principal */}
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-gray-200">
+
+                            {/* Marca */}
                             <div className="lg:col-span-2">
-                                <div className="flex items-center gap-3 mb-4">
-                                    <div className="w-9 h-9 rounded-full bg-brand-blue-400 flex items-center justify-center">
+                                <div className="flex items-center gap-3 mb-5">
+                                    <div className="w-11 h-11 rounded-full bg-brand-blue-700 flex items-center justify-center">
                                         <span className="text-white font-bold text-sm">CE</span>
                                     </div>
-                                    <span className="text-white font-semibold text-sm">Consejo Escolar de Merlo</span>
+                                    <div>
+                                        <span className="block text-base font-bold text-gray-900">Consejo Escolar de Merlo</span>
+                                        <span className="block text-xs text-gray-400">Provincia de Buenos Aires</span>
+                                    </div>
                                 </div>
-                                <p className="text-sm leading-relaxed max-w-md">
-                                    Organismo descentralizado de la Dirección General de Cultura y Educación de la Provincia de Buenos Aires.
+                                <p className="text-sm text-gray-500 leading-relaxed max-w-md">
+                                    Organismo descentralizado de la Dirección General de Cultura y Educación de la Provincia de Buenos Aires, al servicio de la comunidad educativa del distrito.
                                 </p>
                             </div>
+
+                            {/* Navegación */}
                             <div>
-                                <p className="text-white font-semibold text-sm mb-3">Navegación</p>
-                                <nav className="flex flex-col gap-2">
+                                <p className="text-xs font-semibold text-brand-gold-500 tracking-[0.15em] uppercase mb-4">Navegación</p>
+                                <nav className="flex flex-col gap-2.5">
                                     {NAV_ITEMS.map((item) => (
                                         <a
                                             key={item.href}
                                             href={item.href}
                                             onClick={(e) => scrollTo(e, item.href)}
-                                            className="text-sm text-gray-400 hover:text-white transition-colors"
+                                            className="text-sm text-gray-500 hover:text-brand-blue-600 transition-colors"
                                         >
                                             {item.label}
                                         </a>
                                     ))}
                                 </nav>
                             </div>
+
+                            {/* Contacto rápido */}
+                            <div>
+                                <p className="text-xs font-semibold text-brand-gold-500 tracking-[0.15em] uppercase mb-4">Contacto</p>
+                                <div className="space-y-3">
+                                    <div className="flex items-center gap-2.5">
+                                        <svg className="w-4 h-4 text-brand-blue-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                        </svg>
+                                        <span className="text-sm text-gray-500">Av. Calle Real 208/212</span>
+                                    </div>
+                                    <div className="flex items-center gap-2.5">
+                                        <svg className="w-4 h-4 text-brand-blue-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                                        </svg>
+                                        <span className="text-sm text-gray-500">0220-482-5836</span>
+                                    </div>
+                                    <div className="flex items-center gap-2.5">
+                                        <svg className="w-4 h-4 text-brand-blue-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span className="text-sm text-gray-500">Lun a Vie, 8 a 14 hs</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div className="mt-10 pt-6 border-t border-gray-800 text-center text-xs text-gray-500">
-                            © {new Date().getFullYear()} Consejo Escolar de Merlo. Todos los derechos reservados.
+
+                        {/* Línea inferior */}
+                        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                            <p className="text-xs text-gray-400">
+                                © {new Date().getFullYear()} Consejo Escolar de Merlo. Todos los derechos reservados.
+                            </p>
+                            <div className="flex items-center gap-1.5">
+                                <span className="w-2 h-2 rounded-full bg-brand-blue-200" />
+                                <span className="w-2 h-2 rounded-full bg-brand-blue-400" />
+                                <span className="w-2 h-2 rounded-full bg-brand-gold-400" />
+                            </div>
                         </div>
                     </div>
                 </footer>
