@@ -86,15 +86,15 @@ export default function Welcome({ auth }) {
             <div className="bg-white text-gray-800 font-sans antialiased">
 
                 {/* ══════ HEADER ══════ */}
-                <header className={`fixed top-0 inset-x-0 z-50 transition-shadow duration-300 ${scrolled ? 'bg-white shadow-md' : 'bg-white/95'}`}>
-                    <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+                <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-sm' : 'bg-transparent'}`}>
+                    <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 flex items-center justify-between h-16">
                         <a href="#inicio" onClick={(e) => scrollTo(e, '#inicio')} className="flex items-center gap-3 shrink-0">
-                            <div className="w-9 h-9 rounded-full bg-brand-blue-400 flex items-center justify-center">
+                            <div className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors duration-300 ${scrolled ? 'bg-brand-blue-400' : 'bg-white/15 border border-white/25'}`}>
                                 <span className="text-white font-bold text-sm">CE</span>
                             </div>
-                            <span className="hidden sm:block text-sm font-semibold text-gray-800 leading-tight">
-                                Consejo Escolar<br className="hidden lg:block" />
-                                <span className="text-brand-blue-400"> de Merlo</span>
+                            <span className={`hidden sm:block text-sm font-semibold leading-tight transition-colors duration-300 ${scrolled ? 'text-gray-800' : 'text-white'}`}>
+                                Consejo Escolar
+                                <span className={scrolled ? 'text-brand-blue-400' : 'text-brand-gold-300'}> de Merlo</span>
                             </span>
                         </a>
 
@@ -105,7 +105,11 @@ export default function Welcome({ auth }) {
                                     key={item.href}
                                     href={item.href}
                                     onClick={(e) => scrollTo(e, item.href)}
-                                    className="px-3 py-2 text-sm text-gray-600 hover:text-brand-blue-500 transition-colors rounded-md"
+                                    className={`px-3 py-2 text-sm transition-colors duration-300 rounded-md ${
+                                        scrolled
+                                            ? 'text-gray-600 hover:text-brand-blue-500'
+                                            : 'text-white/80 hover:text-white'
+                                    }`}
                                 >
                                     {item.label}
                                 </a>
@@ -113,7 +117,11 @@ export default function Welcome({ auth }) {
                             {auth?.user && (
                                 <Link
                                     href={route('dashboard')}
-                                    className="ml-2 px-4 py-2 text-sm bg-brand-blue-400 text-white rounded-md hover:bg-brand-blue-500 transition-colors"
+                                    className={`ml-2 px-4 py-2 text-sm rounded-md transition-colors duration-300 ${
+                                        scrolled
+                                            ? 'bg-brand-blue-400 text-white hover:bg-brand-blue-500'
+                                            : 'bg-white/15 border border-white/25 text-white hover:bg-white/25'
+                                    }`}
                                 >
                                     Panel admin
                                 </Link>
@@ -122,7 +130,7 @@ export default function Welcome({ auth }) {
 
                         {/* Hamburger */}
                         <button
-                            className="md:hidden p-2 text-gray-600"
+                            className={`md:hidden p-2 transition-colors duration-300 ${scrolled ? 'text-gray-600' : 'text-white'}`}
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                             aria-label="Menú"
                         >
@@ -137,7 +145,7 @@ export default function Welcome({ auth }) {
 
                     {/* Nav móvil */}
                     {mobileMenuOpen && (
-                        <div className="md:hidden bg-white border-t border-gray-100 shadow-lg">
+                        <div className="md:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-lg">
                             <nav className="flex flex-col px-4 py-3 gap-1">
                                 {NAV_ITEMS.map((item) => (
                                     <a
@@ -160,37 +168,66 @@ export default function Welcome({ auth }) {
                 </header>
 
                 {/* ══════ HERO ══════ */}
-                <section id="inicio" className="relative pt-16 overflow-hidden">
-                    <div className="bg-gradient-to-br from-brand-blue-700 via-brand-blue-600 to-brand-blue-800">
+                <section id="inicio" className="relative h-screen min-h-[600px] flex flex-col overflow-hidden">
+                    <div className="flex-1 relative bg-gradient-to-br from-brand-blue-800 via-brand-blue-700 to-brand-blue-900">
                         {/* Patrón sutil */}
-                        <div className="absolute inset-0 opacity-[0.04]" style={{backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")'}} />
-                        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-24 sm:py-32 lg:py-40">
-                            <div className="max-w-2xl">
-                                <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full bg-white/10 text-brand-blue-100 text-xs font-medium tracking-wide uppercase">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-brand-gold-300" />
+                        <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")'}} />
+                        {/* Línea decorativa lateral */}
+                        <div className="absolute left-0 top-1/4 bottom-1/4 w-1 bg-brand-gold-400/30 hidden lg:block" />
+                        {/* Círculo decorativo */}
+                        <div className="absolute -right-32 -bottom-32 w-[500px] h-[500px] rounded-full border border-white/[0.04]" />
+                        <div className="absolute -right-20 -bottom-20 w-[350px] h-[350px] rounded-full border border-white/[0.06]" />
+
+                        <div className="relative flex items-center h-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-16">
+                            <div className="max-w-3xl">
+                                <div className="inline-flex items-center gap-2.5 px-4 py-1.5 mb-8 rounded-full bg-white/[0.08] backdrop-blur-sm text-brand-blue-100 text-sm font-medium tracking-wide uppercase border border-white/[0.08]">
+                                    <span className="w-2 h-2 rounded-full bg-brand-gold-400 animate-pulse" />
                                     Provincia de Buenos Aires
                                 </div>
-                                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
-                                    Consejo Escolar<br />de Merlo
+                                <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold text-white leading-[1.05] tracking-tight">
+                                    Consejo
+                                    <br />
+                                    Escolar
+                                    <span className="text-brand-gold-400">.</span>
+                                    <br />
+                                    <span className="text-brand-blue-200">de Merlo</span>
                                 </h1>
-                                <p className="mt-5 text-base sm:text-lg text-brand-blue-100 leading-relaxed max-w-xl">
+                                <div className="mt-6 w-20 h-1 bg-brand-gold-400 rounded-full" />
+                                <p className="mt-6 text-lg sm:text-xl lg:text-2xl text-brand-blue-200/90 leading-relaxed max-w-2xl font-light">
                                     Organismo responsable de la administración y gestión de los recursos y servicios de las escuelas públicas del distrito.
                                 </p>
-                                <a
-                                    href="#funciones"
-                                    onClick={(e) => scrollTo(e, '#funciones')}
-                                    className="inline-flex items-center gap-2 mt-8 px-6 py-3 bg-brand-gold-400 text-white text-sm font-semibold rounded-md hover:bg-brand-gold-500 transition-colors"
-                                >
-                                    Conocer funciones
-                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
-                                    </svg>
-                                </a>
+                                <div className="mt-10 flex flex-wrap items-center gap-4">
+                                    <a
+                                        href="#funciones"
+                                        onClick={(e) => scrollTo(e, '#funciones')}
+                                        className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-brand-gold-400 text-white text-base font-semibold rounded-lg hover:bg-brand-gold-500 transition-all duration-200 shadow-lg shadow-brand-gold-400/20"
+                                    >
+                                        Conocer funciones
+                                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
+                                        </svg>
+                                    </a>
+                                    <a
+                                        href="#contacto"
+                                        onClick={(e) => scrollTo(e, '#contacto')}
+                                        className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/20 text-white text-base font-medium rounded-lg hover:bg-white/10 transition-all duration-200"
+                                    >
+                                        Contacto
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Indicador de scroll */}
+                        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-brand-blue-300/60">
+                            <span className="text-xs tracking-widest uppercase">Scroll</span>
+                            <div className="w-5 h-8 rounded-full border-2 border-brand-blue-300/30 flex justify-center pt-1.5">
+                                <div className="w-1 h-2 bg-brand-blue-300/50 rounded-full animate-bounce" />
                             </div>
                         </div>
                     </div>
                     {/* Onda inferior */}
-                    <div className="bg-gradient-to-br from-brand-blue-700 via-brand-blue-600 to-brand-blue-800">
+                    <div className="bg-gradient-to-br from-brand-blue-800 via-brand-blue-700 to-brand-blue-900 shrink-0">
                         <svg viewBox="0 0 1440 56" className="w-full block text-white" preserveAspectRatio="none">
                             <path fill="currentColor" d="M0,32L80,37.3C160,43,320,53,480,53.3C640,53,800,43,960,37.3C1120,32,1280,32,1360,32L1440,32L1440,56L1360,56C1280,56,1120,56,960,56C800,56,640,56,480,56C320,56,160,56,80,56L0,56Z" />
                         </svg>
@@ -198,45 +235,75 @@ export default function Welcome({ auth }) {
                 </section>
 
                 {/* ══════ INSTITUCIONAL ══════ */}
-                <section id="institucional" className="py-20 sm:py-24">
-                    <div className="max-w-6xl mx-auto px-4 sm:px-6">
-                        <div className="max-w-3xl mx-auto text-center">
-                            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
-                                ¿Qué es el Consejo Escolar?
-                            </h2>
-                            <div className="mt-3 w-12 h-1 bg-brand-gold-400 mx-auto rounded-full" />
-                        </div>
+                <section id="institucional" className="py-20 sm:py-24 overflow-hidden">
+                    <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
 
-                        <div className="mt-12 grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                            <div className="text-center md:text-left">
-                                <div className="w-10 h-10 mx-auto md:mx-0 rounded-lg bg-brand-blue-50 flex items-center justify-center text-brand-blue-400 mb-4">
-                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21" />
-                                    </svg>
-                                </div>
-                                <p className="text-gray-600 leading-relaxed text-sm">
-                                    El Consejo Escolar de Merlo es un organismo público del sistema educativo de la Provincia de Buenos Aires encargado de administrar y gestionar diversos aspectos del funcionamiento de las escuelas del distrito.
+                        <div className="grid lg:grid-cols-2 gap-12 items-start">
+
+                            {/* Columna izquierda – título + párrafos */}
+                            <div>
+                                <p className="text-xs font-semibold text-brand-gold-500 tracking-[0.2em] uppercase mb-4">Institucional</p>
+                                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight">
+                                    ¿Qué es el<br />
+                                    <span className="text-brand-blue-600">Consejo Escolar?</span>
+                                </h2>
+                                <div className="mt-5 w-16 h-1 bg-brand-gold-400 rounded-full" />
+                                <p className="mt-8 text-lg sm:text-xl text-gray-700 leading-relaxed font-light">
+                                    El Consejo Escolar de Merlo es un <strong className="font-semibold text-gray-900">organismo público</strong> del sistema educativo de la Provincia de Buenos Aires, encargado de administrar y gestionar los recursos y servicios de las escuelas públicas del distrito.
+                                </p>
+                                <p className="mt-6 text-base text-gray-500 leading-relaxed">
+                                    Depende de la Dirección General de Cultura y Educación y actúa como órgano descentralizado a nivel local, garantizando el correcto funcionamiento de los establecimientos escolares.
                                 </p>
                             </div>
-                            <div className="text-center md:text-left">
-                                <div className="w-10 h-10 mx-auto md:mx-0 rounded-lg bg-brand-blue-50 flex items-center justify-center text-brand-blue-400 mb-4">
-                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m9.86-2.54a4.5 4.5 0 00-6.364-6.364L4.5 8.25l4.5 4.5" />
-                                    </svg>
-                                </div>
-                                <p className="text-gray-600 leading-relaxed text-sm">
-                                    Depende de la Dirección General de Cultura y Educación de la Provincia de Buenos Aires y funciona como un órgano descentralizado a nivel local.
-                                </p>
-                            </div>
-                            <div className="text-center md:text-left">
-                                <div className="w-10 h-10 mx-auto md:mx-0 rounded-lg bg-brand-blue-50 flex items-center justify-center text-brand-blue-400 mb-4">
-                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-                                    </svg>
-                                </div>
-                                <p className="text-gray-600 leading-relaxed text-sm">
-                                    Su tarea principal es garantizar el correcto funcionamiento de los servicios escolares y la infraestructura educativa del distrito.
-                                </p>
+
+                            {/* Columna derecha – pilares en cards */}
+                            <div className="space-y-3">
+                                {[
+                                    {
+                                        num: '01',
+                                        title: 'Organismo público provincial',
+                                        desc: 'Integrado al sistema educativo de la Provincia de Buenos Aires con funciones específicas en el distrito de Merlo.',
+                                        icon: (
+                                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21" />
+                                            </svg>
+                                        ),
+                                    },
+                                    {
+                                        num: '02',
+                                        title: 'Órgano descentralizado',
+                                        desc: 'Funciona de manera autónoma a nivel local, dependiendo de la Dirección General de Cultura y Educación bonaerense.',
+                                        icon: (
+                                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m9.86-2.54a4.5 4.5 0 00-6.364-6.364L4.5 8.25l4.5 4.5" />
+                                            </svg>
+                                        ),
+                                    },
+                                    {
+                                        num: '03',
+                                        title: 'Garantía educativa',
+                                        desc: 'Asegura el correcto funcionamiento de los servicios escolares, la infraestructura y los recursos del distrito.',
+                                        icon: (
+                                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                                            </svg>
+                                        ),
+                                    },
+                                ].map((item) => (
+                                    <div
+                                        key={item.num}
+                                        className="group flex items-start gap-5 px-6 py-6 rounded-xl border border-gray-100 bg-white/60 backdrop-blur-sm hover:bg-brand-blue-50/60 hover:border-brand-blue-100 transition-all duration-200 cursor-default"
+                                    >
+                                        <span className="text-xs font-bold text-brand-gold-400 tracking-widest mt-1 w-5 shrink-0">{item.num}</span>
+                                        <div className="w-10 h-10 rounded-lg bg-brand-blue-50 text-brand-blue-400 flex items-center justify-center shrink-0 group-hover:bg-brand-blue-100 transition-colors">
+                                            {item.icon}
+                                        </div>
+                                        <div>
+                                            <p className="font-semibold text-gray-900 mb-1.5">{item.title}</p>
+                                            <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>
