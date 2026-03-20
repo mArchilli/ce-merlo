@@ -14,6 +14,12 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/contacto', function () {
+    return Inertia::render('Contacto', [
+        'canLogin' => Route::has('login'),
+    ]);
+})->name('contacto');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

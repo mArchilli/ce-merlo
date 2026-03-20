@@ -34,7 +34,7 @@ const NAV_ITEMS = [
     { label: 'Institucional', href: '#institucional' },
     { label: 'Funciones', href: '#funciones' },
     { label: 'Autoridades', href: '#autoridades' },
-    { label: 'Contacto', href: '#contacto' },
+    { label: 'Contacto', href: '/contacto', isPage: true },
 ];
 
 const FUNCIONES = [
@@ -100,20 +100,34 @@ export default function Welcome({ auth }) {
 
                         {/* Nav desktop */}
                         <nav className="hidden md:flex items-center gap-1">
-                            {NAV_ITEMS.map((item) => (
-                                <a
-                                    key={item.href}
-                                    href={item.href}
-                                    onClick={(e) => scrollTo(e, item.href)}
-                                    className={`px-3 py-2 text-sm transition-colors duration-300 rounded-md ${
-                                        scrolled
-                                            ? 'text-gray-600 hover:text-brand-blue-500'
-                                            : 'text-white/80 hover:text-white'
-                                    }`}
-                                >
-                                    {item.label}
-                                </a>
-                            ))}
+                            {NAV_ITEMS.map((item) =>
+                                item.isPage ? (
+                                    <Link
+                                        key={item.href}
+                                        href={item.href}
+                                        className={`px-3 py-2 text-sm transition-colors duration-300 rounded-md ${
+                                            scrolled
+                                                ? 'text-gray-600 hover:text-brand-blue-500'
+                                                : 'text-white/80 hover:text-white'
+                                        }`}
+                                    >
+                                        {item.label}
+                                    </Link>
+                                ) : (
+                                    <a
+                                        key={item.href}
+                                        href={item.href}
+                                        onClick={(e) => scrollTo(e, item.href)}
+                                        className={`px-3 py-2 text-sm transition-colors duration-300 rounded-md ${
+                                            scrolled
+                                                ? 'text-gray-600 hover:text-brand-blue-500'
+                                                : 'text-white/80 hover:text-white'
+                                        }`}
+                                    >
+                                        {item.label}
+                                    </a>
+                                )
+                            )}
                             {auth?.user && (
                                 <Link
                                     href={route('dashboard')}
@@ -147,16 +161,26 @@ export default function Welcome({ auth }) {
                     {mobileMenuOpen && (
                         <div className="md:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-lg">
                             <nav className="flex flex-col px-4 py-3 gap-1">
-                                {NAV_ITEMS.map((item) => (
-                                    <a
-                                        key={item.href}
-                                        href={item.href}
-                                        onClick={(e) => scrollTo(e, item.href)}
-                                        className="px-3 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-md"
-                                    >
-                                        {item.label}
-                                    </a>
-                                ))}
+                                {NAV_ITEMS.map((item) =>
+                                    item.isPage ? (
+                                        <Link
+                                            key={item.href}
+                                            href={item.href}
+                                            className="px-3 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-md"
+                                        >
+                                            {item.label}
+                                        </Link>
+                                    ) : (
+                                        <a
+                                            key={item.href}
+                                            href={item.href}
+                                            onClick={(e) => scrollTo(e, item.href)}
+                                            className="px-3 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-md"
+                                        >
+                                            {item.label}
+                                        </a>
+                                    )
+                                )}
                                 {auth?.user && (
                                     <Link href={route('dashboard')} className="px-3 py-2.5 text-sm text-brand-blue-500 font-medium">
                                         Panel admin
@@ -599,16 +623,26 @@ export default function Welcome({ auth }) {
                             <div>
                                 <p className="text-xs font-semibold text-brand-gold-500 tracking-[0.15em] uppercase mb-4">Navegación</p>
                                 <nav className="flex flex-col gap-2.5">
-                                    {NAV_ITEMS.map((item) => (
-                                        <a
-                                            key={item.href}
-                                            href={item.href}
-                                            onClick={(e) => scrollTo(e, item.href)}
-                                            className="text-sm text-gray-500 hover:text-brand-blue-600 transition-colors"
-                                        >
-                                            {item.label}
-                                        </a>
-                                    ))}
+                                    {NAV_ITEMS.map((item) =>
+                                        item.isPage ? (
+                                            <Link
+                                                key={item.href}
+                                                href={item.href}
+                                                className="text-sm text-gray-500 hover:text-brand-blue-600 transition-colors"
+                                            >
+                                                {item.label}
+                                            </Link>
+                                        ) : (
+                                            <a
+                                                key={item.href}
+                                                href={item.href}
+                                                onClick={(e) => scrollTo(e, item.href)}
+                                                className="text-sm text-gray-500 hover:text-brand-blue-600 transition-colors"
+                                            >
+                                                {item.label}
+                                            </a>
+                                        )
+                                    )}
                                 </nav>
                             </div>
 
