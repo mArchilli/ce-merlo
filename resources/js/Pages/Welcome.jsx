@@ -27,6 +27,11 @@ const IconClipboard = () => (
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
     </svg>
 );
+const IconPackage = () => (
+    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+    </svg>
+);
 
 /* ─── Datos ─── */
 const NAV_ITEMS = [
@@ -43,6 +48,7 @@ const FUNCIONES = [
     { icon: <IconTruck />, title: 'Servicios escolares', desc: 'Supervisión de servicios escolares: comedores, transporte y mobiliario.' },
     { icon: <IconUsers />, title: 'Coordinación educativa', desc: 'Coordinación con directivos, docentes y la comunidad educativa.' },
     { icon: <IconClipboard />, title: 'Personal auxiliar', desc: 'Gestión del personal auxiliar de las instituciones educativas.' },
+    { icon: <IconPackage />, title: 'Compras y suministros', desc: 'Gestión de las compras y distribución de materiales, insumos y equipamiento necesarios para el funcionamiento de las escuelas del distrito.' },
 ];
 
 const AUTORIDADES_PRINCIPALES = [
@@ -196,8 +202,7 @@ export default function Welcome({ auth }) {
                     <div className="flex-1 relative bg-gradient-to-br from-brand-blue-800 via-brand-blue-700 to-brand-blue-900">
                         {/* Patrón sutil */}
                         <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")'}} />
-                        {/* Línea decorativa lateral */}
-                        <div className="absolute left-0 top-1/4 bottom-1/4 w-1 bg-brand-gold-400/30 hidden lg:block" />
+                        
                         {/* Círculo decorativo */}
                         <div className="absolute -right-32 -bottom-32 w-[500px] h-[500px] rounded-full border border-white/[0.04]" />
                         <div className="absolute -right-20 -bottom-20 w-[350px] h-[350px] rounded-full border border-white/[0.06]" />
@@ -212,7 +217,6 @@ export default function Welcome({ auth }) {
                                     Consejo
                                     <br />
                                     Escolar
-                                    <span className="text-brand-gold-400">.</span>
                                     <br />
                                     <span className="text-brand-blue-200">de Merlo</span>
                                 </h1>
