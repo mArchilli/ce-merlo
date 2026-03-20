@@ -231,13 +231,12 @@ export default function Welcome({ auth }) {
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
                                         </svg>
                                     </a>
-                                    <a
-                                        href="#contacto"
-                                        onClick={(e) => scrollTo(e, '#contacto')}
+                                    <Link
+                                        href="/contacto"
                                         className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/20 text-white text-base font-medium rounded-lg hover:bg-white/10 transition-all duration-200"
                                     >
                                         Contacto
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -571,17 +570,17 @@ export default function Welcome({ auth }) {
                                     </div>
                                 </div>
 
-                                {/* Mapa */}
-                                <div className="max-w-5xl mx-auto rounded-2xl overflow-hidden border border-white/10 h-[380px]">
-                                    <iframe
-                                        title="Ubicación Consejo Escolar de Merlo"
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3280.8!2d-58.7276!3d-34.6714!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcbf3a0b1c7b3d%3A0x0!2sAv.%20Calle%20Real%20208%2C%20Merlo%2C%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1"
-                                        className="w-full h-full"
-                                        style={{ border: 0 }}
-                                        allowFullScreen=""
-                                        loading="lazy"
-                                        referrerPolicy="no-referrer-when-downgrade"
-                                    />
+                                {/* CTA a página de contacto */}
+                                <div className="text-center mt-10">
+                                    <Link
+                                        href="/contacto"
+                                        className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-brand-gold-400 text-white text-base font-semibold rounded-lg hover:bg-brand-gold-500 transition-all duration-200 shadow-lg shadow-brand-gold-400/20"
+                                    >
+                                        Ver más información de contacto
+                                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                                        </svg>
+                                    </Link>
                                 </div>
                             </div>
 
