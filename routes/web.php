@@ -26,6 +26,12 @@ Route::get('/institucional', function () {
     ]);
 })->name('institucional');
 
+Route::get('/funcionalidades', function () {
+    return Inertia::render('Funcionalidades', [
+        'canLogin' => Route::has('login'),
+    ]);
+})->name('funcionalidades');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

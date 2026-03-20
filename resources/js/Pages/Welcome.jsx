@@ -37,7 +37,7 @@ const IconPackage = () => (
 const NAV_ITEMS = [
     { label: 'Inicio', href: '#inicio' },
     { label: 'Institucional', href: '/institucional', isPage: true },
-    { label: 'Funciones', href: '#funciones' },
+    { label: 'Funcionalidades', href: '/funcionalidades', isPage: true },
     { label: 'Autoridades', href: '#autoridades' },
     { label: 'Contacto', href: '/contacto', isPage: true },
 ];

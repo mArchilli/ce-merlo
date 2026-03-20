@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 const NAV_ITEMS = [
     { label: 'Inicio', href: '/' },
     { label: 'Institucional', href: '/institucional' },
+    { label: 'Funcionalidades', href: '/funcionalidades' },
     { label: 'Contacto', href: '/contacto' },
 ];
 
@@ -793,6 +794,9 @@ export default function Institucional({ auth }) {
                                     </Link>
                                     <Link href="/institucional" className="text-sm text-gray-500 hover:text-brand-blue-600 transition-colors">
                                         Institucional
+                                    </Link>
+                                    <Link href="/funcionalidades" className="text-sm text-gray-500 hover:text-brand-blue-600 transition-colors">
+                                        Funcionalidades
                                     </Link>
                                     <Link href="/contacto" className="text-sm text-gray-500 hover:text-brand-blue-600 transition-colors">
                                         Contacto
