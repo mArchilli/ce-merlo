@@ -32,6 +32,12 @@ Route::get('/funcionalidades', function () {
     ]);
 })->name('funcionalidades');
 
+Route::get('/autoridades', function () {
+    return Inertia::render('Autoridades', [
+        'canLogin' => Route::has('login'),
+    ]);
+})->name('autoridades');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

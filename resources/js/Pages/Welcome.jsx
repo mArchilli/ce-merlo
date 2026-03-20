@@ -38,7 +38,7 @@ const NAV_ITEMS = [
     { label: 'Inicio', href: '#inicio' },
     { label: 'Institucional', href: '/institucional', isPage: true },
     { label: 'Funcionalidades', href: '/funcionalidades', isPage: true },
-    { label: 'Autoridades', href: '#autoridades' },
+    { label: 'Autoridades', href: '/autoridades', isPage: true },
     { label: 'Contacto', href: '/contacto', isPage: true },
 ];
 

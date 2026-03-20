@@ -6,6 +6,7 @@ const NAV_ITEMS = [
     { label: 'Inicio', href: '/' },
     { label: 'Institucional', href: '/institucional' },
     { label: 'Funcionalidades', href: '/funcionalidades' },
+    { label: 'Autoridades', href: '/autoridades' },
     { label: 'Contacto', href: '/contacto' },
 ];
 
@@ -468,6 +469,9 @@ export default function Contacto({ auth }) {
                                     </Link>
                                     <Link href="/funcionalidades" className="text-sm text-gray-500 hover:text-brand-blue-600 transition-colors">
                                         Funcionalidades
+                                    </Link>
+                                    <Link href="/autoridades" className="text-sm text-gray-500 hover:text-brand-blue-600 transition-colors">
+                                        Autoridades
                                     </Link>
                                     <Link href="/contacto" className="text-sm text-gray-500 hover:text-brand-blue-600 transition-colors">
                                         Contacto
