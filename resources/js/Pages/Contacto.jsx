@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 /* ─── Navegación ─── */
 const NAV_ITEMS = [
     { label: 'Inicio', href: '/' },
+    { label: 'Institucional', href: '/institucional' },
     { label: 'Contacto', href: '/contacto' },
 ];
 
@@ -460,6 +461,9 @@ export default function Contacto({ auth }) {
                                 <nav className="flex flex-col gap-2.5">
                                     <Link href="/" className="text-sm text-gray-500 hover:text-brand-blue-600 transition-colors">
                                         Inicio
+                                    </Link>
+                                    <Link href="/institucional" className="text-sm text-gray-500 hover:text-brand-blue-600 transition-colors">
+                                        Institucional
                                     </Link>
                                     <Link href="/contacto" className="text-sm text-gray-500 hover:text-brand-blue-600 transition-colors">
                                         Contacto

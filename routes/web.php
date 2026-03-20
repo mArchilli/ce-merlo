@@ -20,6 +20,12 @@ Route::get('/contacto', function () {
     ]);
 })->name('contacto');
 
+Route::get('/institucional', function () {
+    return Inertia::render('Institucional', [
+        'canLogin' => Route::has('login'),
+    ]);
+})->name('institucional');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

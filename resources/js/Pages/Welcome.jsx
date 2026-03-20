@@ -31,7 +31,7 @@ const IconClipboard = () => (
 /* ─── Datos ─── */
 const NAV_ITEMS = [
     { label: 'Inicio', href: '#inicio' },
-    { label: 'Institucional', href: '#institucional' },
+    { label: 'Institucional', href: '/institucional', isPage: true },
     { label: 'Funciones', href: '#funciones' },
     { label: 'Autoridades', href: '#autoridades' },
     { label: 'Contacto', href: '/contacto', isPage: true },
