@@ -1,0 +1,163 @@
+import { Link } from '@inertiajs/react';
+
+const AUTORIDADES_PRINCIPALES = [
+    { cargo: 'Presidenta', nombre: 'Lic. María José Barrionuevo' },
+    { cargo: 'Vicepresidente', nombre: 'Pablo Robinson Duarte' },
+    { cargo: 'Tesorero', nombre: 'Gabriel Aniceto González' },
+    { cargo: 'Secretario', nombre: 'Juan Carlos Ojeda' },
+];
+
+const VOCALES = [
+    '1º Vocal – Aldio Mario Capece',
+    '2º Vocal – Laura Leguizamón',
+    '3º Vocal – Juan Sebastián Azarko',
+    '4º Vocal – Hugo Osvaldo Gerstner',
+    '5º Vocal – Nilda Gabriela Zapata',
+    '6º Vocal – María Graciela Scutella',
+];
+
+export default function Autoridades() {
+    return (
+        <section id="autoridades" className="relative">
+            {/* Onda superior — transición desde la sección anterior */}
+            <div className="bg-brand-blue-50/40">
+                <svg viewBox="0 0 1440 56" className="w-full block text-brand-blue-800" preserveAspectRatio="none">
+                    <path fill="currentColor" d="M0,32L80,37.3C160,43,320,53,480,53.3C640,53,800,43,960,37.3C1120,32,1280,32,1360,32L1440,32L1440,56L1360,56C1280,56,1120,56,960,56C800,56,640,56,480,56C320,56,160,56,80,56L0,56Z" />
+                </svg>
+            </div>
+
+            {/* Contenido sobre fondo oscuro */}
+            <div className="bg-gradient-to-br from-brand-blue-800 via-brand-blue-700 to-brand-blue-900 relative overflow-hidden">
+                {/* Patrón sutil */}
+                <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")'}} />
+
+                <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-20 sm:py-24">
+
+                    {/* Encabezado */}
+                    <div className="text-center mb-14">
+                        <p className="text-xs font-semibold text-brand-gold-400 tracking-[0.2em] uppercase mb-4">Equipo de trabajo</p>
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
+                            Autoridades
+                        </h2>
+                        <div className="mt-5 w-16 h-1 bg-brand-gold-400 mx-auto rounded-full" />
+                    </div>
+
+                    {/* Principales */}
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-16">
+                        {AUTORIDADES_PRINCIPALES.map((a, i) => (
+                            <div key={i} className="group relative rounded-xl border border-white/10 bg-white/[0.05] backdrop-blur-sm overflow-hidden">
+                                <div className="h-1 bg-gradient-to-r from-brand-gold-400 to-brand-gold-300" />
+                                <div className="px-6 py-7">
+                                    <div className="w-12 h-12 rounded-xl bg-brand-gold-400/10 flex items-center justify-center mb-5">
+                                        <svg className="w-6 h-6 text-brand-gold-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                        </svg>
+                                    </div>
+                                    <p className="text-xs font-semibold text-brand-gold-400 uppercase tracking-wider mb-2">{a.cargo}</p>
+                                    <p className="font-medium text-white text-[15px] leading-snug">{a.nombre}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Vocales */}
+                    <div className="max-w-5xl mx-auto">
+                        <h3 className="text-lg font-semibold text-white text-center mb-7">Vocales</h3>
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {VOCALES.map((v, i) => (
+                                <div key={i} className="flex items-center gap-3.5 rounded-xl border border-white/[0.08] bg-white/[0.04] px-5 py-4">
+                                    <div className="w-2.5 h-2.5 rounded-full bg-brand-gold-400/60 shrink-0" />
+                                    <span className="text-[15px] text-brand-blue-100">{v}</span>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Secretaria Administrativa */}
+                        <div className="mt-12 flex items-center justify-center gap-5 rounded-xl border border-brand-gold-400/15 bg-brand-gold-400/[0.04] px-8 py-5 max-w-lg mx-auto">
+                            <div className="w-12 h-12 rounded-xl bg-brand-gold-400/10 flex items-center justify-center shrink-0">
+                                <svg className="w-6 h-6 text-brand-gold-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p className="text-xs font-semibold text-brand-gold-400 uppercase tracking-wider mb-1">Secretaria Administrativa</p>
+                                <p className="text-[15px] font-medium text-white">Daniela Ester Escudero</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* ── Separador visual ── */}
+                    <div className="relative max-w-5xl mx-auto my-20 sm:my-24">
+                        <div className="border-t border-white/10" />
+                    </div>
+
+                    {/* ══════ CONTACTO ══════ */}
+                    <div className="max-w-7xl mx-auto" id="contacto">
+
+                        {/* Encabezado */}
+                        <div className="text-center mb-16">
+                            <p className="text-xs font-semibold text-brand-gold-400 tracking-[0.2em] uppercase mb-4">Encontranos</p>
+                            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
+                                Contacto
+                            </h2>
+                            <div className="mt-5 w-16 h-1 bg-brand-gold-400 mx-auto rounded-full" />
+                        </div>
+
+                        {/* Info cards */}
+                        <div className="grid sm:grid-cols-3 gap-5 max-w-5xl mx-auto mb-10">
+                            <div className="rounded-xl border border-white/10 bg-white/[0.05] p-6 text-center">
+                                <div className="w-12 h-12 rounded-xl bg-brand-gold-400/10 flex items-center justify-center mx-auto mb-4">
+                                    <svg className="w-6 h-6 text-brand-gold-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                    </svg>
+                                </div>
+                                <p className="text-xs font-semibold text-brand-gold-400 uppercase tracking-wider mb-2">Dirección</p>
+                                <p className="text-[15px] text-brand-blue-100 leading-relaxed">Av. Calle Real 208/212<br />Merlo Centro</p>
+                            </div>
+                            <div className="rounded-xl border border-white/10 bg-white/[0.05] p-6 text-center">
+                                <div className="w-12 h-12 rounded-xl bg-brand-gold-400/10 flex items-center justify-center mx-auto mb-4">
+                                    <svg className="w-6 h-6 text-brand-gold-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                                    </svg>
+                                </div>
+                                <p className="text-xs font-semibold text-brand-gold-400 uppercase tracking-wider mb-2">Teléfono</p>
+                                <p className="text-[15px] text-brand-blue-100">0220-482-5836</p>
+                            </div>
+                            <div className="rounded-xl border border-white/10 bg-white/[0.05] p-6 text-center">
+                                <div className="w-12 h-12 rounded-xl bg-brand-gold-400/10 flex items-center justify-center mx-auto mb-4">
+                                    <svg className="w-6 h-6 text-brand-gold-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <p className="text-xs font-semibold text-brand-gold-400 uppercase tracking-wider mb-2">Horario</p>
+                                <p className="text-[15px] text-brand-blue-100">Lunes a viernes<br />de 8 a 14 hs</p>
+                            </div>
+                        </div>
+
+                        {/* CTA a página de contacto */}
+                        <div className="text-center mt-10">
+                            <Link
+                                href="/contacto"
+                                className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-brand-gold-400 text-white text-base font-semibold rounded-lg hover:bg-brand-gold-500 transition-all duration-200 shadow-lg shadow-brand-gold-400/20"
+                            >
+                                Ver más información de contacto
+                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                                </svg>
+                            </Link>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            {/* Onda inferior — transición al footer blanco */}
+            <div className="bg-gradient-to-br from-brand-blue-800 via-brand-blue-700 to-brand-blue-900">
+                <svg viewBox="0 0 1440 56" className="w-full block text-white" preserveAspectRatio="none">
+                    <path fill="currentColor" d="M0,32L80,37.3C160,43,320,53,480,53.3C640,53,800,43,960,37.3C1120,32,1280,32,1360,32L1440,32L1440,56L1360,56C1280,56,1120,56,960,56C800,56,640,56,480,56C320,56,160,56,80,56L0,56Z" />
+                </svg>
+            </div>
+        </section>
+    );
+}

@@ -20,24 +20,6 @@ Route::get('/contacto', function () {
     ]);
 })->name('contacto');
 
-Route::get('/institucional', function () {
-    return Inertia::render('Institucional', [
-        'canLogin' => Route::has('login'),
-    ]);
-})->name('institucional');
-
-Route::get('/funcionalidades', function () {
-    return Inertia::render('Funcionalidades', [
-        'canLogin' => Route::has('login'),
-    ]);
-})->name('funcionalidades');
-
-Route::get('/autoridades', function () {
-    return Inertia::render('Autoridades', [
-        'canLogin' => Route::has('login'),
-    ]);
-})->name('autoridades');
-
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
