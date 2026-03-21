@@ -82,7 +82,7 @@ export default function Footer({ scrollTo }) {
                 {/* Línea inferior */}
                 <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <p className="text-xs text-gray-400">
-                        © {new Date().getFullYear()} Consejo Escolar de Merlo. Todos los derechos reservados.
+                        © {new Date().getFullYear()} Consejo Escolar de Merlo.
                     </p>
                     <div className="flex items-center gap-4">
                         <span className="text-xs text-gray-400">Powered by <span className="font-semibold text-gray-500">Pampa Labs</span></span>
