@@ -31,19 +31,44 @@ const IconX = () => (
     </svg>
 );
 
+// ─── Configuraciones por tipo ─────────────────────────────────────────────────
+const OBRA_CONFIG = {
+    singular:     'obra',
+    plural:       'obras',
+    featuredKey:  'destacada',
+    storeRoute:   'infraestructura.store',
+    updateRoute:  'infraestructura.update',
+    destroyRoute: 'infraestructura.destroy',
+    msgCreated:   'Obra creada correctamente.',
+    msgUpdated:   'Obra actualizada correctamente.',
+    msgDeleted:   'Obra eliminada correctamente.',
+};
+
+const TRABAJO_CONFIG = {
+    singular:     'trabajo menor',
+    plural:       'trabajos menores',
+    featuredKey:  'destacado',
+    storeRoute:   'trabajos_menores.store',
+    updateRoute:  'trabajos_menores.update',
+    destroyRoute: 'trabajos_menores.destroy',
+    msgCreated:   'Trabajo menor creado correctamente.',
+    msgUpdated:   'Trabajo menor actualizado correctamente.',
+    msgDeleted:   'Trabajo menor eliminado correctamente.',
+};
+
 // ─── Modal genérico (Obra / Trabajo Menor) ────────────────────────────────────
 function ItemModal({ item, onClose, config }) {
     const isEdit = !!item;
 
     const { data, setData, processing, errors, reset } = useForm({
-        titulo:              item?.titulo ?? '',
-        descripcion:         item?.descripcion ?? '',
+        titulo:               item?.titulo ?? '',
+        descripcion:          item?.descripcion ?? '',
         [config.featuredKey]: item?.[config.featuredKey] ?? false,
-        principal_medio_id:  item?.medio_principal?.id ?? '',
-        medios_eliminar:     [],
+        principal_medio_id:   item?.medio_principal?.id ?? '',
+        medios_eliminar:      [],
     });
 
-    const [newFiles, setNewFiles]                 = useState([]);  // { localId, file, url, tipo, nombre }
+    const [newFiles, setNewFiles]                 = useState([]);
     const [principalLocalId, setPrincipalLocalId] = useState(null);
     const fileInputRef                            = useRef(null);
 
@@ -56,7 +81,7 @@ function ItemModal({ item, onClose, config }) {
             nombre:  f.name,
         }));
         setNewFiles(prev => [...prev, ...added]);
-        e.target.value = '';  // resetear para poder volver a elegir el mismo archivo
+        e.target.value = '';
     };
 
     const removeNewFile = (localId) => {
@@ -94,32 +119,46 @@ function ItemModal({ item, onClose, config }) {
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-            <div className="relative w-full max-w-2xl rounded-xl bg-white shadow-2xl">
-                <div className="flex items-center justify-between border-b px-6 py-4">
-                    <h2 className="text-lg font-semibold text-gray-800">
-                        {isEdit ? `Editar ${config.singular}` : `Nuevo ${config.singular}`}
-                    </h2>
-                    <button onClick={onClose} className="text-gray-400 hover:text-gray-600"><IconX /></button>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
+            <div className="relative w-full max-w-2xl rounded-2xl bg-white shadow-2xl overflow-hidden">
+                {/* Franja superior amber */}
+                <div className="h-1 bg-gradient-to-r from-amber-400 to-amber-500" />
+
+                <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+                    <div>
+                        <h2 className="text-base font-semibold text-gray-900">
+                            {isEdit ? `Editar ${config.singular}` : `Nuevo ${config.singular}`}
+                        </h2>
+                        <p className="text-xs text-gray-400 mt-0.5">
+                            {isEdit ? 'Modificá los datos del elemento.' : `Completá los datos para crear un nuevo ${config.singular}.`}
+                        </p>
+                    </div>
+                    <button
+                        onClick={onClose}
+                        className="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors"
+                    >
+                        <IconX />
+                    </button>
                 </div>
 
-                <form onSubmit={submit} className="max-h-[80vh] overflow-y-auto px-6 py-4 space-y-4">
+                <form onSubmit={submit} className="max-h-[78vh] overflow-y-auto px-6 py-5 space-y-5">
                     {/* Título */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Título *</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1.5">Título *</label>
                         <input
                             type="text"
                             value={data.titulo}
                             onChange={(e) => setData('titulo', e.target.value)}
-                            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-amber-400 focus:outline-none focus:ring-1 focus:ring-amber-400"
+                            placeholder={`Nombre del ${config.singular}...`}
+                            className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm transition-colors focus:border-amber-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-400/20"
                         />
                         {errors.titulo && <p className="mt-1 text-xs text-red-500">{errors.titulo}</p>}
                     </div>
 
                     {/* Descripción con Quill */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
-                        <div className="rounded-lg border border-gray-300 overflow-hidden focus-within:border-amber-400 focus-within:ring-1 focus-within:ring-amber-400">
+                        <label className="block text-sm font-medium text-gray-700 mb-1.5">Descripción</label>
+                        <div className="rounded-lg border border-gray-200 overflow-hidden transition-colors focus-within:border-amber-400 focus-within:ring-2 focus-within:ring-amber-400/20">
                             <QuillEditor
                                 value={data.descripcion}
                                 onChange={(val) => setData('descripcion', val)}
@@ -129,7 +168,7 @@ function ItemModal({ item, onClose, config }) {
                     </div>
 
                     {/* Destacado */}
-                    <div className="flex items-center gap-2">
+                    <label className="flex items-center gap-3 cursor-pointer rounded-lg border border-gray-200 px-4 py-3 hover:bg-gray-50 transition-colors">
                         <input
                             id={`destacado-${config.singular}`}
                             type="checkbox"
@@ -137,10 +176,11 @@ function ItemModal({ item, onClose, config }) {
                             onChange={(e) => setData(config.featuredKey, e.target.checked)}
                             className="h-4 w-4 rounded border-gray-300 text-amber-500 focus:ring-amber-400"
                         />
-                        <label htmlFor={`destacado-${config.singular}`} className="text-sm font-medium text-gray-700">
-                            Marcar como destacado
-                        </label>
-                    </div>
+                        <div>
+                            <p className="text-sm font-medium text-gray-700">Marcar como destacado</p>
+                            <p className="text-xs text-gray-400">Se mostrará de forma prominente en el sitio.</p>
+                        </div>
+                    </label>
 
                     {/* Medios existentes (edición) */}
                     {isEdit && item.medios && item.medios.length > 0 && (
@@ -150,12 +190,12 @@ function ItemModal({ item, onClose, config }) {
                                 {item.medios.map((medio) => (
                                     <div
                                         key={medio.id}
-                                        className={`relative rounded-lg border-2 overflow-hidden ${
+                                        className={`relative rounded-xl border-2 overflow-hidden transition-all ${
                                             data.medios_eliminar.includes(medio.id)
                                                 ? 'border-red-400 opacity-50'
                                                 : (data.principal_medio_id === medio.id ||
                                                    (data.principal_medio_id === '' && medio.es_principal))
-                                                ? 'border-amber-400'
+                                                ? 'border-amber-400 ring-2 ring-amber-400/20'
                                                 : 'border-gray-200'
                                         }`}
                                     >
@@ -164,27 +204,27 @@ function ItemModal({ item, onClose, config }) {
                                         ) : (
                                             <video src={medio.url} className="h-24 w-full object-cover" />
                                         )}
-                                        <div className="absolute inset-x-0 bottom-0 flex justify-between bg-black/40 px-1 py-0.5">
+                                        <div className="absolute inset-x-0 bottom-0 flex justify-between bg-black/50 px-1.5 py-1">
                                             <button
                                                 type="button"
                                                 title="Marcar como principal"
                                                 onClick={() => setData('principal_medio_id', medio.id)}
-                                                className={`text-xs ${
+                                                className={`text-xs transition-colors ${
                                                     data.principal_medio_id === medio.id ||
                                                     (data.principal_medio_id === '' && medio.es_principal)
-                                                        ? 'text-amber-400' : 'text-white'
+                                                        ? 'text-amber-400' : 'text-white/70 hover:text-amber-300'
                                                 }`}
                                             >
                                                 <IconStar />
                                             </button>
-                                            <button type="button" onClick={() => toggleEliminar(medio.id)} className="text-white hover:text-red-400">
+                                            <button type="button" onClick={() => toggleEliminar(medio.id)} className="text-white/70 hover:text-red-400 transition-colors">
                                                 <IconX />
                                             </button>
                                         </div>
                                         {(data.principal_medio_id === medio.id ||
                                           (data.principal_medio_id === '' && medio.es_principal)) &&
                                           !data.medios_eliminar.includes(medio.id) && (
-                                            <span className="absolute top-1 left-1 rounded bg-amber-400 px-1 py-0.5 text-[10px] font-bold text-white">Principal</span>
+                                            <span className="absolute top-1 left-1 rounded-md bg-amber-400 px-1.5 py-0.5 text-[10px] font-bold text-white">Principal</span>
                                         )}
                                     </div>
                                 ))}
@@ -203,8 +243,10 @@ function ItemModal({ item, onClose, config }) {
                                 {newFiles.map((f) => (
                                     <div
                                         key={f.localId}
-                                        className={`relative rounded-lg border-2 overflow-hidden ${
-                                            principalLocalId === f.localId ? 'border-amber-400' : 'border-gray-200'
+                                        className={`relative rounded-xl border-2 overflow-hidden transition-all ${
+                                            principalLocalId === f.localId
+                                                ? 'border-amber-400 ring-2 ring-amber-400/20'
+                                                : 'border-gray-200'
                                         }`}
                                     >
                                         {f.tipo === 'imagen' ? (
@@ -212,11 +254,11 @@ function ItemModal({ item, onClose, config }) {
                                         ) : (
                                             <video src={f.url} className="h-24 w-full object-cover" muted />
                                         )}
-                                        <div className="absolute inset-x-0 bottom-0 flex items-center gap-1 bg-black/50 px-1 py-0.5">
+                                        <div className="absolute inset-x-0 bottom-0 flex items-center gap-1 bg-black/50 px-1.5 py-1">
                                             <button
                                                 type="button"
                                                 onClick={() => setPrincipalLocalId(principalLocalId === f.localId ? null : f.localId)}
-                                                className={`shrink-0 ${
+                                                className={`shrink-0 transition-colors ${
                                                     principalLocalId === f.localId
                                                         ? 'text-amber-400'
                                                         : 'text-white/70 hover:text-amber-300'
@@ -229,14 +271,14 @@ function ItemModal({ item, onClose, config }) {
                                             <button
                                                 type="button"
                                                 onClick={() => removeNewFile(f.localId)}
-                                                className="shrink-0 text-white/70 hover:text-red-400"
+                                                className="shrink-0 text-white/70 hover:text-red-400 transition-colors"
                                                 title="Quitar"
                                             >
                                                 <IconX />
                                             </button>
                                         </div>
                                         {principalLocalId === f.localId && (
-                                            <span className="absolute top-1 left-1 rounded bg-amber-400 px-1 py-0.5 text-[10px] font-bold text-white">Principal</span>
+                                            <span className="absolute top-1 left-1 rounded-md bg-amber-400 px-1.5 py-0.5 text-[10px] font-bold text-white">Principal</span>
                                         )}
                                     </div>
                                 ))}
@@ -254,17 +296,25 @@ function ItemModal({ item, onClose, config }) {
                         <button
                             type="button"
                             onClick={() => fileInputRef.current?.click()}
-                            className="flex items-center gap-2 rounded-lg border border-dashed border-gray-300 px-4 py-2 text-sm text-gray-500 hover:border-amber-400 hover:text-amber-500 transition-colors"
+                            className="flex items-center gap-2 rounded-lg border border-dashed border-gray-300 px-4 py-2.5 text-sm text-gray-500 hover:border-amber-400 hover:text-amber-500 hover:bg-amber-50 transition-colors"
                         >
                             <IconPlus /> Agregar archivo(s)
                         </button>
                     </div>
 
-                    <div className="flex justify-end gap-3 pt-2 border-t">
-                        <button type="button" onClick={onClose} className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    <div className="flex justify-end gap-3 pt-2 border-t border-gray-100">
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+                        >
                             Cancelar
                         </button>
-                        <button type="submit" disabled={processing} className="rounded-lg bg-amber-400 px-4 py-2 text-sm font-medium text-white hover:bg-amber-500 disabled:opacity-60">
+                        <button
+                            type="submit"
+                            disabled={processing}
+                            className="rounded-lg bg-amber-400 px-5 py-2 text-sm font-semibold text-white hover:bg-amber-500 disabled:opacity-60 transition-colors shadow-sm shadow-amber-200"
+                        >
                             {processing ? 'Guardando...' : isEdit ? 'Guardar cambios' : `Crear ${config.singular}`}
                         </button>
                     </div>
@@ -279,11 +329,11 @@ function ItemCard({ item, featuredKey, onEdit, onDelete }) {
     const principal = item.medio_principal;
 
     return (
-        <div className="overflow-hidden rounded-xl bg-white shadow-sm border border-gray-100 flex flex-col">
-            <div className="relative h-44 bg-gray-100">
+        <div className="group overflow-hidden rounded-xl bg-white shadow-sm border border-gray-100 flex flex-col hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+            <div className="relative h-44 bg-gray-100 overflow-hidden">
                 {principal ? (
                     principal.tipo === 'imagen' ? (
-                        <img src={principal.url} alt={item.titulo} className="h-full w-full object-cover" />
+                        <img src={principal.url} alt={item.titulo} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300" />
                     ) : (
                         <video src={principal.url} className="h-full w-full object-cover" muted />
                     )
@@ -291,7 +341,7 @@ function ItemCard({ item, featuredKey, onEdit, onDelete }) {
                     <div className="flex h-full items-center justify-center text-gray-300 text-sm">Sin imagen</div>
                 )}
                 {item[featuredKey] && (
-                    <span className="absolute top-2 left-2 flex items-center gap-1 rounded-full bg-amber-400 px-2 py-0.5 text-[11px] font-semibold text-white">
+                    <span className="absolute top-2 left-2 flex items-center gap-1 rounded-full bg-amber-400 px-2 py-0.5 text-[11px] font-semibold text-white shadow-sm">
                         <IconStar /> Destacado
                     </span>
                 )}
@@ -305,18 +355,18 @@ function ItemCard({ item, featuredKey, onEdit, onDelete }) {
                         dangerouslySetInnerHTML={{ __html: item.descripcion }}
                     />
                 )}
-                <div className="mt-auto flex items-center justify-between pt-4 border-t border-gray-100 mt-4">
+                <div className="mt-auto flex items-center justify-between pt-3 border-t border-gray-100 mt-4">
                     <span className="text-xs text-gray-400">{item.medios_count ?? 0} medio(s)</span>
-                    <div className="flex gap-2">
+                    <div className="flex gap-1.5">
                         <button
                             onClick={() => onEdit(item)}
-                            className="flex items-center gap-1 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50"
+                            className="flex items-center gap-1 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:border-amber-300 hover:bg-amber-50 hover:text-amber-600 transition-colors"
                         >
                             <IconEdit /> Editar
                         </button>
                         <button
                             onClick={() => onDelete(item)}
-                            className="flex items-center gap-1 rounded-lg border border-red-100 px-3 py-1.5 text-xs font-medium text-red-500 hover:bg-red-50"
+                            className="flex items-center gap-1 rounded-lg border border-red-100 px-3 py-1.5 text-xs font-medium text-red-500 hover:bg-red-50 hover:border-red-300 transition-colors"
                         >
                             <IconTrash /> Eliminar
                         </button>
@@ -327,110 +377,69 @@ function ItemCard({ item, featuredKey, onEdit, onDelete }) {
     );
 }
 
-// ─── Sección reutilizable (grid + modal + confirmación) ───────────────────────
-function Section({ items, config }) {
-    const [modalOpen,     setModalOpen]     = useState(false);
-    const [editando,      setEditando]      = useState(null);
-    const [aEliminar,     setAEliminar]     = useState(null);
-
-    const handleEdit  = (item) => { setEditando(item); setModalOpen(true); };
-    const handleClose = ()     => { setModalOpen(false); setEditando(null); };
-
-    const confirmDelete = () => {
-        router.delete(route(config.destroyRoute, aEliminar.id), {
-            onSuccess: () => {
-                setAEliminar(null);
-                toast.success(config.msgDeleted);
-            },
-            onError: () => toast.error('No se pudo eliminar el elemento.'),
-        });
-    };
+// ─── Sección reutilizable (solo grid, sin estado de modal) ────────────────────
+function Section({ items, config, onEdit, onDelete }) {
+    if (items.length === 0) {
+        return (
+            <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 py-20 text-gray-400">
+                <p className="text-lg font-medium">No hay {config.plural} cargados</p>
+                <p className="text-sm mt-1">Hacé clic en "Nuevo {config.singular}" para comenzar.</p>
+            </div>
+        );
+    }
 
     return (
-        <div>
-            <div className="mb-6 flex items-center justify-between">
-                <p className="text-sm text-gray-500">{items.length} {config.singular}(s) registrado(s)</p>
-                <button
-                    onClick={() => { setEditando(null); setModalOpen(true); }}
-                    className="flex items-center gap-2 rounded-lg bg-amber-400 px-4 py-2 text-sm font-semibold text-white hover:bg-amber-500 transition-colors"
-                >
-                    <IconPlus /> Nuevo {config.singular}
-                </button>
-            </div>
-
-            {items.length === 0 ? (
-                <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 py-20 text-gray-400">
-                    <p className="text-lg font-medium">No hay {config.plural} cargados</p>
-                    <p className="text-sm mt-1">Hacé clic en "Nuevo {config.singular}" para comenzar.</p>
-                </div>
-            ) : (
-                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {items.map((item) => (
-                        <ItemCard
-                            key={item.id}
-                            item={item}
-                            featuredKey={config.featuredKey}
-                            onEdit={handleEdit}
-                            onDelete={setAEliminar}
-                        />
-                    ))}
-                </div>
-            )}
-
-            {modalOpen && (
-                <ItemModal item={editando} onClose={handleClose} config={config} />
-            )}
-
-            {aEliminar && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-                    <div className="w-full max-w-sm rounded-xl bg-white p-6 shadow-2xl">
-                        <h3 className="text-lg font-semibold text-gray-800">Eliminar {config.singular}</h3>
-                        <p className="mt-2 text-sm text-gray-600">
-                            ¿Estás seguro de eliminar <strong>{aEliminar.titulo}</strong>? Esta acción no se puede deshacer.
-                        </p>
-                        <div className="mt-5 flex justify-end gap-3">
-                            <button onClick={() => setAEliminar(null)} className="rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                                Cancelar
-                            </button>
-                            <button onClick={confirmDelete} className="rounded-lg bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-600">
-                                Eliminar
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {items.map((item) => (
+                <ItemCard
+                    key={item.id}
+                    item={item}
+                    featuredKey={config.featuredKey}
+                    onEdit={onEdit}
+                    onDelete={onDelete}
+                />
+            ))}
         </div>
     );
 }
 
-// ─── Configuraciones por tipo ─────────────────────────────────────────────────
-const OBRA_CONFIG = {
-    singular:     'obra',
-    plural:       'obras',
-    featuredKey:  'destacada',
-    storeRoute:   'infraestructura.store',
-    updateRoute:  'infraestructura.update',
-    destroyRoute: 'infraestructura.destroy',
-    msgCreated:   'Obra creada correctamente.',
-    msgUpdated:   'Obra actualizada correctamente.',
-    msgDeleted:   'Obra eliminada correctamente.',
-};
-
-const TRABAJO_CONFIG = {
-    singular:     'trabajo menor',
-    plural:       'trabajos menores',
-    featuredKey:  'destacado',
-    storeRoute:   'trabajos_menores.store',
-    updateRoute:  'trabajos_menores.update',
-    destroyRoute: 'trabajos_menores.destroy',
-    msgCreated:   'Trabajo menor creado correctamente.',
-    msgUpdated:   'Trabajo menor actualizado correctamente.',
-    msgDeleted:   'Trabajo menor eliminado correctamente.',
-};
-
 // ─── Página principal ─────────────────────────────────────────────────────────
 export default function ObrasIndex({ obras, trabajosMenores }) {
     const [tab, setTab] = useState('obras');
+
+    const [modalOpen,    setModalOpen]    = useState(false);
+    const [editando,     setEditando]     = useState(null);
+    const [modalConfig,  setModalConfig]  = useState(OBRA_CONFIG);
+    const [pendingDelete, setPendingDelete] = useState(null); // { item, config }
+
+    const currentConfig = tab === 'obras' ? OBRA_CONFIG : TRABAJO_CONFIG;
+
+    const handleNew = () => {
+        setEditando(null);
+        setModalConfig(currentConfig);
+        setModalOpen(true);
+    };
+
+    const handleEdit = (item, config) => {
+        setEditando(item);
+        setModalConfig(config);
+        setModalOpen(true);
+    };
+
+    const handleClose = () => {
+        setModalOpen(false);
+        setEditando(null);
+    };
+
+    const confirmDelete = () => {
+        router.delete(route(pendingDelete.config.destroyRoute, pendingDelete.item.id), {
+            onSuccess: () => {
+                setPendingDelete(null);
+                toast.success(pendingDelete.config.msgDeleted);
+            },
+            onError: () => toast.error('No se pudo eliminar el elemento.'),
+        });
+    };
 
     const tabs = [
         { key: 'obras',            label: 'Obras' },
@@ -443,6 +452,14 @@ export default function ObrasIndex({ obras, trabajosMenores }) {
             pageTitle="Infraestructura"
             pageSubtitle="Obras y trabajos menores"
             pageColor="#F59E0B"
+            pageAction={
+                <button
+                    onClick={handleNew}
+                    className="flex items-center gap-2 rounded-lg bg-white/20 border border-white/30 px-4 py-2 text-sm font-semibold text-white hover:bg-white/30 transition-colors backdrop-blur-sm"
+                >
+                    <IconPlus /> {tab === 'obras' ? 'Nueva obra' : 'Nuevo trabajo menor'}
+                </button>
+            }
         >
             <Head title="Infraestructura" />
 
@@ -464,14 +481,64 @@ export default function ObrasIndex({ obras, trabajosMenores }) {
                     ))}
                 </div>
 
+                {/* Contador */}
+                <p className="mb-5 text-sm text-gray-500">
+                    {tab === 'obras'
+                        ? `${obras.length} obra(s) registrada(s)`
+                        : `${trabajosMenores.length} trabajo(s) menor(es) registrado(s)`}
+                </p>
+
                 {tab === 'obras' && (
-                    <Section items={obras} config={OBRA_CONFIG} />
+                    <Section
+                        items={obras}
+                        config={OBRA_CONFIG}
+                        onEdit={(item) => handleEdit(item, OBRA_CONFIG)}
+                        onDelete={(item) => setPendingDelete({ item, config: OBRA_CONFIG })}
+                    />
                 )}
                 {tab === 'trabajos_menores' && (
-                    <Section items={trabajosMenores} config={TRABAJO_CONFIG} />
+                    <Section
+                        items={trabajosMenores}
+                        config={TRABAJO_CONFIG}
+                        onEdit={(item) => handleEdit(item, TRABAJO_CONFIG)}
+                        onDelete={(item) => setPendingDelete({ item, config: TRABAJO_CONFIG })}
+                    />
                 )}
             </div>
         </AuthenticatedLayout>
+
+        {modalOpen && (
+            <ItemModal item={editando} onClose={handleClose} config={modalConfig} />
+        )}
+
+        {pendingDelete && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
+                <div className="w-full max-w-sm rounded-2xl bg-white shadow-2xl overflow-hidden">
+                    <div className="h-1 bg-gradient-to-r from-red-400 to-red-500" />
+                    <div className="p-6">
+                        <h3 className="text-base font-semibold text-gray-900">Eliminar {pendingDelete.config.singular}</h3>
+                        <p className="mt-2 text-sm text-gray-500">
+                            ¿Estás seguro de eliminar <strong className="text-gray-700">{pendingDelete.item.titulo}</strong>? Esta acción no se puede deshacer.
+                        </p>
+                        <div className="mt-5 flex justify-end gap-3">
+                            <button
+                                onClick={() => setPendingDelete(null)}
+                                className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                onClick={confirmDelete}
+                                className="rounded-lg bg-red-500 px-4 py-2 text-sm font-semibold text-white hover:bg-red-600 transition-colors shadow-sm shadow-red-200"
+                            >
+                                Eliminar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )}
+
         <Toaster
             position="top-right"
             duration={4000}
