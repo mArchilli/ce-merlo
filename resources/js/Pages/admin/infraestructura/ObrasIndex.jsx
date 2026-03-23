@@ -440,7 +440,9 @@ export default function ObrasIndex({ obras, trabajosMenores }) {
     return (
         <>
         <AuthenticatedLayout
-            header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Infraestructura</h2>}
+            pageTitle="Infraestructura"
+            pageSubtitle="Obras y trabajos menores"
+            pageColor="#F59E0B"
         >
             <Head title="Infraestructura" />
 

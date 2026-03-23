@@ -355,16 +355,16 @@ export default function AutoridadesIndex({ autoridades }) {
 
     return (
         <AuthenticatedLayout
-            header={
-                <div className="flex items-center justify-between">
-                    <h1 className="text-xl font-semibold text-gray-800">Autoridades</h1>
-                    <button
-                        onClick={openCreate}
-                        className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
-                    >
-                        <IconPlus /> Nueva autoridad
-                    </button>
-                </div>
+            pageTitle="Autoridades"
+            pageSubtitle={`${autoridades.length} consejero(s) registrado(s)`}
+            pageColor="#8B5CF6"
+            pageAction={
+                <button
+                    onClick={openCreate}
+                    className="flex items-center gap-2 rounded-lg bg-white/20 border border-white/30 px-4 py-2 text-sm font-semibold text-white hover:bg-white/30 transition-colors backdrop-blur-sm"
+                >
+                    <IconPlus /> Nueva autoridad
+                </button>
             }
         >
             <Head title="Autoridades" />

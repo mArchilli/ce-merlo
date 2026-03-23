@@ -376,20 +376,21 @@ export default function NovedadesIndex({ novedades }) {
     return (
         <>
         <AuthenticatedLayout
-            header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Novedades</h2>}
+            pageTitle="Novedades"
+            pageSubtitle={`${novedades.length} novedad(es) registrada(s)`}
+            pageColor="#3B82F6"
+            pageAction={
+                <button
+                    onClick={() => { setEditando(null); setModalOpen(true); }}
+                    className="flex items-center gap-2 rounded-lg bg-white/20 border border-white/30 px-4 py-2 text-sm font-semibold text-white hover:bg-white/30 transition-colors backdrop-blur-sm"
+                >
+                    <IconPlus /> Nueva novedad
+                </button>
+            }
         >
             <Head title="Novedades" />
 
             <div className="py-8 px-6">
-                <div className="mb-6 flex items-center justify-between">
-                    <p className="text-sm text-gray-500">{novedades.length} novedad(es) registrada(s)</p>
-                    <button
-                        onClick={() => { setEditando(null); setModalOpen(true); }}
-                        className="flex items-center gap-2 rounded-lg bg-brand-blue-400 px-4 py-2 text-sm font-semibold text-white hover:bg-brand-blue-500 transition-colors"
-                    >
-                        <IconPlus /> Nueva novedad
-                    </button>
-                </div>
 
                 {novedades.length === 0 ? (
                     <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 py-20 text-gray-400">
