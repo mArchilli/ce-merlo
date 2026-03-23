@@ -20,7 +20,7 @@ Route::get('/', function () {
         'canLogin'    => Route::has('login'),
         'autoridades' => $autoridades,
     ]);
-});
+})->name('home');
 
 Route::get('/contacto', function () {
     return Inertia::render('Contacto', [

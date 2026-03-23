@@ -1,26 +1,26 @@
 import { Link } from '@inertiajs/react';
 
 const IconUser = () => (
-    <svg className="w-6 h-6 text-brand-gold-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+    <svg className="w-12 h-12 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
     </svg>
 );
 
 // Datos de respaldo por si no hay registros en la base de datos
 const FALLBACK_PRINCIPALES = [
-    { cargo: 'Presidenta', nombre: 'Lic. María José Barrionuevo' },
-    { cargo: 'Vicepresidente', nombre: 'Pablo Robinson Duarte' },
-    { cargo: 'Tesorero', nombre: 'Gabriel Aniceto González' },
-    { cargo: 'Secretario', nombre: 'Juan Carlos Ojeda' },
+    { cargo: 'Presidenta', nombre: 'Consejero 1' },
+    { cargo: 'Vicepresidente', nombre: 'Consejero 2' },
+    { cargo: 'Tesorero', nombre: 'Consejero 3' },
+    { cargo: 'Secretario', nombre: 'Consejero 4' },
 ];
 
 const FALLBACK_VOCALES = [
-    '1º Vocal – Aldio Mario Capece',
-    '2º Vocal – Laura Leguizamón',
-    '3º Vocal – Juan Sebastián Azarko',
-    '4º Vocal – Hugo Osvaldo Gerstner',
-    '5º Vocal – Nilda Gabriela Zapata',
-    '6º Vocal – María Graciela Scutella',
+    '1º Vocal – Consejero 5',
+    '2º Vocal – Consejero 6',
+    '3º Vocal – Consejero 7',
+    '4º Vocal – Consejero 8',
+    '5º Vocal – Consejero 9',
+    '6º Vocal – Consejero 10',
 ];
 
 export default function Autoridades({ autoridades = [] }) {
@@ -61,22 +61,29 @@ export default function Autoridades({ autoridades = [] }) {
                     {principales.length > 0 && (
                         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-16">
                             {principales.map((a, i) => (
-                                <div key={a.id ?? i} className="group relative rounded-xl border border-white/10 bg-white/[0.05] backdrop-blur-sm overflow-hidden">
-                                    <div className="h-1 bg-gradient-to-r from-brand-gold-400 to-brand-gold-300" />
-                                    <div className="px-6 py-7">
+                                <div key={a.id ?? i} className="group rounded-2xl border border-white/10 bg-white/[0.05] backdrop-blur-sm overflow-hidden flex flex-col">
+                                    {/* Imagen */}
+                                    <div className="relative w-full aspect-[3/4] bg-white/[0.04] overflow-hidden">
                                         {a.foto ? (
                                             <img
                                                 src={`/images/${a.foto}`}
                                                 alt={a.nombre}
-                                                className="w-14 h-14 rounded-xl object-cover mb-5 border border-white/10"
+                                                className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                                             />
                                         ) : (
-                                            <div className="w-12 h-12 rounded-xl bg-brand-gold-400/10 flex items-center justify-center mb-5">
+                                            <div className="w-full h-full flex flex-col items-center justify-center gap-3 text-white/20">
                                                 <IconUser />
+                                                <span className="text-xs tracking-widest uppercase text-white/20">Sin foto</span>
                                             </div>
                                         )}
-                                        <p className="text-xs font-semibold text-brand-gold-400 uppercase tracking-wider mb-2">{a.cargo}</p>
-                                        <p className="font-medium text-white text-[15px] leading-snug">{a.nombre}</p>
+                                        {/* Gradiente inferior */}
+                                        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/60 to-transparent" />
+                                    </div>
+
+                                    {/* Info */}
+                                    <div className="px-5 py-5 flex-1 flex flex-col justify-center border-t border-white/[0.06]">
+                                        <p className="text-[11px] font-bold text-brand-gold-400 uppercase tracking-[0.15em] mb-1.5">{a.cargo}</p>
+                                        <p className="font-semibold text-white text-[15px] leading-snug">{a.nombre}</p>
                                     </div>
                                 </div>
                             ))}
@@ -89,21 +96,26 @@ export default function Autoridades({ autoridades = [] }) {
                             <h3 className="text-lg font-semibold text-white text-center mb-7">Vocales</h3>
                             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {vocales.map((v, i) => (
-                                    <div key={v.id ?? i} className="flex items-center gap-3.5 rounded-xl border border-white/[0.08] bg-white/[0.04] px-5 py-4">
-                                        {v.foto ? (
-                                            <img
-                                                src={`/images/${v.foto}`}
-                                                alt={v.nombre}
-                                                className="w-10 h-10 rounded-full object-cover border border-white/20 shrink-0"
-                                            />
-                                        ) : (
-                                            <div className="w-2.5 h-2.5 rounded-full bg-brand-gold-400/60 shrink-0" />
-                                        )}
+                                    <div key={v.id ?? i} className="flex items-center gap-4 rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-3.5">
+                                        {/* Avatar o foto */}
+                                        <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 border border-white/10 bg-white/[0.06]">
+                                            {v.foto ? (
+                                                <img
+                                                    src={`/images/${v.foto}`}
+                                                    alt={v.nombre}
+                                                    className="w-full h-full object-cover object-top"
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full flex items-center justify-center text-white/30">
+                                                    <IconUser />
+                                                </div>
+                                            )}
+                                        </div>
                                         <div className="min-w-0">
                                             {v.cargo && (
-                                                <p className="text-[12px] font-semibold text-brand-gold-400 uppercase tracking-wide truncate">{v.cargo}</p>
+                                                <p className="text-[11px] font-bold text-brand-gold-400 uppercase tracking-[0.1em] truncate">{v.cargo}</p>
                                             )}
-                                            <span className="text-[15px] text-brand-blue-100">{v.nombre}</span>
+                                            <span className="text-[14px] text-brand-blue-100 leading-snug">{v.nombre}</span>
                                         </div>
                                     </div>
                                 ))}
