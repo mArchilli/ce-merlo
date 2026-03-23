@@ -44,6 +44,12 @@ const IconNewspaper = () => (
     </svg>
 );
 
+const IconUsers = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-5a4 4 0 11-8 0 4 4 0 018 0zm6 0a4 4 0 11-2 0" />
+    </svg>
+);
+
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
     const [collapsed, setCollapsed] = useState(false);
@@ -57,6 +63,7 @@ export default function AuthenticatedLayout({ header, children }) {
         { label: 'Inicio',          icon: <IconHome />,      href: route('dashboard'),             routeName: 'dashboard',             color: '#FFA101', bgLight: '#FFF7E6' },
         { label: 'Infraestructura', icon: <IconBuilding />,  href: route('infraestructura.index'), routeName: 'infraestructura.index', color: '#FFA101', bgLight: '#FFF7E6' },
         { label: 'Novedades',       icon: <IconNewspaper />, href: route('novedades.index'),       routeName: 'novedades.index',       color: '#5796C2', bgLight: '#EBF3FA' },
+        { label: 'Autoridades',     icon: <IconUsers />,     href: route('autoridades.index'),     routeName: 'autoridades.index',     color: '#7C3AED', bgLight: '#F3E8FF' },
         { label: 'Perfil',          icon: <IconUser />,      href: route('profile.edit'),          routeName: 'profile.edit',          color: '#FFA101', bgLight: '#FFF7E6' },
     ];
 

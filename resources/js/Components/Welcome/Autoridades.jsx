@@ -1,13 +1,20 @@
 import { Link } from '@inertiajs/react';
 
-const AUTORIDADES_PRINCIPALES = [
+const IconUser = () => (
+    <svg className="w-6 h-6 text-brand-gold-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+    </svg>
+);
+
+// Datos de respaldo por si no hay registros en la base de datos
+const FALLBACK_PRINCIPALES = [
     { cargo: 'Presidenta', nombre: 'Lic. María José Barrionuevo' },
     { cargo: 'Vicepresidente', nombre: 'Pablo Robinson Duarte' },
     { cargo: 'Tesorero', nombre: 'Gabriel Aniceto González' },
     { cargo: 'Secretario', nombre: 'Juan Carlos Ojeda' },
 ];
 
-const VOCALES = [
+const FALLBACK_VOCALES = [
     '1º Vocal – Aldio Mario Capece',
     '2º Vocal – Laura Leguizamón',
     '3º Vocal – Juan Sebastián Azarko',
@@ -16,7 +23,15 @@ const VOCALES = [
     '6º Vocal – María Graciela Scutella',
 ];
 
-export default function Autoridades() {
+export default function Autoridades({ autoridades = [] }) {
+    const principales = autoridades.length > 0
+        ? autoridades.filter((a) => a.tipo === 'principal')
+        : FALLBACK_PRINCIPALES;
+
+    const vocales = autoridades.length > 0
+        ? autoridades.filter((a) => a.tipo === 'vocal')
+        : FALLBACK_VOCALES.map((v, i) => ({ id: i, cargo: '', nombre: v, foto: null }));
+
     return (
         <section id="autoridades" className="relative">
             {/* Onda superior — transición desde la sección anterior */}
@@ -43,48 +58,58 @@ export default function Autoridades() {
                     </div>
 
                     {/* Principales */}
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-16">
-                        {AUTORIDADES_PRINCIPALES.map((a, i) => (
-                            <div key={i} className="group relative rounded-xl border border-white/10 bg-white/[0.05] backdrop-blur-sm overflow-hidden">
-                                <div className="h-1 bg-gradient-to-r from-brand-gold-400 to-brand-gold-300" />
-                                <div className="px-6 py-7">
-                                    <div className="w-12 h-12 rounded-xl bg-brand-gold-400/10 flex items-center justify-center mb-5">
-                                        <svg className="w-6 h-6 text-brand-gold-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                                        </svg>
+                    {principales.length > 0 && (
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-16">
+                            {principales.map((a, i) => (
+                                <div key={a.id ?? i} className="group relative rounded-xl border border-white/10 bg-white/[0.05] backdrop-blur-sm overflow-hidden">
+                                    <div className="h-1 bg-gradient-to-r from-brand-gold-400 to-brand-gold-300" />
+                                    <div className="px-6 py-7">
+                                        {a.foto ? (
+                                            <img
+                                                src={`/images/${a.foto}`}
+                                                alt={a.nombre}
+                                                className="w-14 h-14 rounded-xl object-cover mb-5 border border-white/10"
+                                            />
+                                        ) : (
+                                            <div className="w-12 h-12 rounded-xl bg-brand-gold-400/10 flex items-center justify-center mb-5">
+                                                <IconUser />
+                                            </div>
+                                        )}
+                                        <p className="text-xs font-semibold text-brand-gold-400 uppercase tracking-wider mb-2">{a.cargo}</p>
+                                        <p className="font-medium text-white text-[15px] leading-snug">{a.nombre}</p>
                                     </div>
-                                    <p className="text-xs font-semibold text-brand-gold-400 uppercase tracking-wider mb-2">{a.cargo}</p>
-                                    <p className="font-medium text-white text-[15px] leading-snug">{a.nombre}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Vocales */}
-                    <div className="max-w-5xl mx-auto">
-                        <h3 className="text-lg font-semibold text-white text-center mb-7">Vocales</h3>
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {VOCALES.map((v, i) => (
-                                <div key={i} className="flex items-center gap-3.5 rounded-xl border border-white/[0.08] bg-white/[0.04] px-5 py-4">
-                                    <div className="w-2.5 h-2.5 rounded-full bg-brand-gold-400/60 shrink-0" />
-                                    <span className="text-[15px] text-brand-blue-100">{v}</span>
                                 </div>
                             ))}
                         </div>
+                    )}
 
-                        {/* Secretaria Administrativa */}
-                        <div className="mt-12 flex items-center justify-center gap-5 rounded-xl border border-brand-gold-400/15 bg-brand-gold-400/[0.04] px-8 py-5 max-w-lg mx-auto">
-                            <div className="w-12 h-12 rounded-xl bg-brand-gold-400/10 flex items-center justify-center shrink-0">
-                                <svg className="w-6 h-6 text-brand-gold-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p className="text-xs font-semibold text-brand-gold-400 uppercase tracking-wider mb-1">Secretaria Administrativa</p>
-                                <p className="text-[15px] font-medium text-white">Daniela Ester Escudero</p>
+                    {/* Vocales */}
+                    {vocales.length > 0 && (
+                        <div className="max-w-5xl mx-auto">
+                            <h3 className="text-lg font-semibold text-white text-center mb-7">Vocales</h3>
+                            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {vocales.map((v, i) => (
+                                    <div key={v.id ?? i} className="flex items-center gap-3.5 rounded-xl border border-white/[0.08] bg-white/[0.04] px-5 py-4">
+                                        {v.foto ? (
+                                            <img
+                                                src={`/images/${v.foto}`}
+                                                alt={v.nombre}
+                                                className="w-10 h-10 rounded-full object-cover border border-white/20 shrink-0"
+                                            />
+                                        ) : (
+                                            <div className="w-2.5 h-2.5 rounded-full bg-brand-gold-400/60 shrink-0" />
+                                        )}
+                                        <div className="min-w-0">
+                                            {v.cargo && (
+                                                <p className="text-[12px] font-semibold text-brand-gold-400 uppercase tracking-wide truncate">{v.cargo}</p>
+                                            )}
+                                            <span className="text-[15px] text-brand-blue-100">{v.nombre}</span>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                    </div>
+                    )}
 
                     {/* ── Separador visual ── */}
                     <div className="relative max-w-5xl mx-auto my-20 sm:my-24">

@@ -127,7 +127,7 @@ class TrabajoMenorController extends Controller
 
     private function guardarArchivo(\Illuminate\Http\UploadedFile $archivo, int $id): string
     {
-        $basePath = env('PUBLIC_OBRAS_IMAGES_PATH', 'images');
+        $basePath = env('PUBLIC_TRABAJOS_MENORES_IMAGES_PATH', 'images');
         $subDir   = "trabajos_menores/{$id}";
         $dir      = public_path($basePath . '/' . $subDir);
 
@@ -143,7 +143,7 @@ class TrabajoMenorController extends Controller
 
     private function eliminarArchivo(string $ruta): void
     {
-        $basePath = env('PUBLIC_OBRAS_IMAGES_PATH', 'images');
+        $basePath = env('PUBLIC_TRABAJOS_MENORES_IMAGES_PATH', 'images');
         $fullPath = public_path($basePath . '/' . $ruta);
 
         if (is_file($fullPath)) {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AutoridadController;
 use App\Http\Controllers\NovedadController;
 use App\Http\Controllers\ObraController;
 use App\Http\Controllers\ProfileController;
@@ -9,8 +10,15 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
+    $autoridades = \App\Models\Autoridad::where('activa', true)
+        ->orderBy('tipo')
+        ->orderBy('orden')
+        ->orderBy('id')
+        ->get();
+
     return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
+        'canLogin'    => Route::has('login'),
+        'autoridades' => $autoridades,
     ]);
 });
 
@@ -48,6 +56,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/novedades/{novedad}', [NovedadController::class, 'update'])->name('novedades.update');
     Route::delete('/novedades/{novedad}', [NovedadController::class, 'destroy'])->name('novedades.destroy');
     Route::post('/novedades/{novedad}/principal', [NovedadController::class, 'setPrincipal'])->name('novedades.principal');
+
+    // Autoridades
+    Route::get('/autoridades', [AutoridadController::class, 'index'])->name('autoridades.index');
+    Route::post('/autoridades', [AutoridadController::class, 'store'])->name('autoridades.store');
+    Route::put('/autoridades/{autoridad}', [AutoridadController::class, 'update'])->name('autoridades.update');
+    Route::delete('/autoridades/{autoridad}', [AutoridadController::class, 'destroy'])->name('autoridades.destroy');
 });
 
 require __DIR__.'/auth.php';

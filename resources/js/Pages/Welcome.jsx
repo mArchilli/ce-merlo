@@ -9,7 +9,7 @@ import Autoridades from '@/Components/Welcome/Autoridades';
 import Footer from '@/Components/Welcome/Footer';
 
 /* ─── Componente principal ─── */
-export default function Welcome({ auth }) {
+export default function Welcome({ auth, autoridades = [] }) {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -36,7 +36,7 @@ export default function Welcome({ auth }) {
                 <Institucional />
                 <Funciones />
                 <Composicion />
-                <Autoridades />
+                <Autoridades autoridades={autoridades} />
                 <Footer scrollTo={scrollTo} />
             </div>
         </>
