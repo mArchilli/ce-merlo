@@ -17,7 +17,7 @@ export default function GuestLayout({ children }) {
                     <Link href="/">
                         <img
                             src="/logo-consejo-de-merlo.png"
-                            alt="Consejo Deliberante de Merlo"
+                            alt="Consejo Escolar de Merlo"
                             className="h-28 w-auto drop-shadow-lg mb-8"
                         />
                     </Link>
@@ -25,7 +25,7 @@ export default function GuestLayout({ children }) {
                         Panel de Administración
                     </h1>
                     <p className="mt-3 text-white/60 text-sm leading-relaxed max-w-xs">
-                        Consejo Deliberante del Partido de Merlo
+                        Consejo Escolar del Partido de Merlo
                     </p>
                     <div className="mt-10 w-16 h-0.5 bg-amber-400/60 rounded-full" />
                 </div>
@@ -38,11 +38,11 @@ export default function GuestLayout({ children }) {
                     <Link href="/">
                         <img
                             src="/logo-consejo-de-merlo.png"
-                            alt="Consejo Deliberante de Merlo"
+                            alt="Consejo Escolar de Merlo"
                             className="h-20 w-auto mx-auto"
                         />
                     </Link>
-                    <p className="mt-2 text-xs text-gray-500">Consejo Deliberante del Partido de Merlo</p>
+                    <p className="mt-2 text-xs text-gray-500">Consejo Escolar del Partido de Merlo</p>
                 </div>
 
                 <div className="w-full max-w-md">
@@ -50,7 +50,7 @@ export default function GuestLayout({ children }) {
                 </div>
 
                 <p className="mt-8 text-xs text-gray-400">
-                    © {new Date().getFullYear()} Consejo Deliberante de Merlo
+                    © {new Date().getFullYear()} Consejo Escolar de Merlo
                 </p>
             </div>
         </div>
