@@ -58,7 +58,7 @@ const IconGlobe = () => (
 
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(true);
 
     const handleLogout = (e) => {
         e.preventDefault();
