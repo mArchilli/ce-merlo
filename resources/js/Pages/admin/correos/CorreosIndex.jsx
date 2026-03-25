@@ -29,6 +29,16 @@ const IconMail = ({ className = 'h-5 w-5' }) => (
         <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
     </svg>
 );
+const IconPhone = ({ className = 'h-5 w-5' }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+    </svg>
+);
+const IconWhatsApp = ({ className = 'h-5 w-5' }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+);
 
 // ─── Modal crear / editar correo ──────────────────────────────────────────────
 function CorreoModal({ correo, areaId, onClose }) {
@@ -37,6 +47,8 @@ function CorreoModal({ correo, areaId, onClose }) {
     const { data, setData, processing, errors, reset } = useForm({
         area_id:     correo?.area_id ?? areaId,
         correo:      correo?.correo ?? '',
+        telefono:    correo?.telefono ?? '',
+        es_whatsapp: correo?.es_whatsapp ?? false,
         descripcion: correo?.descripcion ?? '',
         activo:      correo?.activo ?? true,
     });
@@ -47,7 +59,7 @@ function CorreoModal({ correo, areaId, onClose }) {
             onSuccess: () => {
                 reset();
                 onClose();
-                toast.success(isEdit ? 'Correo actualizado correctamente.' : 'Correo agregado correctamente.');
+                toast.success(isEdit ? 'Contacto actualizado correctamente.' : 'Contacto agregado correctamente.');
             },
             onError: () => toast.error('Error al guardar. Revisá los campos requeridos.'),
         };
@@ -60,17 +72,17 @@ function CorreoModal({ correo, areaId, onClose }) {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
-            <div className="relative w-full max-w-md rounded-2xl bg-white shadow-2xl overflow-hidden">
+            <div className="relative w-full max-w-lg rounded-2xl bg-white shadow-2xl overflow-hidden">
                 {/* Franja superior */}
                 <div className="h-1 bg-gradient-to-r from-sky-400 to-sky-500" />
 
-                <div className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-gray-100">
+                <div className="flex items-center justify-between px-5 sm:px-7 py-4 border-b border-gray-100">
                     <div>
                         <h2 className="text-base font-semibold text-gray-900">
-                            {isEdit ? 'Editar correo' : 'Agregar correo'}
+                            {isEdit ? 'Editar contacto' : 'Agregar contacto'}
                         </h2>
                         <p className="text-xs text-gray-400 mt-0.5">
-                            {isEdit ? 'Modificá los datos del correo.' : 'Completá los datos para agregar un nuevo correo.'}
+                            {isEdit ? 'Modificá los datos del contacto.' : 'Completá al menos un correo o teléfono.'}
                         </p>
                     </div>
                     <button
@@ -81,21 +93,61 @@ function CorreoModal({ correo, areaId, onClose }) {
                     </button>
                 </div>
 
-                <form onSubmit={submit} className="px-4 sm:px-6 py-4 sm:py-5 space-y-4">
-                    {/* Correo */}
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                            Correo electrónico *
-                        </label>
-                        <input
-                            type="email"
-                            value={data.correo}
-                            onChange={(e) => setData('correo', e.target.value)}
-                            placeholder="ejemplo@organismo.gob.ar"
-                            className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm transition-colors focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-400/20"
-                        />
-                        {errors.correo && <p className="mt-1 text-xs text-red-500">{errors.correo}</p>}
+                <form onSubmit={submit} className="px-5 sm:px-7 py-5 space-y-4">
+                    {/* Correo + Teléfono en grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {/* Correo */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                Correo electrónico
+                            </label>
+                            <input
+                                type="email"
+                                value={data.correo}
+                                onChange={(e) => setData('correo', e.target.value)}
+                                placeholder="ejemplo@organismo.gob.ar"
+                                className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm transition-colors focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-400/20"
+                            />
+                            {errors.correo && <p className="mt-1 text-xs text-red-500">{errors.correo}</p>}
+                        </div>
+
+                        {/* Teléfono */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                Teléfono de contacto
+                            </label>
+                            <input
+                                type="text"
+                                value={data.telefono}
+                                onChange={(e) => {
+                                    setData('telefono', e.target.value);
+                                    if (!e.target.value) setData('es_whatsapp', false);
+                                }}
+                                placeholder="Ej: +54 9 220 123-4567"
+                                className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm transition-colors focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-400/20"
+                            />
+                            {errors.telefono && <p className="mt-1 text-xs text-red-500">{errors.telefono}</p>}
+                        </div>
                     </div>
+
+                    {/* WhatsApp — solo cuando hay teléfono */}
+                    {data.telefono && (
+                        <label className="flex items-center gap-3 cursor-pointer rounded-lg border border-green-200 bg-green-50 px-4 py-3 hover:bg-green-100/60 transition-colors">
+                            <input
+                                type="checkbox"
+                                checked={data.es_whatsapp}
+                                onChange={(e) => setData('es_whatsapp', e.target.checked)}
+                                className="h-4 w-4 rounded border-gray-300 text-green-500 focus:ring-green-400"
+                            />
+                            <div className="flex items-center gap-2">
+                                <IconWhatsApp className="h-4 w-4 text-green-500" />
+                                <div>
+                                    <p className="text-sm font-medium text-gray-700">Es número de WhatsApp</p>
+                                    <p className="text-xs text-gray-500">Se generará un enlace directo a WhatsApp.</p>
+                                </div>
+                            </div>
+                        </label>
+                    )}
 
                     {/* Descripción */}
                     <div>
@@ -121,7 +173,7 @@ function CorreoModal({ correo, areaId, onClose }) {
                             className="h-4 w-4 rounded border-gray-300 text-sky-500 focus:ring-sky-400"
                         />
                         <div>
-                            <p className="text-sm font-medium text-gray-700">Correo activo</p>
+                            <p className="text-sm font-medium text-gray-700">Contacto activo</p>
                             <p className="text-xs text-gray-400">Se mostrará en el sitio público del organismo.</p>
                         </div>
                     </label>
@@ -139,7 +191,7 @@ function CorreoModal({ correo, areaId, onClose }) {
                             disabled={processing}
                             className="rounded-lg bg-sky-500 px-5 py-2 text-sm font-semibold text-white hover:bg-sky-600 disabled:opacity-60 transition-colors shadow-sm shadow-sky-200"
                         >
-                            {processing ? 'Guardando...' : isEdit ? 'Guardar cambios' : 'Agregar correo'}
+                            {processing ? 'Guardando...' : isEdit ? 'Guardar cambios' : 'Agregar contacto'}
                         </button>
                     </div>
                 </form>
@@ -211,41 +263,86 @@ export default function CorreosIndex({ areas }) {
 
                 {/* Contador */}
                 <p className="mb-5 text-sm text-gray-500">
-                    {area.correos.length} correo(s) registrado(s) en <span className="font-medium text-gray-700">{area.nombre}</span>
+                    {area.correos.length} contacto(s) registrado(s) en <span className="font-medium text-gray-700">{area.nombre}</span>
                 </p>
 
                 {/* Lista de correos */}
                 {area.correos.length === 0 ? (
                     <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 py-16 text-gray-400">
                         <IconMail className="h-10 w-10 mb-3 opacity-40" />
-                        <p className="text-base font-medium">No hay correos registrados</p>
+                        <p className="text-base font-medium">No hay contactos registrados</p>
                         <p className="text-sm mt-1 text-center px-4">Hacé clic en "Agregar correo" para comenzar.</p>
                     </div>
                 ) : (
                     <div className="space-y-2 max-w-2xl">
-                        {area.correos.map((c) => (
+                        {area.correos.map((c) => {
+                            const waNumber = c.telefono?.replace(/[^\d+]/g, '');
+                            return (
                             <div
                                 key={c.id}
                                 className="flex items-start gap-3 sm:gap-4 rounded-xl bg-white border border-gray-100 px-4 sm:px-5 py-4 shadow-sm hover:shadow-md transition-shadow"
                             >
                                 {/* Ícono */}
                                 <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg mt-0.5 ${
-                                    c.activo ? 'bg-sky-50 text-sky-500' : 'bg-gray-100 text-gray-400'
+                                    !c.activo
+                                        ? 'bg-gray-100 text-gray-400'
+                                        : c.es_whatsapp
+                                        ? 'bg-green-50 text-green-500'
+                                        : c.telefono
+                                        ? 'bg-sky-50 text-sky-400'
+                                        : 'bg-sky-50 text-sky-500'
                                 }`}>
-                                    <IconMail />
+                                    {c.es_whatsapp ? <IconWhatsApp /> : c.telefono && !c.correo ? <IconPhone /> : <IconMail />}
                                 </div>
 
                                 {/* Contenido */}
                                 <div className="flex-1 min-w-0">
-                                    {/* Fila superior: correo + badge */}
-                                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                                        <p className="text-sm font-medium text-gray-800 break-all">{c.correo}</p>
-                                        <span className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                                            c.activo ? 'bg-sky-100 text-sky-700' : 'bg-gray-100 text-gray-500'
-                                        }`}>
-                                            {c.activo ? 'Activo' : 'Inactivo'}
-                                        </span>
-                                    </div>
+                                    {/* Correo */}
+                                    {c.correo && (
+                                        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                                            <p className="text-sm font-medium text-gray-800 break-all">{c.correo}</p>
+                                            <span className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                                                c.activo ? 'bg-sky-100 text-sky-700' : 'bg-gray-100 text-gray-500'
+                                            }`}>
+                                                {c.activo ? 'Activo' : 'Inactivo'}
+                                            </span>
+                                        </div>
+                                    )}
+
+                                    {/* Teléfono / WhatsApp */}
+                                    {c.telefono && (
+                                        <div className={`flex flex-wrap items-center gap-x-2 gap-y-1 ${c.correo ? 'mt-1' : ''}`}>
+                                            {c.es_whatsapp ? (
+                                                <a
+                                                    href={`https://wa.me/${waNumber}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-sm font-medium text-green-600 hover:text-green-700 hover:underline break-all"
+                                                >
+                                                    {c.telefono}
+                                                </a>
+                                            ) : (
+                                                <a
+                                                    href={`tel:${c.telefono}`}
+                                                    className="text-sm font-medium text-gray-800 hover:text-sky-600 hover:underline break-all"
+                                                >
+                                                    {c.telefono}
+                                                </a>
+                                            )}
+                                            <span className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                                                c.es_whatsapp ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
+                                            }`}>
+                                                {c.es_whatsapp ? 'WhatsApp' : 'Teléfono'}
+                                            </span>
+                                            {!c.correo && (
+                                                <span className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                                                    c.activo ? 'bg-sky-100 text-sky-700' : 'bg-gray-100 text-gray-500'
+                                                }`}>
+                                                    {c.activo ? 'Activo' : 'Inactivo'}
+                                                </span>
+                                            )}
+                                        </div>
+                                    )}
 
                                     {/* Descripción */}
                                     {c.descripcion && (
@@ -285,7 +382,8 @@ export default function CorreosIndex({ areas }) {
                                     </button>
                                 </div>
                             </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 )}
             </div>
@@ -300,9 +398,9 @@ export default function CorreosIndex({ areas }) {
                 <div className="w-full max-w-sm rounded-2xl bg-white shadow-2xl overflow-hidden">
                     <div className="h-1 bg-gradient-to-r from-red-400 to-red-500" />
                     <div className="p-6">
-                        <h3 className="text-base font-semibold text-gray-900">Eliminar correo</h3>
+                        <h3 className="text-base font-semibold text-gray-900">Eliminar contacto</h3>
                         <p className="mt-2 text-sm text-gray-500">
-                            ¿Estás seguro de eliminar <strong className="text-gray-700">{pendingDelete.correo}</strong>? Esta acción no se puede deshacer.
+                            ¿Estás seguro de eliminar <strong className="text-gray-700">{pendingDelete.correo || pendingDelete.telefono}</strong>? Esta acción no se puede deshacer.
                         </p>
                         <div className="mt-5 flex justify-end gap-3">
                             <button

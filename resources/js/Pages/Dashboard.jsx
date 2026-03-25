@@ -36,7 +36,7 @@ const modules = [
     {
         label: 'Infraestructura',
         desc: 'Gestioná obras y trabajos menores',
-        href: '/infraestructura',
+        href: '/admin/infraestructura',
         icon: <IconBuilding />,
         from: '#F59E0B',
         to: '#D97706',
@@ -45,7 +45,7 @@ const modules = [
     {
         label: 'Novedades',
         desc: 'Publicá noticias y actualizaciones',
-        href: '/novedades',
+        href: '/admin/novedades',
         icon: <IconNewspaper />,
         from: '#3B82F6',
         to: '#1D4ED8',
@@ -54,16 +54,16 @@ const modules = [
     {
         label: 'Autoridades',
         desc: 'Administrá los consejeros y vocales',
-        href: '/autoridades',
+        href: '/admin/autoridades',
         icon: <IconUsers />,
         from: '#8B5CF6',
         to: '#6D28D9',
         shadow: 'rgba(109,40,217,0.35)',
     },
     {
-        label: 'Correos',
-        desc: 'Gestioná los correos de cada área',
-        href: '/correos',
+        label: 'Contactos',
+        desc: 'Gestioná los medios de contacto de cada área',
+        href: '/admin/correos',
         icon: <IconMailDash />,
         from: '#0EA5E9',
         to: '#0284C7',
@@ -72,7 +72,7 @@ const modules = [
     {
         label: 'Perfil',
         desc: 'Editá tu cuenta y contraseña',
-        href: '/profile',
+        href: '/admin/profile',
         icon: <IconUserCircle />,
         from: '#10B981',
         to: '#059669',

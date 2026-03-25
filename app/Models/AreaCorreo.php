@@ -10,12 +10,15 @@ class AreaCorreo extends Model
     protected $fillable = [
         'area_id',
         'correo',
+        'telefono',
+        'es_whatsapp',
         'descripcion',
         'activo',
     ];
 
     protected $casts = [
-        'activo' => 'boolean',
+        'activo'      => 'boolean',
+        'es_whatsapp' => 'boolean',
     ];
 
     public function area(): BelongsTo

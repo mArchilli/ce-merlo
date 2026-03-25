@@ -24,7 +24,9 @@ class AreaCorreoController extends Controller
     {
         $request->validate([
             'area_id'     => 'required|integer|exists:areas,id',
-            'correo'      => 'required|email|max:255',
+            'correo'      => 'nullable|email|max:255|required_without:telefono',
+            'telefono'    => 'nullable|string|max:50|required_without:correo',
+            'es_whatsapp' => 'boolean',
             'descripcion' => 'nullable|string|max:255',
             'activo'      => 'boolean',
         ]);
@@ -32,6 +34,8 @@ class AreaCorreoController extends Controller
         AreaCorreo::create([
             'area_id'     => $request->area_id,
             'correo'      => $request->correo,
+            'telefono'    => $request->telefono,
+            'es_whatsapp' => $request->boolean('es_whatsapp', false),
             'descripcion' => $request->descripcion,
             'activo'      => $request->boolean('activo', true),
         ]);
@@ -42,13 +46,17 @@ class AreaCorreoController extends Controller
     public function update(Request $request, AreaCorreo $correo): RedirectResponse
     {
         $request->validate([
-            'correo'      => 'required|email|max:255',
+            'correo'      => 'nullable|email|max:255|required_without:telefono',
+            'telefono'    => 'nullable|string|max:50|required_without:correo',
+            'es_whatsapp' => 'boolean',
             'descripcion' => 'nullable|string|max:255',
             'activo'      => 'boolean',
         ]);
 
         $correo->update([
             'correo'      => $request->correo,
+            'telefono'    => $request->telefono,
+            'es_whatsapp' => $request->boolean('es_whatsapp', false),
             'descripcion' => $request->descripcion,
             'activo'      => $request->boolean('activo', true),
         ]);
