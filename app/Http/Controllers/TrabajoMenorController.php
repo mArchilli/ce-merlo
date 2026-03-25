@@ -15,6 +15,8 @@ class TrabajoMenorController extends Controller
             'titulo'          => 'required|string|max:255',
             'descripcion'     => 'nullable|string',
             'destacado'       => 'boolean',
+            'anio'            => 'nullable|integer|min:1900|max:2100',
+            'mes'             => 'nullable|integer|min:1|max:12',
             'medios'          => 'nullable|array',
             'medios.*'        => 'file|mimes:jpg,jpeg,png,gif,webp,mp4,mov,avi,webm|max:102400',
             'principal_index' => 'nullable|integer',
@@ -25,6 +27,8 @@ class TrabajoMenorController extends Controller
                 'titulo'      => $request->titulo,
                 'descripcion' => $request->descripcion,
                 'destacado'   => $request->boolean('destacado'),
+                'anio'        => $request->anio ?: null,
+                'mes'         => $request->mes ?: null,
             ]);
 
             if ($request->hasFile('medios')) {
@@ -55,6 +59,8 @@ class TrabajoMenorController extends Controller
             'titulo'             => 'required|string|max:255',
             'descripcion'        => 'nullable|string',
             'destacado'          => 'boolean',
+            'anio'               => 'nullable|integer|min:1900|max:2100',
+            'mes'                => 'nullable|integer|min:1|max:12',
             'medios'             => 'nullable|array',
             'medios.*'           => 'file|mimes:jpg,jpeg,png,gif,webp,mp4,mov,avi,webm|max:102400',
             'principal_medio_id' => 'nullable|integer|exists:trabajo_menor_medios,id',
@@ -67,6 +73,8 @@ class TrabajoMenorController extends Controller
                 'titulo'      => $request->titulo,
                 'descripcion' => $request->descripcion,
                 'destacado'   => $request->boolean('destacado'),
+                'anio'        => $request->anio ?: null,
+                'mes'         => $request->mes ?: null,
             ]);
 
             if ($request->filled('medios_eliminar')) {

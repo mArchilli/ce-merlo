@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             AutoridadSeeder::class,
             AreaSeeder::class,
+            ObrasSeeder::class,
+            TrabajosMenoresSeeder::class,
         ]);
     }
 }

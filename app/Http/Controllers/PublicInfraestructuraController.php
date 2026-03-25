@@ -22,4 +22,13 @@ class PublicInfraestructuraController extends Controller
             'correos'         => $area?->correosActivos ?? collect(),
         ]);
     }
+
+    public function show(Obra $obra): Response
+    {
+        $obra->load(['medios' => fn ($q) => $q->orderByDesc('es_principal')->orderBy('id')]);
+
+        return Inertia::render('ViewObra', [
+            'obra' => $obra,
+        ]);
+    }
 }

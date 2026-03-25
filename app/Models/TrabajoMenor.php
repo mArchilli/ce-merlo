@@ -14,6 +14,8 @@ class TrabajoMenor extends Model
         'titulo',
         'descripcion',
         'destacado',
+        'anio',
+        'mes',
     ];
 
     protected $casts = [

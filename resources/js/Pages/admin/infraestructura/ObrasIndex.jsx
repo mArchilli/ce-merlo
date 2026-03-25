@@ -64,6 +64,8 @@ function ItemModal({ item, onClose, config }) {
         titulo:               item?.titulo ?? '',
         descripcion:          item?.descripcion ?? '',
         [config.featuredKey]: item?.[config.featuredKey] ?? false,
+        anio:                 item?.anio ?? '',
+        mes:                  item?.mes ?? '',
         principal_medio_id:   item?.medio_principal?.id ?? '',
         medios_eliminar:      [],
     });
@@ -164,6 +166,37 @@ function ItemModal({ item, onClose, config }) {
                                 onChange={(val) => setData('descripcion', val)}
                                 placeholder={`Describí el ${config.singular}...`}
                             />
+                        </div>
+                    </div>
+
+                    {/* Fecha de realización */}
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1.5">Año de realización</label>
+                            <input
+                                type="number"
+                                min="1900"
+                                max="2100"
+                                value={data.anio}
+                                onChange={(e) => setData('anio', e.target.value)}
+                                placeholder="Ej: 2024"
+                                className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm transition-colors focus:border-amber-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-400/20"
+                            />
+                            {errors.anio && <p className="mt-1 text-xs text-red-500">{errors.anio}</p>}
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1.5">Mes de realización</label>
+                            <select
+                                value={data.mes}
+                                onChange={(e) => setData('mes', e.target.value)}
+                                className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm transition-colors focus:border-amber-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-400/20"
+                            >
+                                <option value="">— Sin especificar —</option>
+                                {['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'].map((m, i) => (
+                                    <option key={i + 1} value={i + 1}>{m}</option>
+                                ))}
+                            </select>
+                            {errors.mes && <p className="mt-1 text-xs text-red-500">{errors.mes}</p>}
                         </div>
                     </div>
 
@@ -349,6 +382,13 @@ function ItemCard({ item, featuredKey, onEdit, onDelete }) {
 
             <div className="flex flex-1 flex-col p-4">
                 <h3 className="font-semibold text-gray-800 line-clamp-1">{item.titulo}</h3>
+                {(item.anio || item.mes) && (
+                    <p className="mt-1 text-xs text-amber-600 font-medium">
+                        {['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'][item.mes - 1]
+                            ? `${['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'][item.mes - 1]} ${item.anio ?? ''}`
+                            : item.anio}
+                    </p>
+                )}
                 {item.descripcion && (
                     <div
                         className="mt-1 text-sm text-gray-500 line-clamp-2 prose prose-sm max-w-none"
@@ -377,28 +417,123 @@ function ItemCard({ item, featuredKey, onEdit, onDelete }) {
     );
 }
 
-// ─── Sección reutilizable (solo grid, sin estado de modal) ────────────────────
+// ─── Años disponibles para filtro ────────────────────────────────────────────
+const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+// ─── Sección reutilizable con búsqueda y filtros ──────────────────────────────
 function Section({ items, config, onEdit, onDelete }) {
-    if (items.length === 0) {
-        return (
-            <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 py-20 text-gray-400">
-                <p className="text-lg font-medium">No hay {config.plural} cargados</p>
-                <p className="text-sm mt-1">Hacé clic en "Nuevo {config.singular}" para comenzar.</p>
-            </div>
-        );
-    }
+    const [search, setSearch] = useState('');
+    const [filterAnio, setFilterAnio] = useState('');
+    const [filterMes,  setFilterMes]  = useState('');
+
+    // Años únicos presentes en los items, para el select
+    const aniosDisponibles = [...new Set(items.map(i => i.anio).filter(Boolean))].sort((a, b) => b - a);
+
+    // Filtrado + orden más reciente primero
+    const filtered = items
+        .filter((item) => {
+            const matchSearch = !search ||
+                item.titulo.toLowerCase().includes(search.toLowerCase());
+            const matchAnio = !filterAnio || String(item.anio) === String(filterAnio);
+            const matchMes  = !filterMes  || String(item.mes)  === String(filterMes);
+            return matchSearch && matchAnio && matchMes;
+        })
+        .sort((a, b) => {
+            const ya = a.anio ?? 0, yb = b.anio ?? 0;
+            const ma = a.mes  ?? 0, mb = b.mes  ?? 0;
+            if (yb !== ya) return yb - ya;
+            return mb - ma;
+        });
+
+    const hasFilters = search || filterAnio || filterMes;
 
     return (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {items.map((item) => (
-                <ItemCard
-                    key={item.id}
-                    item={item}
-                    featuredKey={config.featuredKey}
-                    onEdit={onEdit}
-                    onDelete={onDelete}
-                />
-            ))}
+        <div className="space-y-5">
+            {/* Barra de búsqueda y filtros */}
+            <div className="flex flex-wrap gap-3 items-center">
+                {/* Búsqueda */}
+                <div className="relative flex-1 min-w-[200px]">
+                    <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
+                    </svg>
+                    <input
+                        type="text"
+                        placeholder={`Buscar ${config.plural}...`}
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        className="w-full rounded-lg border border-gray-200 bg-gray-50 pl-9 pr-3 py-2 text-sm focus:border-amber-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-400/20"
+                    />
+                </div>
+
+                {/* Filtro año */}
+                <select
+                    value={filterAnio}
+                    onChange={(e) => { setFilterAnio(e.target.value); setFilterMes(''); }}
+                    className="rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/20"
+                >
+                    <option value="">Todos los años</option>
+                    {aniosDisponibles.map(a => (
+                        <option key={a} value={a}>{a}</option>
+                    ))}
+                </select>
+
+                {/* Filtro mes (solo si hay año seleccionado) */}
+                {filterAnio && (
+                    <select
+                        value={filterMes}
+                        onChange={(e) => setFilterMes(e.target.value)}
+                        className="rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/20"
+                    >
+                        <option value="">Todos los meses</option>
+                        {MESES.map((m, i) => (
+                            <option key={i + 1} value={i + 1}>{m}</option>
+                        ))}
+                    </select>
+                )}
+
+                {/* Limpiar filtros */}
+                {hasFilters && (
+                    <button
+                        onClick={() => { setSearch(''); setFilterAnio(''); setFilterMes(''); }}
+                        className="rounded-lg border border-gray-200 px-3 py-2 text-xs text-gray-500 hover:bg-gray-100 transition-colors"
+                    >
+                        Limpiar filtros
+                    </button>
+                )}
+            </div>
+
+            {/* Conteo resultados */}
+            <p className="text-xs text-gray-400">
+                {filtered.length} resultado(s){hasFilters ? ` de ${items.length}` : ''}
+            </p>
+
+            {/* Grid o empty state */}
+            {filtered.length === 0 ? (
+                <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 py-20 text-gray-400">
+                    {items.length === 0
+                        ? <>
+                            <p className="text-lg font-medium">No hay {config.plural} cargados</p>
+                            <p className="text-sm mt-1">Hacé clic en "Nuevo {config.singular}" para comenzar.</p>
+                          </>
+                        : <>
+                            <p className="text-lg font-medium">Sin resultados</p>
+                            <p className="text-sm mt-1">Probá con otros filtros o términos de búsqueda.</p>
+                          </>
+                    }
+                </div>
+            ) : (
+                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {filtered.map((item) => (
+                        <ItemCard
+                            key={item.id}
+                            item={item}
+                            featuredKey={config.featuredKey}
+                            onEdit={onEdit}
+                            onDelete={onDelete}
+                        />
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
@@ -481,13 +616,7 @@ export default function ObrasIndex({ obras, trabajosMenores }) {
                     ))}
                 </div>
 
-                {/* Contador */}
-                <p className="mb-5 text-sm text-gray-500">
-                    {tab === 'obras'
-                        ? `${obras.length} obra(s) registrada(s)`
-                        : `${trabajosMenores.length} trabajo(s) menor(es) registrado(s)`}
-                </p>
-
+                {/* Secciones */}
                 {tab === 'obras' && (
                     <Section
                         items={obras}

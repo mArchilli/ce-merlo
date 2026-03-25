@@ -30,6 +30,8 @@ class ObraController extends Controller
             'titulo'      => 'required|string|max:255',
             'descripcion' => 'nullable|string',
             'destacada'   => 'boolean',
+            'anio'        => 'nullable|integer|min:1900|max:2100',
+            'mes'         => 'nullable|integer|min:1|max:12',
             'medios'      => 'nullable|array',
             'medios.*'    => 'file|mimes:jpg,jpeg,png,gif,webp,mp4,mov,avi,webm|max:102400',
             'principal_index' => 'nullable|integer',
@@ -40,6 +42,8 @@ class ObraController extends Controller
                 'titulo'      => $request->titulo,
                 'descripcion' => $request->descripcion,
                 'destacada'   => $request->boolean('destacada'),
+                'anio'        => $request->anio ?: null,
+                'mes'         => $request->mes ?: null,
             ]);
 
             if ($request->hasFile('medios')) {
@@ -71,6 +75,8 @@ class ObraController extends Controller
             'titulo'      => 'required|string|max:255',
             'descripcion' => 'nullable|string',
             'destacada'   => 'boolean',
+            'anio'        => 'nullable|integer|min:1900|max:2100',
+            'mes'         => 'nullable|integer|min:1|max:12',
             'medios'      => 'nullable|array',
             'medios.*'    => 'file|mimes:jpg,jpeg,png,gif,webp,mp4,mov,avi,webm|max:102400',
             'principal_medio_id' => 'nullable|integer|exists:obra_medios,id',
@@ -83,6 +89,8 @@ class ObraController extends Controller
                 'titulo'      => $request->titulo,
                 'descripcion' => $request->descripcion,
                 'destacada'   => $request->boolean('destacada'),
+                'anio'        => $request->anio ?: null,
+                'mes'         => $request->mes ?: null,
             ]);
 
             // Eliminar medios seleccionados

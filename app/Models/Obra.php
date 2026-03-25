@@ -12,6 +12,8 @@ class Obra extends Model
         'titulo',
         'descripcion',
         'destacada',
+        'anio',
+        'mes',
     ];
 
     protected $casts = [

@@ -31,6 +31,7 @@ Route::get('/contacto', function () {
 })->name('contacto');
 
 Route::get('/areas/infraestructura', [PublicInfraestructuraController::class, 'index'])->name('areas.infraestructura');
+Route::get('/areas/infraestructura/{obra}', [PublicInfraestructuraController::class, 'show'])->name('areas.infraestructura.show');
 
 Route::prefix('admin')->group(function () {
 

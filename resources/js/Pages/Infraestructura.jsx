@@ -1,12 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
-import { useState, useEffect } from 'react';
-
-// ─── Navegación ───────────────────────────────────────────────────────────────
-const NAV_ITEMS = [
-    { label: 'Inicio', href: '/' },
-    { label: 'Infraestructura', href: '/areas/infraestructura' },
-    { label: 'Contacto', href: '/contacto' },
-];
+import { useState } from 'react';
+import PublicNavbar from '@/Components/PublicNavbar';
 
 // ─── Iconos ───────────────────────────────────────────────────────────────────
 const IconMail = () => (
@@ -46,11 +40,12 @@ const IconStar = () => (
 );
 
 // ─── Card de obra / trabajo menor ─────────────────────────────────────────────
-function ItemCard({ item, featuredKey }) {
+function ItemCard({ item, featuredKey, href }) {
     const principal = item.medio_principal;
+    const Wrapper   = href ? Link : 'div';
 
     return (
-        <div className="group overflow-hidden rounded-2xl bg-white border border-gray-100 hover:border-brand-blue-100 hover:shadow-lg transition-all duration-200 flex flex-col">
+        <Wrapper href={href} className="group overflow-hidden rounded-2xl bg-white border border-gray-100 hover:border-brand-blue-100 hover:shadow-lg transition-all duration-200 flex flex-col">
             {/* Imagen */}
             <div className="relative h-48 bg-gray-100 overflow-hidden shrink-0">
                 {principal ? (
@@ -86,22 +81,19 @@ function ItemCard({ item, featuredKey }) {
                         dangerouslySetInnerHTML={{ __html: item.descripcion }}
                     />
                 )}
+                {href && (
+                    <p className="mt-auto pt-3 text-xs font-medium text-brand-blue-500 group-hover:text-brand-blue-700 transition-colors">
+                        Ver detalle →
+                    </p>
+                )}
             </div>
-        </div>
+        </Wrapper>
     );
 }
 
 // ─── Página principal ─────────────────────────────────────────────────────────
-export default function Infraestructura({ auth, obras, trabajosMenores, correos }) {
-    const [scrolled, setScrolled]           = useState(false);
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [tab, setTab]                     = useState('obras');
-
-    useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > 20);
-        window.addEventListener('scroll', onScroll);
-        return () => window.removeEventListener('scroll', onScroll);
-    }, []);
+export default function Infraestructura({ obras, trabajosMenores, correos }) {
+    const [tab, setTab] = useState('obras');
 
     return (
         <>
@@ -110,84 +102,7 @@ export default function Infraestructura({ auth, obras, trabajosMenores, correos 
             <div className="bg-white text-gray-800 font-sans antialiased">
 
                 {/* ══════ HEADER ══════ */}
-                <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-sm' : 'bg-transparent'}`}>
-                    <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 flex items-center justify-between h-16">
-                        <Link href="/" className="flex items-center gap-3 shrink-0">
-                            <div className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors duration-300 ${scrolled ? 'bg-brand-blue-400' : 'bg-white/15 border border-white/25'}`}>
-                                <span className="text-white font-bold text-sm">CE</span>
-                            </div>
-                            <span className={`hidden sm:block text-sm font-semibold leading-tight transition-colors duration-300 ${scrolled ? 'text-gray-800' : 'text-white'}`}>
-                                Consejo Escolar
-                                <span className={scrolled ? 'text-brand-blue-400' : 'text-brand-gold-300'}> de Merlo</span>
-                            </span>
-                        </Link>
-
-                        {/* Nav desktop */}
-                        <nav className="hidden md:flex items-center gap-1">
-                            {NAV_ITEMS.map((item) => (
-                                <Link
-                                    key={item.href}
-                                    href={item.href}
-                                    className={`px-3 py-2 text-sm transition-colors duration-300 rounded-md ${
-                                        scrolled
-                                            ? 'text-gray-600 hover:text-brand-blue-500'
-                                            : 'text-white/80 hover:text-white'
-                                    }`}
-                                >
-                                    {item.label}
-                                </Link>
-                            ))}
-                            {auth?.user && (
-                                <Link
-                                    href={route('dashboard')}
-                                    className={`ml-2 px-4 py-2 text-sm rounded-md transition-colors duration-300 ${
-                                        scrolled
-                                            ? 'bg-brand-blue-400 text-white hover:bg-brand-blue-500'
-                                            : 'bg-white/15 border border-white/25 text-white hover:bg-white/25'
-                                    }`}
-                                >
-                                    Panel admin
-                                </Link>
-                            )}
-                        </nav>
-
-                        {/* Hamburger */}
-                        <button
-                            className={`md:hidden p-2 transition-colors duration-300 ${scrolled ? 'text-gray-600' : 'text-white'}`}
-                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            aria-label="Menú"
-                        >
-                            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                {mobileMenuOpen
-                                    ? <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                    : <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                                }
-                            </svg>
-                        </button>
-                    </div>
-
-                    {/* Nav móvil */}
-                    {mobileMenuOpen && (
-                        <div className="md:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-lg">
-                            <nav className="flex flex-col px-4 py-3 gap-1">
-                                {NAV_ITEMS.map((item) => (
-                                    <Link
-                                        key={item.href}
-                                        href={item.href}
-                                        className="px-3 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-md"
-                                    >
-                                        {item.label}
-                                    </Link>
-                                ))}
-                                {auth?.user && (
-                                    <Link href={route('dashboard')} className="px-3 py-2.5 text-sm text-brand-blue-500 font-medium">
-                                        Panel admin
-                                    </Link>
-                                )}
-                            </nav>
-                        </div>
-                    )}
-                </header>
+                <PublicNavbar transparent />
 
                 {/* ══════ HERO ══════ */}
                 <section className="relative min-h-[380px] sm:min-h-[420px] flex flex-col overflow-hidden">
@@ -281,99 +196,7 @@ export default function Infraestructura({ auth, obras, trabajosMenores, correos 
                     </div>
                 </section>
 
-                {/* ══════ CONTACTO DEL ÁREA ══════ */}
-                {correos.length > 0 && (
-                    <section className="py-16 sm:py-20 bg-brand-blue-50/40">
-                        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
 
-                            <div className="max-w-xl mb-12">
-                                <p className="text-xs font-semibold text-brand-gold-500 tracking-[0.2em] uppercase mb-4">Contacto directo</p>
-                                <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
-                                    Contacto del área
-                                </h2>
-                                <div className="mt-5 w-16 h-1 bg-brand-gold-400 rounded-full" />
-                                <p className="mt-4 text-gray-500 text-base font-light leading-relaxed">
-                                    Para consultas específicas sobre infraestructura escolar, podés contactarnos por correo o teléfono.
-                                </p>
-                            </div>
-
-                            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                                {correos.map((c) => {
-                                    const waNumber = c.telefono?.replace(/[^\d+]/g, '');
-                                    const isPhoneOnly = c.telefono && !c.correo;
-                                    const iconBg = c.es_whatsapp
-                                        ? 'bg-green-50 text-green-500 group-hover:bg-green-100'
-                                        : isPhoneOnly
-                                        ? 'bg-sky-50 text-sky-500 group-hover:bg-sky-100'
-                                        : 'bg-amber-50 text-amber-500 group-hover:bg-amber-100';
-
-                                    const CardIcon = c.es_whatsapp ? IconWhatsApp : isPhoneOnly ? IconPhone : IconMail;
-
-                                    return (
-                                        <div
-                                            key={c.id}
-                                            className="group flex items-start gap-4 rounded-2xl border border-brand-blue-100 bg-white p-6 hover:bg-brand-blue-50/60 hover:border-brand-blue-200 transition-all duration-200"
-                                        >
-                                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-colors ${iconBg}`}>
-                                                <CardIcon />
-                                            </div>
-                                            <div className="min-w-0 flex-1">
-                                                {c.descripcion && (
-                                                    <p className="text-xs font-semibold text-brand-gold-500 uppercase tracking-wider mb-1.5">
-                                                        {c.descripcion}
-                                                    </p>
-                                                )}
-
-                                                {/* Correo */}
-                                                {c.correo && (
-                                                    <a
-                                                        href={`mailto:${c.correo}`}
-                                                        className="flex items-center gap-1.5 group/link"
-                                                    >
-                                                        <span className="font-semibold text-gray-900 text-sm break-all group-hover/link:text-brand-blue-600 transition-colors">
-                                                            {c.correo}
-                                                        </span>
-                                                    </a>
-                                                )}
-
-                                                {/* Teléfono / WhatsApp */}
-                                                {c.telefono && (
-                                                    <a
-                                                        href={c.es_whatsapp ? `https://wa.me/${waNumber}` : `tel:${c.telefono}`}
-                                                        target={c.es_whatsapp ? '_blank' : undefined}
-                                                        rel={c.es_whatsapp ? 'noopener noreferrer' : undefined}
-                                                        className={`flex items-center gap-1.5 ${c.correo ? 'mt-1.5' : ''} group/link`}
-                                                    >
-                                                        <span className={`font-semibold text-sm break-all transition-colors ${
-                                                            c.es_whatsapp
-                                                                ? 'text-green-600 group-hover/link:text-green-700'
-                                                                : 'text-gray-900 group-hover/link:text-brand-blue-600'
-                                                        }`}>
-                                                            {c.telefono}
-                                                        </span>
-                                                        {c.es_whatsapp && (
-                                                            <span className="shrink-0 rounded-full bg-green-100 px-2 py-0.5 text-[10px] font-semibold text-green-700">
-                                                                WhatsApp
-                                                            </span>
-                                                        )}
-                                                    </a>
-                                                )}
-
-                                                <p className="text-xs text-gray-400 mt-1.5">
-                                                    {c.es_whatsapp
-                                                        ? 'Hacer clic para abrir WhatsApp'
-                                                        : c.telefono && !c.correo
-                                                        ? 'Hacer clic para llamar'
-                                                        : 'Hacer clic para enviar un correo'}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    </section>
-                )}
 
                 {/* ══════ OBRAS Y TRABAJOS MENORES ══════ */}
                 <section className="py-16 sm:py-20">
@@ -434,7 +257,7 @@ export default function Infraestructura({ auth, obras, trabajosMenores, correos 
                             ) : (
                                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                                     {obras.map((obra) => (
-                                        <ItemCard key={obra.id} item={obra} featuredKey="destacada" />
+                                        <ItemCard key={obra.id} item={obra} featuredKey="destacada" href={`/areas/infraestructura/${obra.id}`} />
                                     ))}
                                 </div>
                             )
@@ -458,7 +281,7 @@ export default function Infraestructura({ auth, obras, trabajosMenores, correos 
                     </div>
                 </section>
 
-                {/* ══════ CTA ══════ */}
+                {/* ══════ CONTACTO ══════ */}
                 <section className="relative">
                     <div className="bg-white">
                         <svg viewBox="0 0 1440 56" className="w-full block text-brand-blue-800" preserveAspectRatio="none">
@@ -467,15 +290,97 @@ export default function Infraestructura({ auth, obras, trabajosMenores, correos 
                     </div>
                     <div className="bg-gradient-to-br from-brand-blue-800 via-brand-blue-700 to-brand-blue-900 relative overflow-hidden">
                         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} />
-                        <div className="relative max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 py-16 sm:py-20 text-center">
-                            <p className="text-xs font-semibold text-brand-gold-400 tracking-[0.2em] uppercase mb-4">¿Tenés una consulta?</p>
-                            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-tight mb-4">
-                                Contactate con Infraestructura
-                            </h2>
-                            <div className="w-16 h-1 bg-brand-gold-400 mx-auto rounded-full mb-6" />
-                            <p className="text-brand-blue-200/90 text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto mb-8">
-                                Para reportar problemas en establecimientos escolares o consultar sobre obras en curso, no dudes en comunicarte con nosotros.
-                            </p>
+
+                        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16 sm:py-20">
+
+                            {/* Encabezado centrado */}
+                            <div className="text-center mb-12">
+                                <p className="text-xs font-semibold text-brand-gold-400 tracking-[0.2em] uppercase mb-4">¿Tenés una consulta?</p>
+                                <h2 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight">
+                                    Contactate con Infraestructura
+                                </h2>
+                                <div className="mt-5 w-16 h-1 bg-brand-gold-400 mx-auto rounded-full" />
+                                <p className="mt-5 text-brand-blue-200/90 text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto">
+                                    Para reportar problemas en establecimientos escolares o consultar sobre obras en curso, no dudes en comunicarte con nosotros.
+                                </p>
+                            </div>
+
+                            {/* Cards de contacto */}
+                            {correos.length > 0 && (
+                                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
+                                    {correos.map((c) => {
+                                        const waNumber = c.telefono?.replace(/[^\d+]/g, '');
+                                        const isPhoneOnly = c.telefono && !c.correo;
+                                        const iconBg = c.es_whatsapp
+                                            ? 'bg-green-400/20 text-green-300 group-hover:bg-green-400/30'
+                                            : isPhoneOnly
+                                            ? 'bg-sky-400/20 text-sky-300 group-hover:bg-sky-400/30'
+                                            : 'bg-brand-gold-400/20 text-brand-gold-300 group-hover:bg-brand-gold-400/30';
+
+                                        const CardIcon = c.es_whatsapp ? IconWhatsApp : isPhoneOnly ? IconPhone : IconMail;
+
+                                        return (
+                                            <div
+                                                key={c.id}
+                                                className="group flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.07] backdrop-blur-sm p-6 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200"
+                                            >
+                                                <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-colors ${iconBg}`}>
+                                                    <CardIcon />
+                                                </div>
+                                                <div className="min-w-0 flex-1">
+                                                    {c.descripcion && (
+                                                        <p className="text-xs font-semibold text-brand-gold-400 uppercase tracking-wider mb-1.5">
+                                                            {c.descripcion}
+                                                        </p>
+                                                    )}
+
+                                                    {/* Correo */}
+                                                    {c.correo && (
+                                                        <a href={`mailto:${c.correo}`} className="group/link">
+                                                            <span className="font-semibold text-white text-sm break-all group-hover/link:text-brand-gold-300 transition-colors">
+                                                                {c.correo}
+                                                            </span>
+                                                        </a>
+                                                    )}
+
+                                                    {/* Teléfono / WhatsApp */}
+                                                    {c.telefono && (
+                                                        <a
+                                                            href={c.es_whatsapp ? `https://wa.me/${waNumber}` : `tel:${c.telefono}`}
+                                                            target={c.es_whatsapp ? '_blank' : undefined}
+                                                            rel={c.es_whatsapp ? 'noopener noreferrer' : undefined}
+                                                            className={`flex items-center gap-1.5 group/link ${c.correo ? 'mt-1.5' : ''}`}
+                                                        >
+                                                            <span className={`font-semibold text-sm break-all transition-colors ${
+                                                                c.es_whatsapp
+                                                                    ? 'text-green-300 group-hover/link:text-green-200'
+                                                                    : 'text-white group-hover/link:text-brand-gold-300'
+                                                            }`}>
+                                                                {c.telefono}
+                                                            </span>
+                                                            {c.es_whatsapp && (
+                                                                <span className="shrink-0 rounded-full bg-green-400/20 px-2 py-0.5 text-[10px] font-semibold text-green-300">
+                                                                    WhatsApp
+                                                                </span>
+                                                            )}
+                                                        </a>
+                                                    )}
+
+                                                    <p className="text-xs text-brand-blue-300/70 mt-1.5">
+                                                        {c.es_whatsapp
+                                                            ? 'Hacer clic para abrir WhatsApp'
+                                                            : c.telefono && !c.correo
+                                                            ? 'Hacer clic para llamar'
+                                                            : 'Hacer clic para enviar un correo'}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            )}
+
+                            {/* Botones */}
                             <div className="flex flex-wrap items-center justify-center gap-4">
                                 <Link
                                     href="/contacto"
@@ -530,7 +435,11 @@ export default function Infraestructura({ auth, obras, trabajosMenores, correos 
                             <div>
                                 <p className="text-xs font-semibold text-brand-gold-500 tracking-[0.15em] uppercase mb-4">Navegación</p>
                                 <nav className="flex flex-col gap-2.5">
-                                    {NAV_ITEMS.map((item) => (
+                                    {[
+                                        { label: 'Inicio',          href: '/' },
+                                        { label: 'Infraestructura', href: '/areas/infraestructura' },
+                                        { label: 'Contacto',        href: '/contacto' },
+                                    ].map((item) => (
                                         <Link key={item.href} href={item.href} className="text-sm text-gray-500 hover:text-brand-blue-600 transition-colors">
                                             {item.label}
                                         </Link>
