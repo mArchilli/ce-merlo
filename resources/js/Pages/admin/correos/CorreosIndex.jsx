@@ -64,7 +64,7 @@ function CorreoModal({ correo, areaId, onClose }) {
                 {/* Franja superior */}
                 <div className="h-1 bg-gradient-to-r from-sky-400 to-sky-500" />
 
-                <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+                <div className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-gray-100">
                     <div>
                         <h2 className="text-base font-semibold text-gray-900">
                             {isEdit ? 'Editar correo' : 'Agregar correo'}
@@ -81,7 +81,7 @@ function CorreoModal({ correo, areaId, onClose }) {
                     </button>
                 </div>
 
-                <form onSubmit={submit} className="px-6 py-5 space-y-4">
+                <form onSubmit={submit} className="px-4 sm:px-6 py-4 sm:py-5 space-y-4">
                     {/* Correo */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1.5">
@@ -191,7 +191,7 @@ export default function CorreosIndex({ areas }) {
         >
             <Head title="Correos" />
 
-            <div className="py-8 px-6">
+            <div className="py-6 px-4 sm:py-8 sm:px-6">
                 {/* Tabs de áreas */}
                 <div className="mb-6 flex gap-1 border-b border-gray-200 overflow-x-auto">
                     {areas.map((a, idx) => (
@@ -216,38 +216,61 @@ export default function CorreosIndex({ areas }) {
 
                 {/* Lista de correos */}
                 {area.correos.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 py-20 text-gray-400">
+                    <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 py-16 text-gray-400">
                         <IconMail className="h-10 w-10 mb-3 opacity-40" />
-                        <p className="text-lg font-medium">No hay correos registrados</p>
-                        <p className="text-sm mt-1">Hacé clic en "Agregar correo" para comenzar.</p>
+                        <p className="text-base font-medium">No hay correos registrados</p>
+                        <p className="text-sm mt-1 text-center px-4">Hacé clic en "Agregar correo" para comenzar.</p>
                     </div>
                 ) : (
                     <div className="space-y-2 max-w-2xl">
                         {area.correos.map((c) => (
                             <div
                                 key={c.id}
-                                className="flex items-center gap-4 rounded-xl bg-white border border-gray-100 px-5 py-4 shadow-sm hover:shadow-md transition-shadow"
+                                className="flex items-start gap-3 sm:gap-4 rounded-xl bg-white border border-gray-100 px-4 sm:px-5 py-4 shadow-sm hover:shadow-md transition-shadow"
                             >
-                                <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${
+                                {/* Ícono */}
+                                <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg mt-0.5 ${
                                     c.activo ? 'bg-sky-50 text-sky-500' : 'bg-gray-100 text-gray-400'
                                 }`}>
                                     <IconMail />
                                 </div>
 
+                                {/* Contenido */}
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-medium text-gray-800 truncate">{c.correo}</p>
+                                    {/* Fila superior: correo + badge */}
+                                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                                        <p className="text-sm font-medium text-gray-800 break-all">{c.correo}</p>
+                                        <span className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                                            c.activo ? 'bg-sky-100 text-sky-700' : 'bg-gray-100 text-gray-500'
+                                        }`}>
+                                            {c.activo ? 'Activo' : 'Inactivo'}
+                                        </span>
+                                    </div>
+
+                                    {/* Descripción */}
                                     {c.descripcion && (
-                                        <p className="text-xs text-gray-400 mt-0.5 truncate">{c.descripcion}</p>
+                                        <p className="text-xs text-gray-400 mt-0.5">{c.descripcion}</p>
                                     )}
+
+                                    {/* Botones — siempre visibles, debajo en mobile */}
+                                    <div className="flex gap-1.5 mt-3 sm:hidden">
+                                        <button
+                                            onClick={() => { setEditando(c); setModalOpen(true); }}
+                                            className="flex items-center gap-1 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:border-sky-300 hover:bg-sky-50 hover:text-sky-600 transition-colors"
+                                        >
+                                            <IconEdit /> Editar
+                                        </button>
+                                        <button
+                                            onClick={() => setPendingDelete(c)}
+                                            className="flex items-center gap-1 rounded-lg border border-red-100 px-3 py-1.5 text-xs font-medium text-red-500 hover:bg-red-50 hover:border-red-300 transition-colors"
+                                        >
+                                            <IconTrash /> Eliminar
+                                        </button>
+                                    </div>
                                 </div>
 
-                                <span className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                                    c.activo ? 'bg-sky-100 text-sky-700' : 'bg-gray-100 text-gray-500'
-                                }`}>
-                                    {c.activo ? 'Activo' : 'Inactivo'}
-                                </span>
-
-                                <div className="flex gap-1.5 shrink-0">
+                                {/* Botones — solo desktop */}
+                                <div className="hidden sm:flex gap-1.5 shrink-0">
                                     <button
                                         onClick={() => { setEditando(c); setModalOpen(true); }}
                                         className="flex items-center gap-1 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:border-sky-300 hover:bg-sky-50 hover:text-sky-600 transition-colors"
