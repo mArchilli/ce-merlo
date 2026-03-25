@@ -21,6 +21,11 @@ const IconUserCircle = () => (
         <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zm-4 7a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
     </svg>
 );
+const IconMailDash = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    </svg>
+);
 const IconArrow = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -54,6 +59,15 @@ const modules = [
         from: '#8B5CF6',
         to: '#6D28D9',
         shadow: 'rgba(109,40,217,0.35)',
+    },
+    {
+        label: 'Correos',
+        desc: 'Gestioná los correos de cada área',
+        href: '/correos',
+        icon: <IconMailDash />,
+        from: '#0EA5E9',
+        to: '#0284C7',
+        shadow: 'rgba(2,132,199,0.35)',
     },
     {
         label: 'Perfil',

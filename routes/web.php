@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AreaCorreoController;
 use App\Http\Controllers\AutoridadController;
 use App\Http\Controllers\NovedadController;
 use App\Http\Controllers\ObraController;
@@ -62,6 +63,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/autoridades', [AutoridadController::class, 'store'])->name('autoridades.store');
     Route::put('/autoridades/{autoridad}', [AutoridadController::class, 'update'])->name('autoridades.update');
     Route::delete('/autoridades/{autoridad}', [AutoridadController::class, 'destroy'])->name('autoridades.destroy');
+
+    // Correos por área
+    Route::get('/correos', [AreaCorreoController::class, 'index'])->name('correos.index');
+    Route::post('/correos', [AreaCorreoController::class, 'store'])->name('correos.store');
+    Route::put('/correos/{correo}', [AreaCorreoController::class, 'update'])->name('correos.update');
+    Route::delete('/correos/{correo}', [AreaCorreoController::class, 'destroy'])->name('correos.destroy');
 });
 
 require __DIR__.'/auth.php';
