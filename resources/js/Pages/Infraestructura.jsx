@@ -95,6 +95,9 @@ function ItemCard({ item, featuredKey, href }) {
 export default function Infraestructura({ obras, trabajosMenores, correos }) {
     const [tab, setTab] = useState('obras');
 
+    const obrasDestacadas   = obras.filter(o => o.destacada);
+    const trabajosDestacados = trabajosMenores.filter(t => t.destacado);
+
     return (
         <>
             <Head title="Infraestructura – Consejo Escolar de Merlo" />
@@ -247,36 +250,60 @@ export default function Infraestructura({ obras, trabajosMenores, correos }) {
                             </button>
                         </div>
 
-                        {/* Grid obras */}
+                        {/* Grid obras destacadas */}
                         {tab === 'obras' && (
-                            obras.length === 0 ? (
+                            obrasDestacadas.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-200 py-20 text-gray-400">
                                     <IconBuilding />
-                                    <p className="mt-3 text-base font-medium">No hay obras publicadas aún</p>
+                                    <p className="mt-3 text-base font-medium">No hay obras destacadas aún</p>
                                 </div>
                             ) : (
                                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                                    {obras.map((obra) => (
+                                    {obrasDestacadas.map((obra) => (
                                         <ItemCard key={obra.id} item={obra} featuredKey="destacada" href={`/areas/infraestructura/${obra.id}`} />
                                     ))}
                                 </div>
                             )
                         )}
+                        {tab === 'obras' && (
+                            <div className="mt-8 flex justify-center">
+                                <Link
+                                    href="/areas/infraestructura/obras"
+                                    className="inline-flex items-center gap-2.5 px-6 py-3 bg-brand-blue-700 text-white text-sm font-semibold rounded-lg hover:bg-brand-blue-800 transition-all duration-200 shadow-sm"
+                                >
+                                    <IconBuilding />
+                                    Ver todas las obras
+                                    <span className="ml-1 rounded-full bg-white/20 px-2 py-0.5 text-xs font-bold">{obras.length}</span>
+                                </Link>
+                            </div>
+                        )}
 
-                        {/* Grid trabajos menores */}
+                        {/* Grid trabajos menores destacados */}
                         {tab === 'trabajos' && (
-                            trabajosMenores.length === 0 ? (
+                            trabajosDestacados.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-200 py-20 text-gray-400">
                                     <IconWrench />
-                                    <p className="mt-3 text-base font-medium">No hay trabajos menores publicados aún</p>
+                                    <p className="mt-3 text-base font-medium">No hay trabajos menores destacados aún</p>
                                 </div>
                             ) : (
                                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                                    {trabajosMenores.map((t) => (
+                                    {trabajosDestacados.map((t) => (
                                         <ItemCard key={t.id} item={t} featuredKey="destacado" />
                                     ))}
                                 </div>
                             )
+                        )}
+                        {tab === 'trabajos' && (
+                            <div className="mt-8 flex justify-center">
+                                <Link
+                                    href="/areas/infraestructura/trabajos"
+                                    className="inline-flex items-center gap-2.5 px-6 py-3 bg-brand-blue-700 text-white text-sm font-semibold rounded-lg hover:bg-brand-blue-800 transition-all duration-200 shadow-sm"
+                                >
+                                    <IconWrench />
+                                    Ver todos los trabajos menores
+                                    <span className="ml-1 rounded-full bg-white/20 px-2 py-0.5 text-xs font-bold">{trabajosMenores.length}</span>
+                                </Link>
+                            </div>
                         )}
                     </div>
                 </section>

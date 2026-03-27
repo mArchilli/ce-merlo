@@ -23,6 +23,34 @@ class PublicInfraestructuraController extends Controller
         ]);
     }
 
+    public function listObras(): Response
+    {
+        $obras = Obra::with('medioPrincipal')
+            ->orderByDesc('anio')
+            ->orderByDesc('mes')
+            ->orderByDesc('id')
+            ->get();
+
+        return Inertia::render('InfraestructuraLista', [
+            'items' => $obras,
+            'tipo'  => 'obras',
+        ]);
+    }
+
+    public function listTrabajos(): Response
+    {
+        $trabajos = TrabajoMenor::with('medioPrincipal')
+            ->orderByDesc('anio')
+            ->orderByDesc('mes')
+            ->orderByDesc('id')
+            ->get();
+
+        return Inertia::render('InfraestructuraLista', [
+            'items' => $trabajos,
+            'tipo'  => 'trabajos',
+        ]);
+    }
+
     public function show(Obra $obra): Response
     {
         $obra->load(['medios' => fn ($q) => $q->orderByDesc('es_principal')->orderBy('id')]);
