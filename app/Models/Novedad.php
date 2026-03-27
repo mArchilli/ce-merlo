@@ -15,6 +15,9 @@ class Novedad extends Model
         'descripcion',
         'activa',
         'destacada',
+        'anio',
+        'mes',
+        'dia',
     ];
 
     protected $casts = [

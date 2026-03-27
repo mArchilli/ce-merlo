@@ -39,12 +39,16 @@ const IconEyeOff = () => (
 // ─── Modal Novedad ────────────────────────────────────────────────────────────
 function NovedadModal({ item, onClose }) {
     const isEdit = !!item;
+    const hoy = new Date();
 
     const { data, setData, processing, errors, reset } = useForm({
         titulo:              item?.titulo ?? '',
         descripcion:         item?.descripcion ?? '',
         activa:              item?.activa ?? true,
         destacada:           item?.destacada ?? false,
+        anio:                item?.anio ?? hoy.getFullYear(),
+        mes:                 item?.mes  ?? (hoy.getMonth() + 1),
+        dia:                 item?.dia  ?? hoy.getDate(),
         principal_medio_id:  item?.medio_principal?.id ?? '',
         medios_eliminar:     [],
     });
@@ -159,6 +163,57 @@ function NovedadModal({ item, onClose }) {
                             <label htmlFor="activa" className="text-sm font-medium text-gray-700">
                                 Visible (activa)
                             </label>
+                        </div>
+                    </div>
+
+                    {/* Fecha */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Fecha de publicación</label>
+                        <div className="grid grid-cols-3 gap-3">
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">Día</label>
+                                <input
+                                    type="number"
+                                    min="1"
+                                    max="31"
+                                    placeholder="DD"
+                                    value={data.dia}
+                                    onChange={(e) => setData('dia', e.target.value)}
+                                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-blue-400 focus:outline-none focus:ring-1 focus:ring-brand-blue-400"
+                                />
+                                {errors.dia && <p className="mt-1 text-xs text-red-500">{errors.dia}</p>}
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">Mes</label>
+                                <select
+                                    value={data.mes}
+                                    onChange={(e) => setData('mes', e.target.value)}
+                                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-blue-400 focus:outline-none focus:ring-1 focus:ring-brand-blue-400"
+                                >
+                                    <option value="">—</option>
+                                    {[
+                                        [1,'Enero'],[2,'Febrero'],[3,'Marzo'],[4,'Abril'],
+                                        [5,'Mayo'],[6,'Junio'],[7,'Julio'],[8,'Agosto'],
+                                        [9,'Septiembre'],[10,'Octubre'],[11,'Noviembre'],[12,'Diciembre'],
+                                    ].map(([n, label]) => (
+                                        <option key={n} value={n}>{label}</option>
+                                    ))}
+                                </select>
+                                {errors.mes && <p className="mt-1 text-xs text-red-500">{errors.mes}</p>}
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">Año</label>
+                                <input
+                                    type="number"
+                                    min="2000"
+                                    max="2100"
+                                    placeholder="AAAA"
+                                    value={data.anio}
+                                    onChange={(e) => setData('anio', e.target.value)}
+                                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-blue-400 focus:outline-none focus:ring-1 focus:ring-brand-blue-400"
+                                />
+                                {errors.anio && <p className="mt-1 text-xs text-red-500">{errors.anio}</p>}
+                            </div>
                         </div>
                     </div>
 

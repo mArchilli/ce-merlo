@@ -6,6 +6,7 @@ use App\Http\Controllers\NovedadController;
 use App\Http\Controllers\ObraController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicInfraestructuraController;
+use App\Http\Controllers\PublicNovedadController;
 use App\Http\Controllers\TrabajoMenorController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -18,11 +19,23 @@ Route::get('/', function () {
         ->orderBy('id')
         ->get();
 
+    $novedades = \App\Models\Novedad::with('medioPrincipal')
+        ->where('activa', true)
+        ->where('destacada', true)
+        ->orderByDesc('anio')
+        ->orderByDesc('mes')
+        ->orderByDesc('dia')
+        ->orderByDesc('id')
+        ->get();
+
     return Inertia::render('Welcome', [
         'canLogin'    => Route::has('login'),
         'autoridades' => $autoridades,
+        'novedades'   => $novedades,
     ]);
 })->name('home');
+
+Route::get('/novedades', [PublicNovedadController::class, 'index'])->name('novedades.public');
 
 Route::get('/contacto', function () {
     return Inertia::render('Contacto', [

@@ -28,6 +28,9 @@ class NovedadController extends Controller
             'descripcion'     => 'nullable|string',
             'activa'          => 'boolean',
             'destacada'       => 'boolean',
+            'anio'            => 'nullable|integer|min:2000|max:2100',
+            'mes'             => 'nullable|integer|min:1|max:12',
+            'dia'             => 'nullable|integer|min:1|max:31',
             'medios'          => 'nullable|array',
             'medios.*'        => 'file|mimes:jpg,jpeg,png,gif,webp,mp4,mov,avi,webm|max:102400',
             'principal_index' => 'nullable|integer',
@@ -39,6 +42,9 @@ class NovedadController extends Controller
                 'descripcion' => $request->descripcion,
                 'activa'      => $request->boolean('activa', true),
                 'destacada'   => $request->boolean('destacada'),
+                'anio'        => $request->anio ?: null,
+                'mes'         => $request->mes ?: null,
+                'dia'         => $request->dia ?: null,
             ]);
 
             if ($request->hasFile('medios')) {
@@ -70,6 +76,9 @@ class NovedadController extends Controller
             'descripcion'        => 'nullable|string',
             'activa'             => 'boolean',
             'destacada'          => 'boolean',
+            'anio'               => 'nullable|integer|min:2000|max:2100',
+            'mes'                => 'nullable|integer|min:1|max:12',
+            'dia'                => 'nullable|integer|min:1|max:31',
             'medios'             => 'nullable|array',
             'medios.*'           => 'file|mimes:jpg,jpeg,png,gif,webp,mp4,mov,avi,webm|max:102400',
             'principal_medio_id' => 'nullable|integer|exists:novedad_medios,id',
@@ -83,6 +92,9 @@ class NovedadController extends Controller
                 'descripcion' => $request->descripcion,
                 'activa'      => $request->boolean('activa', true),
                 'destacada'   => $request->boolean('destacada'),
+                'anio'        => $request->anio ?: null,
+                'mes'         => $request->mes ?: null,
+                'dia'         => $request->dia ?: null,
             ]);
 
             if ($request->filled('medios_eliminar')) {

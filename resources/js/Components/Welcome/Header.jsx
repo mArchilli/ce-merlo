@@ -5,6 +5,7 @@ const NAV_ITEMS = [
     { label: 'Institucional', href: '#institucional' },
     { label: 'Funcionalidades', href: '#funcionalidades' },
     { label: 'Autoridades', href: '#autoridades' },
+    { label: 'Novedades', href: '/novedades', isPage: true },
     { label: 'Contacto', href: '/contacto', isPage: true },
 ];
 

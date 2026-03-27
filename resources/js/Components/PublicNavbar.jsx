@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 
 const NAV_ITEMS = [
     { label: 'Inicio',          href: '/' },
+    { label: 'Novedades',       href: '/novedades' },
     { label: 'Infraestructura', href: '/areas/infraestructura' },
     { label: 'Contacto',        href: '/contacto' },
 ];
