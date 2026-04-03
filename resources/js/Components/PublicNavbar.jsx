@@ -2,10 +2,11 @@ import { Link, usePage } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 
 const NAV_ITEMS = [
-    { label: 'Inicio',          href: '/' },
-    { label: 'Novedades',       href: '/novedades' },
-    { label: 'Infraestructura', href: '/areas/infraestructura' },
-    { label: 'Contacto',        href: '/contacto' },
+    { label: 'Inicio',            href: '/' },
+    { label: 'Novedades',         href: '/novedades' },
+    { label: 'Infraestructura',   href: '/areas/infraestructura' },
+    { label: 'Recursos Humanos',  href: '/areas/recursos-humanos' },
+    { label: 'Contacto',          href: '/contacto' },
 ];
 
 /**

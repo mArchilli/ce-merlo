@@ -51,6 +51,11 @@ const IconMail = () => (
         <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
     </svg>
 );
+const IconBriefcase = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zM16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" />
+    </svg>
+);
 
 export default function AuthenticatedLayout({ header, pageTitle, pageSubtitle, pageColor, pageAction, children }) {
     const user = usePage().props.auth.user;
@@ -66,8 +71,9 @@ export default function AuthenticatedLayout({ header, pageTitle, pageSubtitle, p
         { label: 'Infraestructura', icon: <IconBuilding />,  href: route('infraestructura.index'), routeName: 'infraestructura.index', activeColor: '#FFA101' },
         { label: 'Novedades',       icon: <IconNewspaper />, href: route('novedades.index'),       routeName: 'novedades.index',       activeColor: '#5796C2' },
         { label: 'Autoridades',     icon: <IconUsers />,     href: route('autoridades.index'),     routeName: 'autoridades.index',     activeColor: '#A78BFA' },
-        { label: 'Correos',         icon: <IconMail />,      href: route('correos.index'),         routeName: 'correos.index',         activeColor: '#0EA5E9' },
-        { label: 'Perfil',          icon: <IconUser />,      href: route('profile.edit'),          routeName: 'profile.edit',          activeColor: '#D4A843' },
+        { label: 'Correos',         icon: <IconMail />,       href: route('correos.index'),           routeName: 'correos.index',           activeColor: '#0EA5E9' },
+        { label: 'RR.HH.',          icon: <IconBriefcase />, href: route('recursos_humanos.index'), routeName: 'recursos_humanos.index', activeColor: '#10B981' },
+        { label: 'Perfil',          icon: <IconUser />,      href: route('profile.edit'),            routeName: 'profile.edit',            activeColor: '#D4A843' },
     ];
 
     return (

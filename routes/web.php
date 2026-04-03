@@ -7,6 +7,8 @@ use App\Http\Controllers\ObraController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicInfraestructuraController;
 use App\Http\Controllers\PublicNovedadController;
+use App\Http\Controllers\PublicRecursosHumanosController;
+use App\Http\Controllers\RecursosHumanosController;
 use App\Http\Controllers\TrabajoMenorController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +38,8 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/novedades', [PublicNovedadController::class, 'index'])->name('novedades.public');
+
+Route::get('/areas/recursos-humanos', [PublicRecursosHumanosController::class, 'index'])->name('areas.recursos_humanos');
 
 Route::get('/contacto', function () {
     return Inertia::render('Contacto', [
@@ -90,6 +94,12 @@ Route::prefix('admin')->group(function () {
         Route::post('/correos', [AreaCorreoController::class, 'store'])->name('correos.store');
         Route::put('/correos/{correo}', [AreaCorreoController::class, 'update'])->name('correos.update');
         Route::delete('/correos/{correo}', [AreaCorreoController::class, 'destroy'])->name('correos.destroy');
+
+        // Recursos Humanos
+        Route::get('/recursos-humanos', [RecursosHumanosController::class, 'index'])->name('recursos_humanos.index');
+        Route::post('/recursos-humanos', [RecursosHumanosController::class, 'store'])->name('recursos_humanos.store');
+        Route::put('/recursos-humanos/{recursosHumano}', [RecursosHumanosController::class, 'update'])->name('recursos_humanos.update');
+        Route::delete('/recursos-humanos/{recursosHumano}', [RecursosHumanosController::class, 'destroy'])->name('recursos_humanos.destroy');
     });
 
 });
