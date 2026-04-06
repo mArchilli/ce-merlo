@@ -31,66 +31,100 @@ const IconBriefcase = () => (
         <path strokeLinecap="round" strokeLinejoin="round" d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zM16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" />
     </svg>
 );
+const IconGlobe = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253M3 12a8.959 8.959 0 01.284-2.253" />
+    </svg>
+);
 const IconArrow = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
     </svg>
 );
 
-const modules = [
+const categories = [
     {
-        label: 'Infraestructura',
-        desc: 'Gestioná obras y trabajos menores',
-        href: '/admin/infraestructura',
-        icon: <IconBuilding />,
-        from: '#F59E0B',
-        to: '#D97706',
-        shadow: 'rgba(217,119,6,0.35)',
+        title: 'Áreas',
+        modules: [
+            {
+                label: 'Infraestructura',
+                desc: 'Gestioná obras y trabajos menores',
+                href: '/admin/infraestructura',
+                icon: <IconBuilding />,
+                from: '#F59E0B',
+                to: '#D97706',
+                shadow: 'rgba(217,119,6,0.35)',
+            },
+            {
+                label: 'RR.HH.',
+                desc: 'Publicá documentos de recursos humanos',
+                href: '/admin/recursos-humanos',
+                icon: <IconBriefcase />,
+                from: '#10B981',
+                to: '#059669',
+                shadow: 'rgba(5,150,105,0.35)',
+            },
+            {
+                label: 'SAE',
+                desc: 'Publicá los menús del Servicio Alimentario Escolar',
+                href: '/admin/sae',
+                icon: <IconGlobe />,
+                from: '#F97316',
+                to: '#EA580C',
+                shadow: 'rgba(234,88,12,0.35)',
+            },
+        ],
     },
     {
-        label: 'Novedades',
-        desc: 'Publicá noticias y actualizaciones',
-        href: '/admin/novedades',
-        icon: <IconNewspaper />,
-        from: '#3B82F6',
-        to: '#1D4ED8',
-        shadow: 'rgba(29,78,216,0.35)',
+        title: 'Comunicación',
+        modules: [
+            {
+                label: 'Novedades',
+                desc: 'Publicá noticias y actualizaciones',
+                href: '/admin/novedades',
+                icon: <IconNewspaper />,
+                from: '#3B82F6',
+                to: '#1D4ED8',
+                shadow: 'rgba(29,78,216,0.35)',
+            },
+            {
+                label: 'Autoridades',
+                desc: 'Administrá los consejeros y vocales',
+                href: '/admin/autoridades',
+                icon: <IconUsers />,
+                from: '#8B5CF6',
+                to: '#6D28D9',
+                shadow: 'rgba(109,40,217,0.35)',
+            },
+        ],
     },
     {
-        label: 'Autoridades',
-        desc: 'Administrá los consejeros y vocales',
-        href: '/admin/autoridades',
-        icon: <IconUsers />,
-        from: '#8B5CF6',
-        to: '#6D28D9',
-        shadow: 'rgba(109,40,217,0.35)',
+        title: 'Contacto',
+        modules: [
+            {
+                label: 'Correos y teléfonos',
+                desc: 'Gestioná los medios de contacto de cada área',
+                href: '/admin/correos',
+                icon: <IconMailDash />,
+                from: '#0EA5E9',
+                to: '#0284C7',
+                shadow: 'rgba(2,132,199,0.35)',
+            },
+        ],
     },
     {
-        label: 'Contactos',
-        desc: 'Gestioná los medios de contacto de cada área',
-        href: '/admin/correos',
-        icon: <IconMailDash />,
-        from: '#0EA5E9',
-        to: '#0284C7',
-        shadow: 'rgba(2,132,199,0.35)',
-    },
-    {
-        label: 'RR.HH.',
-        desc: 'Publicá documentos de recursos humanos',
-        href: '/admin/recursos-humanos',
-        icon: <IconBriefcase />,
-        from: '#10B981',
-        to: '#059669',
-        shadow: 'rgba(5,150,105,0.35)',
-    },
-    {
-        label: 'Perfil',
-        desc: 'Editá tu cuenta y contraseña',
-        href: '/admin/profile',
-        icon: <IconUserCircle />,
-        from: '#10B981',
-        to: '#059669',
-        shadow: 'rgba(5,150,105,0.35)',
+        title: 'Configuración',
+        modules: [
+            {
+                label: 'Perfil',
+                desc: 'Editá tu cuenta y contraseña',
+                href: '/admin/profile',
+                icon: <IconUserCircle />,
+                from: '#64748B',
+                to: '#475569',
+                shadow: 'rgba(71,85,105,0.35)',
+            },
+        ],
     },
 ];
 
@@ -124,44 +158,45 @@ export default function Dashboard() {
                 </div>
             </div>
 
-            <div className="px-8 py-8">
-                {/* Título sección */}
-                <div className="mb-6">
-                    <h2 className="text-lg font-bold text-gray-800">Módulos del sistema</h2>
-                    <p className="text-sm text-gray-400">Seleccioná un módulo para comenzar</p>
-                </div>
+            <div className="px-8 py-8 space-y-10">
+                {categories.map((cat) => (
+                    <div key={cat.title}>
+                        <div className="mb-4">
+                            <h2 className="text-base font-bold text-gray-700 uppercase tracking-wide">{cat.title}</h2>
+                            <div className="mt-1 h-0.5 w-10 rounded-full bg-gray-200" />
+                        </div>
+                        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+                            {cat.modules.map((mod) => (
+                                <Link
+                                    key={mod.label}
+                                    href={mod.href}
+                                    className="group relative overflow-hidden rounded-2xl p-6 text-white transition-all duration-200 hover:-translate-y-1"
+                                    style={{
+                                        background: `linear-gradient(135deg, ${mod.from} 0%, ${mod.to} 100%)`,
+                                        boxShadow: `0 8px 24px ${mod.shadow}`,
+                                    }}
+                                >
+                                    {/* Círculo decorativo de fondo */}
+                                    <div className="absolute -bottom-4 -right-4 h-24 w-24 rounded-full bg-white/10 transition-transform duration-300 group-hover:scale-125" />
 
-                {/* Grid de cards */}
-                <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-                    {modules.map((mod) => (
-                        <Link
-                            key={mod.label}
-                            href={mod.href}
-                            className="group relative overflow-hidden rounded-2xl p-6 text-white transition-all duration-200 hover:-translate-y-1"
-                            style={{
-                                background: `linear-gradient(135deg, ${mod.from} 0%, ${mod.to} 100%)`,
-                                boxShadow: `0 8px 24px ${mod.shadow}`,
-                            }}
-                        >
-                            {/* Círculo decorativo de fondo */}
-                            <div className="absolute -bottom-4 -right-4 h-24 w-24 rounded-full bg-white/10 transition-transform duration-300 group-hover:scale-125" />
+                                    {/* Ícono */}
+                                    <div className="mb-4 inline-flex items-center justify-center rounded-xl bg-white/20 p-3">
+                                        {mod.icon}
+                                    </div>
 
-                            {/* Ícono */}
-                            <div className="mb-4 inline-flex items-center justify-center rounded-xl bg-white/20 p-3">
-                                {mod.icon}
-                            </div>
+                                    {/* Texto */}
+                                    <h3 className="text-base font-bold leading-tight">{mod.label}</h3>
+                                    <p className="mt-1 text-xs text-white/70 leading-snug">{mod.desc}</p>
 
-                            {/* Texto */}
-                            <h3 className="text-base font-bold leading-tight">{mod.label}</h3>
-                            <p className="mt-1 text-xs text-white/70 leading-snug">{mod.desc}</p>
-
-                            {/* Flecha */}
-                            <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-white/80 group-hover:text-white transition-colors">
-                                Ir al módulo <IconArrow />
-                            </div>
-                        </Link>
-                    ))}
-                </div>
+                                    {/* Flecha */}
+                                    <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-white/80 group-hover:text-white transition-colors">
+                                        Ir al módulo <IconArrow />
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                ))}
             </div>
         </AuthenticatedLayout>
     );

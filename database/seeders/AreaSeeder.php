@@ -12,6 +12,7 @@ class AreaSeeder extends Seeder
         $areas = [
             ['nombre' => 'Infraestructura',    'slug' => 'infraestructura'],
             ['nombre' => 'Recursos Humanos',   'slug' => 'recursos-humanos'],
+            ['nombre' => 'SAE',                'slug' => 'sae'],
             ['nombre' => 'Cooperación Escolar','slug' => 'cooperacion-escolar'],
             ['nombre' => 'Patrimonio',         'slug' => 'patrimonio'],
             ['nombre' => 'Descentralizados',   'slug' => 'descentralizados'],

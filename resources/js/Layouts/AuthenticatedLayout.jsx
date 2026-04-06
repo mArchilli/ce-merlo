@@ -73,6 +73,7 @@ export default function AuthenticatedLayout({ header, pageTitle, pageSubtitle, p
         { label: 'Autoridades',     icon: <IconUsers />,     href: route('autoridades.index'),     routeName: 'autoridades.index',     activeColor: '#A78BFA' },
         { label: 'Correos',         icon: <IconMail />,       href: route('correos.index'),           routeName: 'correos.index',           activeColor: '#0EA5E9' },
         { label: 'RR.HH.',          icon: <IconBriefcase />, href: route('recursos_humanos.index'), routeName: 'recursos_humanos.index', activeColor: '#10B981' },
+        { label: 'SAE',             icon: <IconGlobe />,     href: route('sae.index'),               routeName: 'sae.index',               activeColor: '#F97316' },
         { label: 'Perfil',          icon: <IconUser />,      href: route('profile.edit'),            routeName: 'profile.edit',            activeColor: '#D4A843' },
     ];
 

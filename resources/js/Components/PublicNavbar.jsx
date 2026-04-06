@@ -6,6 +6,7 @@ const NAV_ITEMS = [
     { label: 'Novedades',         href: '/novedades' },
     { label: 'Infraestructura',   href: '/areas/infraestructura' },
     { label: 'Recursos Humanos',  href: '/areas/recursos-humanos' },
+    { label: 'SAE',               href: '/areas/sae' },
     { label: 'Contacto',          href: '/contacto' },
 ];
 

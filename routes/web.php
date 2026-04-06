@@ -8,7 +8,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicInfraestructuraController;
 use App\Http\Controllers\PublicNovedadController;
 use App\Http\Controllers\PublicRecursosHumanosController;
+use App\Http\Controllers\PublicSaeController;
 use App\Http\Controllers\RecursosHumanosController;
+use App\Http\Controllers\SaeController;
 use App\Http\Controllers\TrabajoMenorController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +42,7 @@ Route::get('/', function () {
 Route::get('/novedades', [PublicNovedadController::class, 'index'])->name('novedades.public');
 
 Route::get('/areas/recursos-humanos', [PublicRecursosHumanosController::class, 'index'])->name('areas.recursos_humanos');
+Route::get('/areas/sae', [PublicSaeController::class, 'index'])->name('areas.sae');
 
 Route::get('/contacto', function () {
     return Inertia::render('Contacto', [
@@ -100,6 +103,12 @@ Route::prefix('admin')->group(function () {
         Route::post('/recursos-humanos', [RecursosHumanosController::class, 'store'])->name('recursos_humanos.store');
         Route::put('/recursos-humanos/{recursosHumano}', [RecursosHumanosController::class, 'update'])->name('recursos_humanos.update');
         Route::delete('/recursos-humanos/{recursosHumano}', [RecursosHumanosController::class, 'destroy'])->name('recursos_humanos.destroy');
+
+        // SAE
+        Route::get('/sae', [SaeController::class, 'index'])->name('sae.index');
+        Route::post('/sae', [SaeController::class, 'store'])->name('sae.store');
+        Route::put('/sae/{sae}', [SaeController::class, 'update'])->name('sae.update');
+        Route::delete('/sae/{sae}', [SaeController::class, 'destroy'])->name('sae.destroy');
     });
 
 });
