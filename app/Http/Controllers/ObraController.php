@@ -16,7 +16,7 @@ class ObraController extends Controller
     public function index(): Response
     {
         $obras          = Obra::with(['medioPrincipal', 'medios'])->withCount('medios')->latest()->get();
-        $trabajosMenores = TrabajoMenor::with(['medioPrincipal', 'medios'])->withCount('medios')->latest()->get();
+        $trabajosMenores = TrabajoMenor::with(['medioPrincipal', 'medios'])->withCount('medios')->where('tipo', 'infraestructura')->latest()->get();
 
         return Inertia::render('admin/infraestructura/ObrasIndex', [
             'obras'           => $obras,

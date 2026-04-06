@@ -6,9 +6,24 @@ use App\Models\TrabajoMenor;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
+use Inertia\Response;
 
-class TrabajoMenorController extends Controller
+class DescentralizadosController extends Controller
 {
+    public function index(): Response
+    {
+        $trabajos = TrabajoMenor::with(['medioPrincipal', 'medios'])
+            ->withCount('medios')
+            ->where('tipo', 'descentralizados')
+            ->latest()
+            ->get();
+
+        return Inertia::render('admin/descentralizados/DescentralizadosIndex', [
+            'trabajos' => $trabajos,
+        ]);
+    }
+
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
@@ -24,7 +39,7 @@ class TrabajoMenorController extends Controller
 
         DB::transaction(function () use ($request) {
             $trabajo = TrabajoMenor::create([
-                'tipo'        => 'infraestructura',
+                'tipo'        => 'descentralizados',
                 'titulo'      => $request->titulo,
                 'descripcion' => $request->descripcion,
                 'destacado'   => $request->boolean('destacado'),
@@ -51,7 +66,7 @@ class TrabajoMenorController extends Controller
             }
         });
 
-        return redirect()->route('infraestructura.index')->with('success', 'Trabajo menor creado correctamente.');
+        return redirect()->route('descentralizados.index')->with('success', 'Trabajo menor creado correctamente.');
     }
 
     public function update(Request $request, TrabajoMenor $trabajoMenor): RedirectResponse
@@ -108,7 +123,7 @@ class TrabajoMenorController extends Controller
             }
         });
 
-        return redirect()->route('infraestructura.index')->with('success', 'Trabajo menor actualizado correctamente.');
+        return redirect()->route('descentralizados.index')->with('success', 'Trabajo menor actualizado correctamente.');
     }
 
     public function destroy(TrabajoMenor $trabajoMenor): RedirectResponse
@@ -119,7 +134,7 @@ class TrabajoMenorController extends Controller
 
         $trabajoMenor->delete();
 
-        return redirect()->route('infraestructura.index')->with('success', 'Trabajo menor eliminado correctamente.');
+        return redirect()->route('descentralizados.index')->with('success', 'Trabajo menor eliminado correctamente.');
     }
 
     public function setPrincipal(Request $request, TrabajoMenor $trabajoMenor): RedirectResponse
@@ -136,8 +151,8 @@ class TrabajoMenorController extends Controller
 
     private function guardarArchivo(\Illuminate\Http\UploadedFile $archivo, int $id): string
     {
-        $basePath = env('PUBLIC_TRABAJOS_MENORES_IMAGES_PATH', 'images');
-        $subDir   = "trabajos_menores/{$id}";
+        $basePath = env('PUBLIC_OBRAS_IMAGES_PATH', 'images');
+        $subDir   = "descentralizados/{$id}";
         $dir      = public_path($basePath . '/' . $subDir);
 
         if (!is_dir($dir)) {
@@ -152,7 +167,7 @@ class TrabajoMenorController extends Controller
 
     private function eliminarArchivo(string $ruta): void
     {
-        $basePath = env('PUBLIC_TRABAJOS_MENORES_IMAGES_PATH', 'images');
+        $basePath = env('PUBLIC_OBRAS_IMAGES_PATH', 'images');
         $fullPath = public_path($basePath . '/' . $ruta);
 
         if (is_file($fullPath)) {

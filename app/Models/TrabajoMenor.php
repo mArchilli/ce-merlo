@@ -11,6 +11,7 @@ class TrabajoMenor extends Model
     protected $table = 'trabajos_menores';
 
     protected $fillable = [
+        'tipo',
         'titulo',
         'descripcion',
         'destacado',

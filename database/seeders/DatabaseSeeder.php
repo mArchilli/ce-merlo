@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             AreaSeeder::class,
             ObrasSeeder::class,
             TrabajosMenoresSeeder::class,
+            DescentralizadosSeeder::class,
             NovedadSeeder::class,
         ]);
     }

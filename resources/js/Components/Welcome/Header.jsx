@@ -8,6 +8,7 @@ const NAV_ITEMS = [
     { label: 'Novedades', href: '/novedades', isPage: true },
     { label: 'Recursos Humanos', href: '/areas/recursos-humanos', isPage: true },
     { label: 'SAE', href: '/areas/sae', isPage: true },
+    { label: 'Descentralizados', href: '/areas/descentralizados', isPage: true },
     { label: 'Contacto', href: '/contacto', isPage: true },
 ];
 

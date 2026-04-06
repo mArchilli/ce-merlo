@@ -56,6 +56,11 @@ const IconBriefcase = () => (
         <path strokeLinecap="round" strokeLinejoin="round" d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zM16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" />
     </svg>
 );
+const IconTool = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" />
+    </svg>
+);
 
 export default function AuthenticatedLayout({ header, pageTitle, pageSubtitle, pageColor, pageAction, children }) {
     const user = usePage().props.auth.user;
@@ -69,6 +74,7 @@ export default function AuthenticatedLayout({ header, pageTitle, pageSubtitle, p
     const navItems = [
         { label: 'Inicio',          icon: <IconHome />,      href: route('dashboard'),             routeName: 'dashboard',             activeColor: '#D4A843' },
         { label: 'Infraestructura', icon: <IconBuilding />,  href: route('infraestructura.index'), routeName: 'infraestructura.index', activeColor: '#FFA101' },
+        { label: 'Descentralizados', icon: <IconTool />,    href: route('descentralizados.index'), routeName: 'descentralizados.index', activeColor: '#0D9488' },
         { label: 'Novedades',       icon: <IconNewspaper />, href: route('novedades.index'),       routeName: 'novedades.index',       activeColor: '#5796C2' },
         { label: 'Autoridades',     icon: <IconUsers />,     href: route('autoridades.index'),     routeName: 'autoridades.index',     activeColor: '#A78BFA' },
         { label: 'Correos',         icon: <IconMail />,       href: route('correos.index'),           routeName: 'correos.index',           activeColor: '#0EA5E9' },
