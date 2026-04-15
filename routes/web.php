@@ -10,6 +10,8 @@ use App\Http\Controllers\PublicInfraestructuraController;
 use App\Http\Controllers\PublicNovedadController;
 use App\Http\Controllers\PatrimonioController;
 use App\Http\Controllers\PublicPatrimonioController;
+use App\Http\Controllers\CooperacionEscolarController;
+use App\Http\Controllers\PublicCooperacionEscolarController;
 use App\Http\Controllers\PublicRecursosHumanosController;
 use App\Http\Controllers\PublicSaeController;
 use App\Http\Controllers\RecursosHumanosController;
@@ -47,6 +49,7 @@ Route::get('/novedades', [PublicNovedadController::class, 'index'])->name('noved
 
 Route::get('/areas/recursos-humanos', [PublicRecursosHumanosController::class, 'index'])->name('areas.recursos_humanos');
 Route::get('/areas/patrimonio', [PublicPatrimonioController::class, 'index'])->name('areas.patrimonio');
+Route::get('/areas/cooperacion-escolar', [PublicCooperacionEscolarController::class, 'index'])->name('areas.cooperacion_escolar');
 Route::get('/areas/sae', [PublicSaeController::class, 'index'])->name('areas.sae');
 Route::get('/areas/descentralizados', [PublicDescentralizadosController::class, 'index'])->name('areas.descentralizados');
 
@@ -122,6 +125,12 @@ Route::prefix('admin')->group(function () {
         Route::post('/patrimonio', [PatrimonioController::class, 'store'])->name('patrimonio.store');
         Route::put('/patrimonio/{patrimonio}', [PatrimonioController::class, 'update'])->name('patrimonio.update');
         Route::delete('/patrimonio/{patrimonio}', [PatrimonioController::class, 'destroy'])->name('patrimonio.destroy');
+
+        // Cooperación Escolar
+        Route::get('/cooperacion-escolar', [CooperacionEscolarController::class, 'index'])->name('cooperacion_escolar.index');
+        Route::post('/cooperacion-escolar', [CooperacionEscolarController::class, 'store'])->name('cooperacion_escolar.store');
+        Route::put('/cooperacion-escolar/{cooperacionEscolar}', [CooperacionEscolarController::class, 'update'])->name('cooperacion_escolar.update');
+        Route::delete('/cooperacion-escolar/{cooperacionEscolar}', [CooperacionEscolarController::class, 'destroy'])->name('cooperacion_escolar.destroy');
 
         // SAE
         Route::get('/sae', [SaeController::class, 'index'])->name('sae.index');

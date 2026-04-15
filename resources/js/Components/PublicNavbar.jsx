@@ -7,6 +7,7 @@ const NAV_ITEMS = [
     { label: 'Infraestructura',   href: '/areas/infraestructura' },
     { label: 'Recursos Humanos',  href: '/areas/recursos-humanos' },
     { label: 'Patrimonio',        href: '/areas/patrimonio' },
+    { label: 'Coop. Escolar',     href: '/areas/cooperacion-escolar' },
     { label: 'SAE',               href: '/areas/sae' },
     { label: 'Descentralizados',  href: '/areas/descentralizados' },
     { label: 'Contacto',          href: '/contacto' },
