@@ -8,6 +8,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicDescentralizadosController;
 use App\Http\Controllers\PublicInfraestructuraController;
 use App\Http\Controllers\PublicNovedadController;
+use App\Http\Controllers\PatrimonioController;
+use App\Http\Controllers\PublicPatrimonioController;
 use App\Http\Controllers\PublicRecursosHumanosController;
 use App\Http\Controllers\PublicSaeController;
 use App\Http\Controllers\RecursosHumanosController;
@@ -44,6 +46,7 @@ Route::get('/', function () {
 Route::get('/novedades', [PublicNovedadController::class, 'index'])->name('novedades.public');
 
 Route::get('/areas/recursos-humanos', [PublicRecursosHumanosController::class, 'index'])->name('areas.recursos_humanos');
+Route::get('/areas/patrimonio', [PublicPatrimonioController::class, 'index'])->name('areas.patrimonio');
 Route::get('/areas/sae', [PublicSaeController::class, 'index'])->name('areas.sae');
 Route::get('/areas/descentralizados', [PublicDescentralizadosController::class, 'index'])->name('areas.descentralizados');
 
@@ -113,6 +116,12 @@ Route::prefix('admin')->group(function () {
         Route::put('/descentralizados/{trabajoMenor}', [DescentralizadosController::class, 'update'])->name('descentralizados.update');
         Route::delete('/descentralizados/{trabajoMenor}', [DescentralizadosController::class, 'destroy'])->name('descentralizados.destroy');
         Route::post('/descentralizados/{trabajoMenor}/principal', [DescentralizadosController::class, 'setPrincipal'])->name('descentralizados.principal');
+
+        // Patrimonio
+        Route::get('/patrimonio', [PatrimonioController::class, 'index'])->name('patrimonio.index');
+        Route::post('/patrimonio', [PatrimonioController::class, 'store'])->name('patrimonio.store');
+        Route::put('/patrimonio/{patrimonio}', [PatrimonioController::class, 'update'])->name('patrimonio.update');
+        Route::delete('/patrimonio/{patrimonio}', [PatrimonioController::class, 'destroy'])->name('patrimonio.destroy');
 
         // SAE
         Route::get('/sae', [SaeController::class, 'index'])->name('sae.index');

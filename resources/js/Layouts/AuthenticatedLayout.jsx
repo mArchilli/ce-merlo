@@ -56,6 +56,11 @@ const IconBriefcase = () => (
         <path strokeLinecap="round" strokeLinejoin="round" d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zM16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" />
     </svg>
 );
+const IconArchive = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 2.498c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125m16.5 2.498v2.254c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V11.37" />
+    </svg>
+);
 const IconTool = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" />
@@ -64,7 +69,18 @@ const IconTool = () => (
 
 export default function AuthenticatedLayout({ header, pageTitle, pageSubtitle, pageColor, pageAction, children }) {
     const user = usePage().props.auth.user;
-    const [collapsed, setCollapsed] = useState(true);
+    const [collapsed, setCollapsed] = useState(() => {
+        const saved = localStorage.getItem('sidebar-collapsed');
+        return saved === null ? true : saved === 'true';
+    });
+
+    const toggleCollapsed = () => {
+        setCollapsed((prev) => {
+            const next = !prev;
+            localStorage.setItem('sidebar-collapsed', String(next));
+            return next;
+        });
+    };
 
     const handleLogout = (e) => {
         e.preventDefault();
@@ -79,6 +95,7 @@ export default function AuthenticatedLayout({ header, pageTitle, pageSubtitle, p
         { label: 'Autoridades',     icon: <IconUsers />,     href: route('autoridades.index'),     routeName: 'autoridades.index',     activeColor: '#A78BFA' },
         { label: 'Correos',         icon: <IconMail />,       href: route('correos.index'),           routeName: 'correos.index',           activeColor: '#0EA5E9' },
         { label: 'RR.HH.',          icon: <IconBriefcase />, href: route('recursos_humanos.index'), routeName: 'recursos_humanos.index', activeColor: '#10B981' },
+        { label: 'Patrimonio',       icon: <IconArchive />,   href: route('patrimonio.index'),       routeName: 'patrimonio.index',       activeColor: '#F59E0B' },
         { label: 'SAE',             icon: <IconGlobe />,     href: route('sae.index'),               routeName: 'sae.index',               activeColor: '#F97316' },
         { label: 'Perfil',          icon: <IconUser />,      href: route('profile.edit'),            routeName: 'profile.edit',            activeColor: '#D4A843' },
     ];
@@ -114,7 +131,7 @@ export default function AuthenticatedLayout({ header, pageTitle, pageSubtitle, p
 
                 {/* Botón colapsar */}
                 <button
-                    onClick={() => setCollapsed((prev) => !prev)}
+                    onClick={toggleCollapsed}
                     className="absolute -right-3 top-6 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-white/10 border border-white/20 text-white/60 shadow hover:bg-white/20 hover:text-white transition-colors"
                     title={collapsed ? 'Expandir' : 'Contraer'}
                 >
