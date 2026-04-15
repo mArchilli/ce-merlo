@@ -116,6 +116,9 @@ export default function Autoridades({ autoridades = [] }) {
                                                 <p className="text-[11px] font-bold text-brand-gold-400 uppercase tracking-[0.1em] truncate">{v.cargo}</p>
                                             )}
                                             <span className="text-[14px] text-brand-blue-100 leading-snug">{v.nombre}</span>
+                                            {v.area && (
+                                                <p className="text-[11px] text-white/40 mt-0.5 truncate">{v.area}</p>
+                                            )}
                                         </div>
                                     </div>
                                 ))}

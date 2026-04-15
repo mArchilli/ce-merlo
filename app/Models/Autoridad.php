@@ -12,6 +12,7 @@ class Autoridad extends Model
         'nombre',
         'cargo',
         'tipo',
+        'area',
         'foto',
         'orden',
         'activa',
