@@ -1,12 +1,13 @@
 import { Head } from '@inertiajs/react';
 import PublicNavbar from '@/Components/PublicNavbar';
+import PublicFooter from '@/Components/PublicFooter';
 import Hero from '@/Components/Welcome/Hero';
 import Institucional from '@/Components/Welcome/Institucional';
 import Funciones from '@/Components/Welcome/Funciones';
+import Areas from '@/Components/Welcome/Areas';
 import Composicion from '@/Components/Welcome/Composicion';
 import Autoridades from '@/Components/Welcome/Autoridades';
 import Novedades from '@/Components/Welcome/Novedades';
-import Footer from '@/Components/Welcome/Footer';
 
 /* ─── Componente principal ─── */
 export default function Welcome({ autoridades = [], novedades = [] }) {
@@ -25,10 +26,11 @@ export default function Welcome({ autoridades = [], novedades = [] }) {
                 <Hero scrollTo={scrollTo} />
                 <Institucional />
                 <Funciones />
+                <Areas />
                 <Composicion />
                 <Autoridades autoridades={autoridades} />
                 <Novedades novedades={novedades} />
-                <Footer scrollTo={scrollTo} />
+                <PublicFooter />
             </div>
         </>
     );
