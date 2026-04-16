@@ -215,6 +215,7 @@ export default function RecursosHumanos({ recursos, correos }) {
                 </section>
 
                 {/* ══════ ACTO PÚBLICO ══════ */}
+                {recursos.length > 0 && (
                 <section className="py-16 sm:py-20 bg-gray-50">
                     <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
 
@@ -229,20 +230,14 @@ export default function RecursosHumanos({ recursos, correos }) {
                             </p>
                         </div>
 
-                        {recursos.length === 0 ? (
-                            <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-200 bg-white py-20 text-gray-400">
-                                <IconPdf />
-                                <p className="mt-3 text-base font-medium">No hay documentos publicados aún</p>
-                            </div>
-                        ) : (
-                            <div className="">
-                                {recursos.map((recurso) => (
-                                    <ActoPublicoCard key={recurso.id} recurso={recurso} />
-                                ))}
-                            </div>
-                        )}
+                        <div className="">
+                            {recursos.map((recurso) => (
+                                <ActoPublicoCard key={recurso.id} recurso={recurso} />
+                            ))}
+                        </div>
                     </div>
                 </section>
+                )}
 
                 {/* ══════ CONTACTO ══════ */}
                 <section className="relative">
