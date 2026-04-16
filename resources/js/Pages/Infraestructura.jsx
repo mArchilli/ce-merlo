@@ -39,6 +39,16 @@ const IconStar = () => (
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
     </svg>
 );
+const IconPdf = () => (
+    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8.5 18h-1v-5h1.9c.8 0 1.3.5 1.3 1.3 0 .9-.5 1.4-1.4 1.4H8.5v2.3zm.4-3.1h.4c.4 0 .6-.2.6-.6 0-.4-.2-.6-.6-.6h-.4v1.2zm3.7 3.1h-1.1v-5h1.2c1.4 0 2.2.8 2.2 2.5 0 1.6-.9 2.5-2.3 2.5zm.1-4.2h-.1v3.4h.1c.8 0 1.2-.5 1.2-1.7 0-1.2-.4-1.7-1.2-1.7zm4.3.8h1.5v.8H17v1.7h-1v-5h2.6v.8H17v1.7z"/>
+    </svg>
+);
+const IconExternalLink = () => (
+    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+    </svg>
+);
 
 // ─── Card de obra / trabajo menor ─────────────────────────────────────────────
 function ItemCard({ item, featuredKey, href }) {
@@ -93,8 +103,12 @@ function ItemCard({ item, featuredKey, href }) {
 }
 
 // ─── Página principal ─────────────────────────────────────────────────────────
-export default function Infraestructura({ obras, trabajosMenores, correos }) {
+const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+export default function Infraestructura({ obras, trabajosMenores, correos, documentos = [] }) {
     const [tab, setTab] = useState('obras');
+    const [previewUrl, setPreviewUrl] = useState(null);
+    const [previewTitulo, setPreviewTitulo] = useState('');
 
     const obrasDestacadas   = obras.filter(o => o.destacada);
     const trabajosDestacados = trabajosMenores.filter(t => t.destacado);
@@ -308,6 +322,106 @@ export default function Infraestructura({ obras, trabajosMenores, correos }) {
                         )}
                     </div>
                 </section>
+
+                {/* ══════ DOCUMENTOS PDF ══════ */}
+                {documentos.length > 0 && (
+                    <section className="py-16 sm:py-20 bg-gray-50/60">
+                        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+
+                            <div className="max-w-xl mb-10">
+                                <p className="text-xs font-semibold text-brand-gold-500 tracking-[0.2em] uppercase mb-4">Documentación</p>
+                                <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
+                                    Documentos y publicaciones
+                                </h2>
+                                <div className="mt-5 w-16 h-1 bg-brand-gold-400 rounded-full" />
+                                <p className="mt-4 text-gray-500 text-base font-light leading-relaxed">
+                                    Informes, actas y publicaciones oficiales del área de Infraestructura.
+                                </p>
+                            </div>
+
+                            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                                {documentos.map((doc) => (
+                                    <div key={doc.id} className="group flex flex-col rounded-2xl bg-white border border-gray-100 hover:border-brand-blue-100 hover:shadow-lg transition-all duration-200 overflow-hidden">
+                                        {/* Miniatura iframe */}
+                                        <div className="relative bg-gray-50 border-b border-gray-100 overflow-hidden" style={{ height: '200px' }}>
+                                            {doc.pdf_url ? (
+                                                <iframe
+                                                    src={`${doc.pdf_url}#toolbar=0&navpanes=0&scrollbar=0`}
+                                                    title={doc.titulo}
+                                                    className="w-full h-full border-0 pointer-events-none"
+                                                />
+                                            ) : (
+                                                <div className="flex h-full items-center justify-center text-gray-300">
+                                                    <IconPdf />
+                                                </div>
+                                            )}
+                                            {(doc.mes || doc.anio) && (
+                                                <span className="absolute top-2 right-2 rounded-lg bg-white/90 border border-gray-200 px-2 py-0.5 text-xs font-medium text-gray-600">
+                                                    {doc.mes ? `${MESES[doc.mes - 1]} ` : ''}{doc.anio ?? ''}
+                                                </span>
+                                            )}
+                                        </div>
+
+                                        {/* Info */}
+                                        <div className="flex flex-col flex-1 p-4">
+                                            <div className="flex items-start gap-2 mb-1">
+                                                <span className="text-red-400 shrink-0 mt-0.5"><IconPdf /></span>
+                                                <h3 className="font-bold text-gray-900 text-[14px] leading-snug line-clamp-2">{doc.titulo}</h3>
+                                            </div>
+                                            {doc.descripcion && (
+                                                <p className="mt-1 text-xs text-gray-500 line-clamp-2 leading-relaxed">{doc.descripcion}</p>
+                                            )}
+                                            <div className="mt-auto flex items-center gap-2 pt-3 border-t border-gray-100 mt-4">
+                                                {doc.pdf_url && (
+                                                    <>
+                                                        <button
+                                                            onClick={() => { setPreviewUrl(doc.pdf_url); setPreviewTitulo(doc.titulo); }}
+                                                            className="flex-1 flex items-center justify-center gap-1.5 rounded-lg bg-brand-blue-700 px-3 py-2 text-xs font-semibold text-white hover:bg-brand-blue-800 transition-colors"
+                                                        >
+                                                            Ver PDF
+                                                        </button>
+                                                        <a
+                                                            href={doc.pdf_url}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="flex items-center justify-center rounded-lg border border-gray-200 p-2 text-gray-500 hover:border-brand-blue-300 hover:text-brand-blue-600 transition-colors"
+                                                            title="Abrir en nueva pestaña"
+                                                        >
+                                                            <IconExternalLink />
+                                                        </a>
+                                                    </>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                )}
+
+                {/* Visor PDF modal */}
+                {previewUrl && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={() => setPreviewUrl(null)}>
+                        <div className="relative flex w-full max-w-5xl flex-col rounded-2xl bg-white shadow-2xl overflow-hidden" style={{ height: '90vh' }} onClick={(e) => e.stopPropagation()}>
+                            <div className="flex items-center justify-between border-b px-6 py-4 shrink-0">
+                                <h2 className="text-sm font-semibold text-gray-800 truncate pr-4">{previewTitulo}</h2>
+                                <button onClick={() => setPreviewUrl(null)} className="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors">
+                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                                </button>
+                            </div>
+                            <div className="flex-1 overflow-hidden">
+                                <iframe src={previewUrl} title={previewTitulo} className="h-full w-full border-0" />
+                            </div>
+                            <div className="flex justify-end border-t px-6 py-3 shrink-0">
+                                <a href={previewUrl} target="_blank" rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                                    <IconExternalLink /> Abrir en nueva pestaña
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {/* ══════ CONTACTO ══════ */}
                 <section className="relative">

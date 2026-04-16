@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Area;
+use App\Models\InfraestructuraDocumento;
 use App\Models\Obra;
 use App\Models\TrabajoMenor;
 use Inertia\Inertia;
@@ -16,10 +17,27 @@ class PublicInfraestructuraController extends Controller
         $trabajosMenores = TrabajoMenor::with('medioPrincipal')->withCount('medios')->latest()->get();
         $area            = Area::where('slug', 'infraestructura')->with('correosActivos')->first();
 
+        $documentos = InfraestructuraDocumento::where('activa', true)
+            ->orderByDesc('anio')
+            ->orderByDesc('mes')
+            ->orderByDesc('id')
+            ->get()
+            ->map(fn ($d) => [
+                'id'          => $d->id,
+                'titulo'      => $d->titulo,
+                'descripcion' => $d->descripcion,
+                'anio'        => $d->anio,
+                'mes'         => $d->mes,
+                'pdf_url'     => $d->archivo_pdf
+                    ? asset(env('PUBLIC_INFRAESTRUCTURA_PDF_URL_PATH', 'pdfs/infraestructura') . '/' . $d->archivo_pdf)
+                    : null,
+            ]);
+
         return Inertia::render('Infraestructura', [
             'obras'           => $obras,
             'trabajosMenores' => $trabajosMenores,
             'correos'         => $area?->correosActivos ?? collect(),
+            'documentos'      => $documentos,
         ]);
     }
 

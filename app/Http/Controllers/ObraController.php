@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Obra;
 use App\Models\ObraMedio;
+use App\Models\InfraestructuraDocumento;
 use App\Models\TrabajoMenor;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,12 +16,27 @@ class ObraController extends Controller
 {
     public function index(): Response
     {
-        $obras          = Obra::with(['medioPrincipal', 'medios'])->withCount('medios')->latest()->get();
+        $obras           = Obra::with(['medioPrincipal', 'medios'])->withCount('medios')->latest()->get();
         $trabajosMenores = TrabajoMenor::with(['medioPrincipal', 'medios'])->withCount('medios')->where('tipo', 'infraestructura')->latest()->get();
+        $documentos      = InfraestructuraDocumento::latest()->get()->map(function ($item) {
+            return [
+                'id'          => $item->id,
+                'titulo'      => $item->titulo,
+                'descripcion' => $item->descripcion,
+                'activa'      => $item->activa,
+                'anio'        => $item->anio,
+                'mes'         => $item->mes,
+                'archivo_pdf' => $item->archivo_pdf,
+                'pdf_url'     => $item->archivo_pdf
+                    ? asset(env('PUBLIC_INFRAESTRUCTURA_PDF_URL_PATH', 'pdfs/infraestructura') . '/' . $item->archivo_pdf)
+                    : null,
+            ];
+        });
 
         return Inertia::render('admin/infraestructura/ObrasIndex', [
             'obras'           => $obras,
             'trabajosMenores' => $trabajosMenores,
+            'documentos'      => $documentos,
         ]);
     }
 
