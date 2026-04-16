@@ -462,12 +462,13 @@ function PdfViewerModal({ url, titulo, onClose }) {
 // ─── Modal Documento PDF ──────────────────────────────────────────────────────
 function DocumentoModal({ item, onClose }) {
     const isEdit = !!item;
+    const now = new Date();
     const { data, setData, processing, errors, reset } = useForm({
         titulo:      item?.titulo      ?? '',
         descripcion: item?.descripcion ?? '',
         activa:      item?.activa      ?? true,
-        anio:        item?.anio        ?? '',
-        mes:         item?.mes         ?? '',
+        anio:        item?.anio        ?? now.getFullYear(),
+        mes:         item?.mes         ?? (now.getMonth() + 1),
         archivo_pdf: null,
     });
     const fileInputRef = useRef(null);
