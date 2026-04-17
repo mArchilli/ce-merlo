@@ -30,12 +30,12 @@ const IconPackage = () => (
 );
 
 const FUNCIONES = [
-    { icon: <IconMoney />, title: 'Administración de fondos', desc: 'Administración de fondos destinados al sistema educativo del distrito.' },
+    { icon: <IconMoney />, title: 'Administración de fondos', desc: 'Coordinacion con Inspectores, directivos y la comunidad educativa por medio de las cooperadoras escolares.' },
     { icon: <IconBuilding />, title: 'Infraestructura escolar', desc: 'Gestión de infraestructura escolar: mantenimiento, reparaciones y obras.' },
     { icon: <IconTruck />, title: 'Servicios escolares', desc: 'Supervisión de servicios escolares: comedores, transporte y mobiliario.' },
     { icon: <IconUsers />, title: 'Coordinación educativa', desc: 'Coordinación con directivos, docentes y la comunidad educativa.' },
-    { icon: <IconClipboard />, title: 'Personal auxiliar', desc: 'Gestión del personal auxiliar de las instituciones educativas.' },
-    { icon: <IconPackage />, title: 'Compras y suministros', desc: 'Gestión de las compras y distribución de materiales, insumos y equipamiento necesarios para el funcionamiento de las escuelas del distrito.' },
+    { icon: <IconClipboard />, title: 'Recursos humanos', desc: 'Designación de personal auxiliar de las instituciones educativas.' },
+    { icon: <IconPackage />, title: 'S.A.E', desc: 'Supervisión de servicios escolares: comedores, transporte y patrimonio de las instituciones escolares.' },
 ];
 
 export default function Funciones() {

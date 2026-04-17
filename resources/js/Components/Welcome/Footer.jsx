@@ -85,7 +85,7 @@ export default function Footer({ scrollTo }) {
                         © {new Date().getFullYear()} Consejo Escolar de Merlo.
                     </p>
                     <div className="flex items-center gap-4">
-                        <span className="text-xs text-gray-400">Powered by <span className="font-semibold text-gray-500">Pampa Labs</span></span>
+                        <span className="text-xs text-gray-400">Powered by <span className="font-semibold text-gray-500">PAMPA LABS</span></span>
                         <div className="flex items-center gap-1.5">
                             <span className="w-2 h-2 rounded-full bg-brand-blue-200" />
                             <span className="w-2 h-2 rounded-full bg-brand-blue-400" />
