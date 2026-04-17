@@ -60,10 +60,7 @@ export default function PublicNavbar({ transparent = false }) {
 
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-3 shrink-0">
-                    <div className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors duration-300 ${ghost ? 'bg-white/15 border border-white/25' : 'bg-brand-blue-400'}`}>
-                        <span className="text-white font-bold text-sm">CE</span>
-                    </div>
-                    <span className={`hidden sm:block text-sm font-semibold leading-tight transition-colors duration-300 ${ghost ? 'text-white' : 'text-gray-800'}`}>
+                    <span className={`text-sm font-semibold leading-tight transition-colors duration-300 ${ghost ? 'text-white' : 'text-gray-800'}`}>
                         Consejo Escolar
                         <span className={ghost ? 'text-brand-gold-300' : 'text-brand-blue-400'}> de Merlo</span>
                     </span>
@@ -72,9 +69,10 @@ export default function PublicNavbar({ transparent = false }) {
                 {/* Hamburger — siempre visible */}
                 <button
                     onClick={() => setMenuOpen(true)}
-                    className={`p-2 rounded-md transition-colors duration-300 ${ghost ? 'text-white hover:bg-white/10' : 'text-gray-600 hover:bg-gray-100'}`}
+                    className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors duration-300 ${ghost ? 'text-white hover:bg-white/10' : 'text-gray-600 hover:bg-gray-100'}`}
                     aria-label="Abrir menú"
                 >
+                    <span className={`text-[11px] font-bold tracking-[0.18em] uppercase ${ghost ? 'text-white' : 'text-gray-600'}`}>Menú</span>
                     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     </svg>
@@ -94,10 +92,7 @@ export default function PublicNavbar({ transparent = false }) {
                 {/* Top bar */}
                 <div className="flex items-center justify-between px-6 sm:px-8 lg:px-12 h-16 shrink-0">
                     <Link href="/" onClick={close} className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-full bg-white/15 border border-white/25 flex items-center justify-center">
-                            <span className="text-white font-bold text-sm">CE</span>
-                        </div>
-                        <span className="hidden sm:block text-sm font-semibold text-white leading-tight">
+                        <span className="text-sm font-semibold text-white leading-tight">
                             Consejo Escolar
                             <span className="text-brand-gold-300"> de Merlo</span>
                         </span>
@@ -119,13 +114,13 @@ export default function PublicNavbar({ transparent = false }) {
 
                         {/* Navegación */}
                         <div className="flex flex-col items-center gap-1 sm:pr-10 sm:border-r sm:border-white/15">
-                            <p className="text-white font-bold text-xl mb-5 tracking-tight">Navegación</p>
+                            <p className="text-white font-bold text-xl sm:text-2xl mb-5 sm:mb-8 tracking-tight">Navegación</p>
                             {NAV_MAIN.map((item) => (
                                 <Link
                                     key={item.href}
                                     href={item.href}
                                     onClick={close}
-                                    className={`px-6 py-2.5 rounded-lg text-base font-medium transition-colors w-full text-center ${
+                                    className={`px-6 py-2.5 sm:py-3.5 rounded-lg text-base sm:text-xl font-medium transition-colors w-full text-center ${
                                         isActive(item.href)
                                             ? 'bg-white/20 text-white'
                                             : 'text-white/70 hover:text-white hover:bg-white/10'
@@ -147,13 +142,13 @@ export default function PublicNavbar({ transparent = false }) {
 
                         {/* Áreas */}
                         <div className="flex flex-col items-center gap-1 sm:pl-10">
-                            <p className="text-white font-bold text-xl mb-5 tracking-tight">Áreas</p>
+                            <p className="text-white font-bold text-xl sm:text-2xl mb-5 sm:mb-8 tracking-tight">Áreas</p>
                             {NAV_AREAS.map((item) => (
                                 <Link
                                     key={item.href}
                                     href={item.href}
                                     onClick={close}
-                                    className={`px-6 py-2.5 rounded-lg text-base font-medium transition-colors w-full text-center ${
+                                    className={`px-6 py-2.5 sm:py-3.5 rounded-lg text-base sm:text-xl font-medium transition-colors w-full text-center ${
                                         isActive(item.href)
                                             ? 'bg-white/20 text-white'
                                             : 'text-white/70 hover:text-white hover:bg-white/10'

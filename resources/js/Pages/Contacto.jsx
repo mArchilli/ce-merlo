@@ -29,7 +29,7 @@ const CONTACTO_INFO = [
     {
         titulo: 'Horario de atención',
         detalle: 'Lunes a viernes',
-        subtexto: 'de 8 a 14 hs',
+        subtexto: 'de 8 a 16 hs',
         icon: (
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -56,7 +56,7 @@ const FAQ = [
     },
     {
         pregunta: '¿Necesito sacar turno previo?',
-        respuesta: 'No es necesario sacar turno previo. Podés acercarte en el horario de atención de lunes a viernes de 8 a 14 hs. Para consultas específicas, te recomendamos comunicarte telefónicamente antes.',
+        respuesta: 'No es necesario sacar turno previo. Podés acercarte en el horario de atención de lunes a viernes de 8 a 16 hs. Para consultas específicas, te recomendamos comunicarte telefónicamente antes.',
     },
     {
         pregunta: '¿Cómo reporto un problema de infraestructura en una escuela?',
@@ -228,7 +228,7 @@ export default function Contacto() {
                                         <div>
                                             <p className="font-semibold text-gray-900 text-sm mb-1">Horario de atención</p>
                                             <p className="text-gray-500 text-sm leading-relaxed">
-                                                Lunes a viernes de 8:00 a 14:00 hs. Se recomienda llegar antes de las 13:30 para ser atendido.
+                                                Lunes a viernes de 8:00 a 16:00 hs. Se recomienda llegar antes de las 13:30 para ser atendido.
                                             </p>
                                         </div>
                                     </div>

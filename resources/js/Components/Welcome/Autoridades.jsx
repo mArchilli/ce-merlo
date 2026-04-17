@@ -171,7 +171,7 @@ export default function Autoridades({ autoridades = [] }) {
                                     </svg>
                                 </div>
                                 <p className="text-xs font-semibold text-brand-gold-400 uppercase tracking-wider mb-2">Horario</p>
-                                <p className="text-[15px] text-brand-blue-100">Lunes a viernes<br />de 8 a 14 hs</p>
+                                <p className="text-[15px] text-brand-blue-100">Lunes a viernes<br />de 8 a 16 hs</p>
                             </div>
                         </div>
 
