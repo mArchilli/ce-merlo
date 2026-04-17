@@ -38,6 +38,7 @@ function AutoridadModal({ item, onClose }) {
         nombre:       item?.nombre ?? '',
         cargo:        item?.cargo ?? '',
         tipo:         item?.tipo ?? 'principal',
+        area:         item?.area ?? '',
         orden:        item?.orden ?? 0,
         activa:       item?.activa ?? true,
         eliminar_foto: false,
@@ -146,6 +147,28 @@ function AutoridadModal({ item, onClose }) {
                         />
                         {errors.cargo && <p className="mt-1 text-xs text-red-500">{errors.cargo}</p>}
                     </div>
+
+                    {/* Área (solo vocales) */}
+                    {data.tipo === 'vocal' && (
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Área asignada</label>
+                            <select
+                                value={data.area}
+                                onChange={(e) => setData('area', e.target.value)}
+                                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                            >
+                                <option value="">Sin área asignada</option>
+                                <option value="Infraestructura">Infraestructura</option>
+                                <option value="Recursos Humanos">Recursos Humanos</option>
+                                <option value="Patrimonio">Patrimonio</option>
+                                <option value="Cooperación Escolar">Cooperación Escolar</option>
+                                <option value="SAE">SAE</option>
+                                <option value="Descentralizados">Descentralizados</option>
+                                <option value="Correo Oficial">Correo Oficial</option>
+                            </select>
+                            {errors.area && <p className="mt-1 text-xs text-red-500">{errors.area}</p>}
+                        </div>
+                    )}
 
                     {/* Orden */}
                     <div>
@@ -316,6 +339,11 @@ function AutoridadCard({ autoridad, onEdit, onDelete }) {
                     }`}>
                         {autoridad.tipo === 'principal' ? 'Principal' : 'Vocal'}
                     </span>
+                    {autoridad.area && (
+                        <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600">
+                            {autoridad.area}
+                        </span>
+                    )}
                     {!autoridad.activa && (
                         <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-500">Oculto</span>
                     )}

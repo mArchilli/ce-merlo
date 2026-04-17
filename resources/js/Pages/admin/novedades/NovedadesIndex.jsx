@@ -409,11 +409,112 @@ function NovedadCard({ novedad, onEdit, onDelete }) {
     );
 }
 
+// ─── Paginación ───────────────────────────────────────────────────────────────
+function Pagination({ paginator, onPageChange }) {
+    if (paginator.last_page <= 1) return null;
+
+    const { current_page, last_page } = paginator;
+
+    const pages = [];
+    if (last_page <= 7) {
+        for (let i = 1; i <= last_page; i++) pages.push(i);
+    } else if (current_page <= 4) {
+        pages.push(1, 2, 3, 4, 5, '…', last_page);
+    } else if (current_page >= last_page - 3) {
+        pages.push(1, '…', last_page - 4, last_page - 3, last_page - 2, last_page - 1, last_page);
+    } else {
+        pages.push(1, '…', current_page - 1, current_page, current_page + 1, '…', last_page);
+    }
+
+    return (
+        <div className="flex items-center justify-center gap-1 mt-8">
+            <button
+                onClick={() => onPageChange(current_page - 1)}
+                disabled={current_page === 1}
+                className="flex items-center gap-1 rounded-lg border border-gray-200 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+                Anterior
+            </button>
+
+            {pages.map((p, i) =>
+                p === '…' ? (
+                    <span key={`e${i}`} className="px-2 py-2 text-sm text-gray-400 select-none">…</span>
+                ) : (
+                    <button
+                        key={p}
+                        onClick={() => onPageChange(p)}
+                        className={`min-w-[2.25rem] rounded-lg border px-3 py-2 text-sm font-medium transition-colors ${
+                            p === current_page
+                                ? 'border-brand-blue-400 bg-brand-blue-400 text-white'
+                                : 'border-gray-200 text-gray-600 hover:bg-gray-50'
+                        }`}
+                    >
+                        {p}
+                    </button>
+                )
+            )}
+
+            <button
+                onClick={() => onPageChange(current_page + 1)}
+                disabled={current_page === last_page}
+                className="flex items-center gap-1 rounded-lg border border-gray-200 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            >
+                Siguiente
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        </div>
+    );
+}
+
 // ─── Página principal ─────────────────────────────────────────────────────────
-export default function NovedadesIndex({ novedades }) {
+export default function NovedadesIndex({ novedades, filters = {}, anios = [] }) {
     const [modalOpen, setModalOpen] = useState(false);
     const [editando,  setEditando]  = useState(null);
     const [aEliminar, setAEliminar] = useState(null);
+
+    const [search, setSearch] = useState(filters.search ?? '');
+    const [mes,    setMes]    = useState(filters.mes    ?? '');
+    const [anio,   setAnio]   = useState(filters.anio   ?? '');
+
+    const searchTimer = useRef(null);
+
+    const go = (params) => {
+        const clean = Object.fromEntries(Object.entries(params).filter(([, v]) => v !== '' && v !== null && v !== undefined));
+        router.get(route('novedades.index'), clean, { preserveState: true, preserveScroll: true, replace: true });
+    };
+
+    const handleSearchChange = (val) => {
+        setSearch(val);
+        clearTimeout(searchTimer.current);
+        const currentMes  = mes;
+        const currentAnio = anio;
+        searchTimer.current = setTimeout(() => {
+            go({ search: val, mes: currentMes, anio: currentAnio, page: 1 });
+        }, 400);
+    };
+
+    const handleMesChange = (val) => {
+        setMes(val);
+        go({ search, mes: val, anio, page: 1 });
+    };
+
+    const handleAnioChange = (val) => {
+        setAnio(val);
+        setMes('');
+        go({ search, anio: val, mes: '', page: 1 });
+    };
+
+    const limpiar = () => {
+        setSearch(''); setMes(''); setAnio('');
+        router.get(route('novedades.index'), {}, { preserveState: true, preserveScroll: true, replace: true });
+    };
+
+    const hayFiltros = search || mes || anio;
 
     const handleEdit  = (item) => { setEditando(item); setModalOpen(true); };
     const handleClose = ()     => { setModalOpen(false); setEditando(null); };
@@ -432,7 +533,7 @@ export default function NovedadesIndex({ novedades }) {
         <>
         <AuthenticatedLayout
             pageTitle="Novedades"
-            pageSubtitle={`${novedades.length} novedad(es) registrada(s)`}
+            pageSubtitle={`${novedades.total} novedad(es) registrada(s)`}
             pageColor="#3B82F6"
             pageAction={
                 <button
@@ -447,22 +548,98 @@ export default function NovedadesIndex({ novedades }) {
 
             <div className="py-8 px-6">
 
-                {novedades.length === 0 ? (
+                {/* Barra de filtros */}
+                <div className="flex flex-wrap items-center gap-3 mb-6 pb-5 border-b border-gray-200">
+                    {/* Búsqueda */}
+                    <div className="relative">
+                        <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 105 11a6 6 0 0012 0z" />
+                        </svg>
+                        <input
+                            type="text"
+                            placeholder="Buscar por título..."
+                            value={search}
+                            onChange={(e) => handleSearchChange(e.target.value)}
+                            className="pl-9 pr-3 py-2 rounded-lg border border-gray-200 bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-blue-300 focus:border-transparent w-60"
+                        />
+                    </div>
+
+                    {/* Filtro año */}
+                    <div className="flex items-center gap-2">
+                        <label className="text-sm text-gray-500 whitespace-nowrap">Año</label>
+                        <select
+                            value={anio}
+                            onChange={(e) => handleAnioChange(e.target.value)}
+                            className="text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-blue-300 focus:border-transparent"
+                        >
+                            <option value="">Todos</option>
+                            {anios.map(a => <option key={a} value={a}>{a}</option>)}
+                        </select>
+                    </div>
+
+                    {/* Filtro mes */}
+                    <div className="flex items-center gap-2">
+                        <label className="text-sm text-gray-500 whitespace-nowrap">Mes</label>
+                        <select
+                            value={mes}
+                            onChange={(e) => handleMesChange(e.target.value)}
+                            className="text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-blue-300 focus:border-transparent"
+                        >
+                            <option value="">Todos</option>
+                            {[
+                                [1,'Enero'],[2,'Febrero'],[3,'Marzo'],[4,'Abril'],
+                                [5,'Mayo'],[6,'Junio'],[7,'Julio'],[8,'Agosto'],
+                                [9,'Septiembre'],[10,'Octubre'],[11,'Noviembre'],[12,'Diciembre'],
+                            ].map(([n, label]) => <option key={n} value={n}>{label}</option>)}
+                        </select>
+                    </div>
+
+                    {hayFiltros && (
+                        <button
+                            onClick={limpiar}
+                            className="flex items-center gap-1 text-sm text-brand-blue-500 hover:text-brand-blue-700 font-medium transition-colors"
+                        >
+                            <IconX /> Limpiar
+                        </button>
+                    )}
+
+                    <span className="ml-auto text-sm text-gray-400">
+                        {novedades.total} {novedades.total === 1 ? 'novedad' : 'novedades'}
+                        {hayFiltros ? ' encontradas' : ''}
+                    </span>
+                </div>
+
+                {novedades.data.length === 0 ? (
                     <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 py-20 text-gray-400">
-                        <p className="text-lg font-medium">No hay novedades cargadas</p>
-                        <p className="text-sm mt-1">Hacé clic en "Nueva novedad" para comenzar.</p>
+                        <p className="text-lg font-medium">
+                            {hayFiltros ? 'No hay novedades con los filtros seleccionados' : 'No hay novedades cargadas'}
+                        </p>
+                        {hayFiltros ? (
+                            <button onClick={limpiar} className="mt-3 text-sm text-brand-blue-500 hover:text-brand-blue-700 font-medium transition-colors">
+                                Limpiar filtros
+                            </button>
+                        ) : (
+                            <p className="text-sm mt-1">Hacé clic en "Nueva novedad" para comenzar.</p>
+                        )}
                     </div>
                 ) : (
-                    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                        {novedades.map((novedad) => (
-                            <NovedadCard
-                                key={novedad.id}
-                                novedad={novedad}
-                                onEdit={handleEdit}
-                                onDelete={setAEliminar}
-                            />
-                        ))}
-                    </div>
+                    <>
+                        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                            {novedades.data.map((novedad) => (
+                                <NovedadCard
+                                    key={novedad.id}
+                                    novedad={novedad}
+                                    onEdit={handleEdit}
+                                    onDelete={setAEliminar}
+                                />
+                            ))}
+                        </div>
+
+                        <Pagination
+                            paginator={novedades}
+                            onPageChange={(page) => go({ search, mes, anio, page })}
+                        />
+                    </>
                 )}
             </div>
         </AuthenticatedLayout>
@@ -512,3 +689,4 @@ export default function NovedadesIndex({ novedades }) {
         </>
     );
 }
+

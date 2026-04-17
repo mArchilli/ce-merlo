@@ -144,12 +144,10 @@ export default function Novedades({ novedades = [] }) {
                         <div className="absolute -right-20 -bottom-20 w-[280px] h-[280px] rounded-full border border-white/[0.06]" />
 
                         <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-24 pb-12">
-                            {/* Breadcrumb */}
-                            <nav className="flex items-center gap-2 text-brand-blue-200/70 text-sm mb-6">
-                                <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
-                                <span>/</span>
-                                <span className="text-white font-medium">Novedades</span>
-                            </nav>
+                            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 mb-6 rounded-full bg-white/[0.08] backdrop-blur-sm text-brand-blue-100 text-sm font-medium tracking-wide uppercase border border-white/[0.08]">
+                                <span className="w-2 h-2 rounded-full bg-brand-gold-400 animate-pulse" />
+                                Consejo Escolar de Merlo
+                            </div>
 
                             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-[1.08] tracking-tight">
                                 Novedades<span className="text-brand-gold-400">.</span>

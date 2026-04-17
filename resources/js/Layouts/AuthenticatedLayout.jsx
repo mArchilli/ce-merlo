@@ -92,18 +92,42 @@ export default function AuthenticatedLayout({ header, pageTitle, pageSubtitle, p
         router.post(route('logout'));
     };
 
-    const navItems = [
-        { label: 'Inicio',          icon: <IconHome />,      href: route('dashboard'),             routeName: 'dashboard',             activeColor: '#D4A843' },
-        { label: 'Infraestructura', icon: <IconBuilding />,  href: route('infraestructura.index'), routeName: 'infraestructura.index', activeColor: '#FFA101' },
-        { label: 'Descentralizados', icon: <IconTool />,    href: route('descentralizados.index'), routeName: 'descentralizados.index', activeColor: '#0D9488' },
-        { label: 'Novedades',       icon: <IconNewspaper />, href: route('novedades.index'),       routeName: 'novedades.index',       activeColor: '#5796C2' },
-        { label: 'Autoridades',     icon: <IconUsers />,     href: route('autoridades.index'),     routeName: 'autoridades.index',     activeColor: '#A78BFA' },
-        { label: 'Correos',         icon: <IconMail />,       href: route('correos.index'),           routeName: 'correos.index',           activeColor: '#0EA5E9' },
-        { label: 'RR.HH.',          icon: <IconBriefcase />, href: route('recursos_humanos.index'), routeName: 'recursos_humanos.index', activeColor: '#10B981' },
-        { label: 'Patrimonio',       icon: <IconArchive />,   href: route('patrimonio.index'),       routeName: 'patrimonio.index',       activeColor: '#F59E0B' },
-        { label: 'Coop. Escolar', icon: <IconHandshake />, href: route('cooperacion_escolar.index'), routeName: 'cooperacion_escolar.index', activeColor: '#7C3AED' },
-        { label: 'SAE',             icon: <IconGlobe />,     href: route('sae.index'),               routeName: 'sae.index',               activeColor: '#F97316' },
-        { label: 'Perfil',          icon: <IconUser />,      href: route('profile.edit'),            routeName: 'profile.edit',            activeColor: '#D4A843' },
+    const navGroups = [
+        {
+            items: [
+                { label: 'Inicio', icon: <IconHome />, href: route('dashboard'), routeName: 'dashboard', activeColor: '#D4A843' },
+            ],
+        },
+        {
+            title: 'Áreas',
+            items: [
+                { label: 'Infraestructura',  icon: <IconBuilding />,  href: route('infraestructura.index'),       routeName: 'infraestructura.index',       activeColor: '#FFA101' },
+                { label: 'Descentralizados', icon: <IconTool />,      href: route('descentralizados.index'),      routeName: 'descentralizados.index',      activeColor: '#0D9488' },
+                { label: 'RR.HH.',           icon: <IconBriefcase />, href: route('recursos_humanos.index'),      routeName: 'recursos_humanos.index',      activeColor: '#10B981' },
+                { label: 'SAE',              icon: <IconGlobe />,     href: route('sae.index'),                   routeName: 'sae.index',                   activeColor: '#F97316' },
+                { label: 'Patrimonio',       icon: <IconArchive />,   href: route('patrimonio.index'),            routeName: 'patrimonio.index',            activeColor: '#F59E0B' },
+                { label: 'Coop. Escolar',    icon: <IconHandshake />, href: route('cooperacion_escolar.index'),   routeName: 'cooperacion_escolar.index',   activeColor: '#7C3AED' },
+            ],
+        },
+        {
+            title: 'Comunicación',
+            items: [
+                { label: 'Novedades',   icon: <IconNewspaper />, href: route('novedades.index'),   routeName: 'novedades.index',   activeColor: '#5796C2' },
+                { label: 'Autoridades', icon: <IconUsers />,     href: route('autoridades.index'), routeName: 'autoridades.index', activeColor: '#A78BFA' },
+            ],
+        },
+        {
+            title: 'Contacto',
+            items: [
+                { label: 'Correos', icon: <IconMail />, href: route('correos.index'), routeName: 'correos.index', activeColor: '#0EA5E9' },
+            ],
+        },
+        {
+            title: 'Configuración',
+            items: [
+                { label: 'Perfil', icon: <IconUser />, href: route('profile.edit'), routeName: 'profile.edit', activeColor: '#D4A843' },
+            ],
+        },
     ];
 
     return (
@@ -145,38 +169,52 @@ export default function AuthenticatedLayout({ header, pageTitle, pageSubtitle, p
                 </button>
 
                 {/* Navegación */}
-                <nav className="flex-1 space-y-0.5 px-2">
-                    {navItems.map((item) => {
-                        const isActive = route().current(item.routeName);
-                        return (
-                            <Link
-                                key={item.routeName}
-                                href={item.href}
-                                title={collapsed ? item.label : undefined}
-                                className={`group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150 ${
-                                    isActive
-                                        ? 'bg-white/10 text-white'
-                                        : 'text-white/60 hover:bg-white/[0.07] hover:text-white'
-                                }`}
-                            >
-                                {isActive && (
-                                    <span
-                                        className="absolute left-0 h-7 w-0.5 rounded-r-full"
-                                        style={{ backgroundColor: item.activeColor }}
-                                    />
-                                )}
-                                <span
-                                    className="relative shrink-0"
-                                    style={isActive ? { color: item.activeColor } : {}}
-                                >
-                                    {item.icon}
-                                </span>
-                                {!collapsed && (
-                                    <span className="truncate">{item.label}</span>
-                                )}
-                            </Link>
-                        );
-                    })}
+                <nav className="flex-1 space-y-1 px-2 overflow-y-auto">
+                    {navGroups.map((group, gi) => (
+                        <div key={gi} className={gi > 0 ? 'pt-2' : ''}>
+                            {group.title && !collapsed && (
+                                <p className="px-3 pb-1 pt-1 text-[10px] font-semibold uppercase tracking-widest text-white/30 select-none">
+                                    {group.title}
+                                </p>
+                            )}
+                            {group.title && collapsed && gi > 0 && (
+                                <div className="mx-3 mb-1 mt-1 border-t border-white/10" />
+                            )}
+                            <div className="space-y-0.5">
+                                {group.items.map((item) => {
+                                    const isActive = route().current(item.routeName);
+                                    return (
+                                        <Link
+                                            key={item.routeName}
+                                            href={item.href}
+                                            title={collapsed ? item.label : undefined}
+                                            className={`group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150 ${
+                                                isActive
+                                                    ? 'bg-white/10 text-white'
+                                                    : 'text-white/60 hover:bg-white/[0.07] hover:text-white'
+                                            }`}
+                                        >
+                                            {isActive && (
+                                                <span
+                                                    className="absolute left-0 h-7 w-0.5 rounded-r-full"
+                                                    style={{ backgroundColor: item.activeColor }}
+                                                />
+                                            )}
+                                            <span
+                                                className="relative shrink-0"
+                                                style={isActive ? { color: item.activeColor } : {}}
+                                            >
+                                                {item.icon}
+                                            </span>
+                                            {!collapsed && (
+                                                <span className="truncate">{item.label}</span>
+                                            )}
+                                        </Link>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    ))}
                 </nav>
 
                 {/* Usuario + acciones */}

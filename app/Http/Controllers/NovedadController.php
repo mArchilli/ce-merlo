@@ -12,12 +12,29 @@ use Inertia\Response;
 
 class NovedadController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $novedades = Novedad::with(['medioPrincipal', 'medios'])->withCount('medios')->latest()->get();
+        $query = Novedad::with(['medioPrincipal', 'medios'])->withCount('medios')->latest();
+
+        if ($search = $request->input('search')) {
+            $query->where('titulo', 'like', "%{$search}%");
+        }
+
+        if ($mes = $request->input('mes')) {
+            $query->where('mes', (int) $mes);
+        }
+
+        if ($anio = $request->input('anio')) {
+            $query->where('anio', (int) $anio);
+        }
+
+        $novedades = $query->paginate(12)->withQueryString();
+        $anios     = Novedad::distinct()->whereNotNull('anio')->orderByDesc('anio')->pluck('anio');
 
         return Inertia::render('admin/novedades/NovedadesIndex', [
             'novedades' => $novedades,
+            'filters'   => $request->only(['search', 'mes', 'anio']),
+            'anios'     => $anios,
         ]);
     }
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AreaCorreoController;
+use App\Http\Controllers\InfraestructuraDocumentoController;
 use App\Http\Controllers\AutoridadController;
 use App\Http\Controllers\NovedadController;
 use App\Http\Controllers\ObraController;
@@ -73,7 +74,6 @@ Route::prefix('admin')->group(function () {
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
         // Infraestructura - Obras
         Route::get('/infraestructura', [ObraController::class, 'index'])->name('infraestructura.index');
@@ -81,6 +81,11 @@ Route::prefix('admin')->group(function () {
         Route::put('/infraestructura/{obra}', [ObraController::class, 'update'])->name('infraestructura.update');
         Route::delete('/infraestructura/{obra}', [ObraController::class, 'destroy'])->name('infraestructura.destroy');
         Route::post('/infraestructura/{obra}/principal', [ObraController::class, 'setPrincipal'])->name('infraestructura.principal');
+
+        // Infraestructura - Documentos PDF
+        Route::post('/infraestructura-documentos', [InfraestructuraDocumentoController::class, 'store'])->name('infraestructura_documentos.store');
+        Route::put('/infraestructura-documentos/{infraestructuraDocumento}', [InfraestructuraDocumentoController::class, 'update'])->name('infraestructura_documentos.update');
+        Route::delete('/infraestructura-documentos/{infraestructuraDocumento}', [InfraestructuraDocumentoController::class, 'destroy'])->name('infraestructura_documentos.destroy');
 
         // Infraestructura - Trabajos Menores
         Route::post('/trabajos-menores', [TrabajoMenorController::class, 'store'])->name('trabajos_menores.store');
