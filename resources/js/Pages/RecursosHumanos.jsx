@@ -146,7 +146,7 @@ export default function RecursosHumanos({ recursos, correos }) {
                                 </h1>
                                 <div className="mt-5 w-20 h-1 bg-emerald-400 rounded-full" />
                                 <p className="mt-5 text-lg sm:text-xl text-brand-blue-200/90 leading-relaxed max-w-xl font-light">
-                                    Gestionamos todo lo relacionado con el personal de los establecimientos educativos del distrito de Merlo: concursos, actos públicos y documentación oficial.
+                                    Gestionamos la asignación de cargos de personal auxiliar habilitados por la Provincia de Buenos Aires y la resolución de conflictos dentro de los establecimientos educativos del distrito.
                                 </p>
                             </div>
                         </div>
@@ -170,7 +170,7 @@ export default function RecursosHumanos({ recursos, correos }) {
                             </h2>
                             <div className="mt-5 w-16 h-1 bg-emerald-400 rounded-full" />
                             <p className="mt-5 text-gray-500 text-base font-light leading-relaxed">
-                                El área de Recursos Humanos del Consejo Escolar de Merlo gestiona los procesos de designación, concursos y actos públicos del personal docente y no docente del distrito.
+                                El área de Recursos Humanos del Consejo Escolar de Merlo se ocupa de la asignación de cargos de personal auxiliar habilitados por la Provincia de Buenos Aires y de la resolución de conflictos con personal auxiliar dentro de los establecimientos educativos del distrito.
                             </p>
                         </div>
 
@@ -180,9 +180,9 @@ export default function RecursosHumanos({ recursos, correos }) {
                                     <IconBriefcase />
                                 </div>
                                 <div>
-                                    <p className="font-bold text-gray-900 text-[15px] mb-2">Actos públicos</p>
+                                    <p className="font-bold text-gray-900 text-[15px] mb-2">Asignación de cargos</p>
                                     <p className="text-gray-500 text-sm leading-relaxed">
-                                        Publicación de documentos y convocatorias para actos públicos de designación y cobertura de cargos docentes.
+                                        Asignación de cargos de personal auxiliar habilitados por la Provincia de Buenos Aires para los establecimientos educativos del distrito.
                                     </p>
                                 </div>
                             </div>
@@ -192,9 +192,9 @@ export default function RecursosHumanos({ recursos, correos }) {
                                     <IconUsers />
                                 </div>
                                 <div>
-                                    <p className="font-bold text-gray-900 text-[15px] mb-2">Gestión de personal</p>
+                                    <p className="font-bold text-gray-900 text-[15px] mb-2">Resolución de conflictos</p>
                                     <p className="text-gray-500 text-sm leading-relaxed">
-                                        Administración de legajos, licencias y trámites vinculados al personal de los establecimientos del distrito.
+                                        Intervención y resolución de conflictos con personal auxiliar dentro de las instituciones educativas del distrito.
                                     </p>
                                 </div>
                             </div>
@@ -206,7 +206,7 @@ export default function RecursosHumanos({ recursos, correos }) {
                                 <div>
                                     <p className="font-bold text-gray-900 text-[15px] mb-2">Documentación oficial</p>
                                     <p className="text-gray-500 text-sm leading-relaxed">
-                                        Acceso a resoluciones, circulares y documentos oficiales relacionados con los recursos humanos del sistema educativo distrital.
+                                        Acceso a resoluciones, actos públicos y documentos oficiales vinculados a la gestión del personal auxiliar del sistema educativo distrital.
                                     </p>
                                 </div>
                             </div>
@@ -226,7 +226,7 @@ export default function RecursosHumanos({ recursos, correos }) {
                             </h2>
                             <div className="mt-5 w-16 h-1 bg-emerald-400 rounded-full" />
                             <p className="mt-4 text-gray-500 text-base font-light leading-relaxed">
-                                Documentos y convocatorias vigentes para los actos públicos de designación.
+                                Documentos y actos públicos vigentes para la asignación de cargos de personal auxiliar habilitados por la Provincia.
                             </p>
                         </div>
 
@@ -258,7 +258,7 @@ export default function RecursosHumanos({ recursos, correos }) {
                                 </h2>
                                 <div className="mt-5 w-16 h-1 bg-emerald-400 mx-auto rounded-full" />
                                 <p className="mt-5 text-brand-blue-200/90 text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto">
-                                    Para consultas sobre designaciones, actos públicos o trámites de personal, comunicate con nuestra área.
+                                    Para consultas sobre asignación de cargos de personal auxiliar o resolución de conflictos en establecimientos educativos, comunicate con nuestra área.
                                 </p>
                             </div>
 

@@ -159,7 +159,7 @@ export default function CooperacionEscolar({ items, correos }) {
                             </h2>
                             <div className="mt-5 w-16 h-1 bg-violet-400 rounded-full" />
                             <p className="mt-5 text-gray-500 text-base font-light leading-relaxed">
-                                El área de Cooperación Escolar del Consejo Escolar de Merlo administra y supervisa los fondos de cooperadora escolar, garantizando su correcta utilización en beneficio de la comunidad educativa del distrito.
+                                El área de Cooperación Escolar del Consejo Escolar de Merlo se ocupa de las cuestiones impositivas y administrativas de las cooperadoras escolares del distrito, incluyendo rendiciones de fondos, confección de planillas PIA y gestión de cuentas bancarias.
                             </p>
                         </div>
 

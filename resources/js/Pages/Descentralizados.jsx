@@ -69,8 +69,8 @@ const SERVICIOS = [
     },
     {
         icon: <IconShield />,
-        titulo: 'Desinfección',
-        desc: 'Saneamiento integral de aulas, baños, cocinas y espacios comunes mediante productos biocidas autorizados.',
+        titulo: 'Análisis de agua',
+        desc: 'Extracción y análisis de muestras de agua potable en los establecimientos educativos para verificar su calidad y aptitud para el consumo.',
     },
     {
         icon: <IconDroplet />,
@@ -240,7 +240,7 @@ export default function Descentralizados({ trabajos, correos }) {
                                 </h2>
                                 <div className="mt-5 w-16 h-1 rounded-full" style={{ backgroundColor: PAGE_COLOR }} />
                                 <p className="mt-4 text-gray-500 text-base font-light leading-relaxed">
-                                    Registro de los trabajos de fumigación, desinfección, provisión de agua y saneamiento realizados en los establecimientos del distrito.
+                                    Registro de los trabajos de fumigación, análisis de agua, provisión de agua y saneamiento realizados en los establecimientos del distrito.
                                 </p>
                             </div>
 
@@ -272,7 +272,7 @@ export default function Descentralizados({ trabajos, correos }) {
                                 </h2>
                                 <div className="mt-5 w-16 h-1 mx-auto rounded-full" style={{ backgroundColor: PAGE_COLOR }} />
                                 <p className="mt-5 text-brand-blue-200/90 text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto">
-                                    Para solicitar fumigación, desinfección, provisión de bidones, desagote de pozo o limpieza de tanque en tu establecimiento, comunicate con nuestra área.
+                                    Para solicitar fumigación, análisis de agua, provisión de bidones, desagote de pozo o limpieza de tanque en tu establecimiento, comunicate con nuestra área.
                                 </p>
                             </div>
 

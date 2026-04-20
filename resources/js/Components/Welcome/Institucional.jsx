@@ -19,6 +19,28 @@ export default function Institucional() {
                         <p className="mt-6 text-base text-gray-500 leading-relaxed">
                             Depende de la Dirección General de Cultura y Educación y actúa como órgano descentralizado a nivel local, garantizando el correcto funcionamiento de los establecimientos escolares.
                         </p>
+                        <a
+                            href="https://normas.gba.gob.ar/ar-b/ley/2007/13688/3181"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-8 inline-flex items-center gap-3 px-5 py-4 rounded-xl border border-brand-blue-100 bg-brand-blue-50/60 hover:bg-brand-blue-100/70 hover:border-brand-blue-200 transition-all duration-200 group"
+                        >
+                            <div className="w-9 h-9 rounded-lg bg-brand-blue-600 text-white flex items-center justify-center shrink-0">
+                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                                </svg>
+                            </div>
+                            <div className="text-left">
+                                <p className="text-xs font-semibold text-brand-blue-500 uppercase tracking-widest">Marco normativo</p>
+                                <p className="text-sm font-semibold text-gray-900 group-hover:text-brand-blue-700 transition-colors">
+                                    Ley Provincial N.° 13.688
+                                </p>
+                                <p className="text-xs text-gray-500">Ley de Educación de la Provincia de Buenos Aires — Consejos Escolares</p>
+                            </div>
+                            <svg className="w-4 h-4 text-gray-400 group-hover:text-brand-blue-500 ml-auto shrink-0 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                            </svg>
+                        </a>
                     </div>
 
                     {/* Columna derecha – pilares en cards */}

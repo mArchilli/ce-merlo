@@ -294,6 +294,94 @@ export default function Contacto() {
                     </div>
                 </section>
 
+                {/* ══════ ORGANISMOS VINCULADOS ══════ */}
+                <section className="py-16 sm:py-20 bg-brand-blue-50/40">
+                    <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+
+                        <div className="max-w-xl mb-12">
+                            <p className="text-xs font-semibold text-brand-gold-500 tracking-[0.2em] uppercase mb-4">Red institucional</p>
+                            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
+                                Organismos vinculados
+                            </h2>
+                            <div className="mt-5 w-16 h-1 bg-brand-gold-400 rounded-full" />
+                            <p className="mt-4 text-gray-500 text-base font-light leading-relaxed">
+                                Organismos e instituciones con los que el Consejo Escolar de Merlo trabaja de manera coordinada en el distrito.
+                            </p>
+                        </div>
+
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                            {[
+                                {
+                                    nombre: 'Jefatura Distrital',
+                                    responsable: 'Hugo Rosa',
+                                    cargo: 'Jefe Distrital',
+                                    icon: (
+                                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                                        </svg>
+                                    ),
+                                },
+                                {
+                                    nombre: 'Secretaría de Educación',
+                                    responsable: 'Silvana Zahana',
+                                    cargo: 'Secretaria de Educación',
+                                    icon: (
+                                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21" />
+                                        </svg>
+                                    ),
+                                },
+                                {
+                                    nombre: 'Sede Inspectores de Nivel',
+                                    responsable: 'Hugo Rosa',
+                                    cargo: 'Inspector Jefe Distrital',
+                                    icon: (
+                                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                    ),
+                                },
+                                {
+                                    nombre: 'Dirección Provincial de Infraestructura Escolar (DPIe)',
+                                    responsable: 'Karina Morales',
+                                    cargo: 'Inspectora Regional',
+                                    icon: (
+                                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
+                                        </svg>
+                                    ),
+                                },
+                            ].map((org, i) => (
+                                <div
+                                    key={i}
+                                    className="group flex flex-col gap-5 rounded-2xl border border-brand-blue-100 bg-white p-6 hover:bg-brand-blue-50/60 hover:border-brand-blue-200 transition-all duration-200"
+                                >
+                                    <div className="w-12 h-12 rounded-xl bg-brand-blue-50 text-brand-blue-400 flex items-center justify-center shrink-0 group-hover:bg-brand-blue-100 transition-colors">
+                                        {org.icon}
+                                    </div>
+                                    <div className="flex-1">
+                                        <p className="font-bold text-gray-900 text-[15px] leading-snug mb-3">
+                                            {org.nombre}
+                                        </p>
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-7 h-7 rounded-full bg-brand-gold-50 text-brand-gold-500 flex items-center justify-center shrink-0">
+                                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <p className="text-sm font-semibold text-gray-800">{org.responsable}</p>
+                                                <p className="text-xs text-gray-400">{org.cargo}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
                 {/* ══════ CTA ══════ */}
                 <section className="relative">
                     <div className="bg-white">

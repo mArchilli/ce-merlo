@@ -44,32 +44,43 @@ export default function Funciones() {
             <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
 
                 {/* Encabezado */}
-                <div className="max-w-xl mb-12">
-                    <p className="text-xs font-semibold text-brand-gold-500 tracking-[0.2em] uppercase mb-4">¿Qué hacemos?</p>
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight">
-                        Funciones principales
-                    </h2>
-                    <div className="mt-5 w-16 h-1 bg-brand-gold-400 rounded-full" />
-                    <p className="mt-4 text-gray-500 text-base font-light leading-relaxed">
-                        El Consejo Escolar desempeña funciones clave para el sistema educativo del distrito de Merlo.
+                <div className="grid lg:grid-cols-2 gap-8 items-end mb-14">
+                    <div>
+                        <p className="text-xs font-semibold text-brand-gold-500 tracking-[0.2em] uppercase mb-4">¿Qué hacemos?</p>
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight">
+                            Funciones<br />
+                            <span className="text-brand-blue-600">principales</span>
+                        </h2>
+                        <div className="mt-5 w-16 h-1 bg-brand-gold-400 rounded-full" />
+                    </div>
+                    <p className="text-gray-500 text-base font-light leading-relaxed lg:pb-1">
+                        El Consejo Escolar desempeña funciones clave para el sistema educativo del distrito de Merlo, actuando como nexo entre la comunidad escolar y los organismos provinciales.
                     </p>
                 </div>
 
-                {/* Grid de cards */}
+                {/* Grid de cards glassmorphism */}
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     {FUNCIONES.map((f, i) => (
                         <div
                             key={i}
-                            className="flex flex-col gap-5 rounded-2xl border border-brand-blue-100 bg-white p-7"
+                            className="group flex flex-col gap-5 rounded-2xl border border-brand-blue-100 bg-white p-7 hover:bg-brand-blue-50/60 hover:border-brand-blue-200 transition-all duration-200"
                         >
-                            {/* Ícono */}
-                            <div className="w-14 h-14 rounded-xl bg-brand-blue-50 text-brand-blue-400 flex items-center justify-center shrink-0">
-                                {f.icon}
+                            {/* Número + ícono */}
+                            <div className="flex items-start justify-between">
+                                <div className="w-14 h-14 rounded-xl bg-brand-blue-50 text-brand-blue-400 flex items-center justify-center shrink-0 group-hover:bg-brand-blue-100 transition-colors">
+                                    {f.icon}
+                                </div>
+                                <span className="text-[10px] font-bold text-brand-gold-400 tracking-[0.2em] uppercase mt-1">
+                                    {String(i + 1).padStart(2, '0')}
+                                </span>
                             </div>
+
+                            {/* Separador */}
+                            <div className="w-8 h-px bg-brand-blue-100" />
 
                             {/* Texto */}
                             <div>
-                                <h3 className="font-bold text-gray-900 text-base mb-2">{f.title}</h3>
+                                <h3 className="font-bold text-gray-900 text-base mb-2 leading-snug">{f.title}</h3>
                                 <p className="text-gray-500 text-sm leading-relaxed">{f.desc}</p>
                             </div>
                         </div>
