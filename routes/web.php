@@ -6,6 +6,7 @@ use App\Http\Controllers\AutoridadController;
 use App\Http\Controllers\NovedadController;
 use App\Http\Controllers\ObraController;
 use App\Http\Controllers\OrganismoVinculadoController;
+use App\Http\Controllers\PreguntaFrecuenteController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicDescentralizadosController;
 use App\Http\Controllers\PublicInfraestructuraController;
@@ -58,10 +59,12 @@ Route::get('/areas/descentralizados', [PublicDescentralizadosController::class, 
 
 Route::get('/contacto', function () {
     $organismos = \App\Models\OrganismoVinculado::orderBy('orden')->orderBy('id')->get();
+    $faqs       = \App\Models\PreguntaFrecuente::orderBy('orden')->orderBy('id')->get();
 
     return Inertia::render('Contacto', [
         'canLogin'   => Route::has('login'),
         'organismos' => $organismos,
+        'faqs'       => $faqs,
     ]);
 })->name('contacto');
 
@@ -153,6 +156,12 @@ Route::prefix('admin')->group(function () {
         Route::post('/organismos', [OrganismoVinculadoController::class, 'store'])->name('organismos.store');
         Route::put('/organismos/{organismo}', [OrganismoVinculadoController::class, 'update'])->name('organismos.update');
         Route::delete('/organismos/{organismo}', [OrganismoVinculadoController::class, 'destroy'])->name('organismos.destroy');
+
+        // Preguntas frecuentes
+        Route::get('/faqs', [PreguntaFrecuenteController::class, 'index'])->name('faqs.index');
+        Route::post('/faqs', [PreguntaFrecuenteController::class, 'store'])->name('faqs.store');
+        Route::put('/faqs/{faq}', [PreguntaFrecuenteController::class, 'update'])->name('faqs.update');
+        Route::delete('/faqs/{faq}', [PreguntaFrecuenteController::class, 'destroy'])->name('faqs.destroy');
     });
 
 });

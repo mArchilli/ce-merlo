@@ -31,28 +31,9 @@ const CONTACTO_INFO = [
     },
 ];
 
-/* ─── Preguntas frecuentes ─── */
-const FAQ = [
-    {
-        pregunta: '¿Qué trámites puedo realizar en el Consejo Escolar?',
-        respuesta: 'En el Consejo Escolar se gestionan trámites relacionados con infraestructura escolar, comedores, transporte educativo, provisión de mobiliario y equipamiento, y administración de personal auxiliar.',
-    },
-    {
-        pregunta: '¿Necesito sacar turno previo?',
-        respuesta: 'No es necesario sacar turno previo. Podés acercarte en el horario de atención de lunes a viernes de 8 a 16 hs. Para consultas específicas, te recomendamos comunicarte telefónicamente antes.',
-    },
-    {
-        pregunta: '¿Cómo reporto un problema de infraestructura en una escuela?',
-        respuesta: 'Podés acercarte personalmente a la sede del Consejo Escolar, llamar por teléfono al 0220-482-5836 o enviar un correo electrónico detallando el problema y la escuela afectada.',
-    },
-    {
-        pregunta: '¿El Consejo Escolar gestiona las inscripciones escolares?',
-        respuesta: 'No, las inscripciones escolares son gestionadas directamente por cada establecimiento educativo. El Consejo Escolar se encarga de la administración de recursos, infraestructura y servicios.',
-    },
-];
 
 /* ─── Componente principal ─── */
-export default function Contacto({ organismos = [] }) {
+export default function Contacto({ organismos = [], faqs = [] }) {
     const [openFaq, setOpenFaq] = useState(null);
 
     const toggleFaq = (index) => {
@@ -231,7 +212,7 @@ export default function Contacto({ organismos = [] }) {
 
                             {/* Columna derecha - Accordion */}
                             <div className="lg:col-span-3 space-y-3">
-                                {FAQ.map((item, i) => (
+                                {faqs.map((item, i) => (
                                     <div
                                         key={i}
                                         className="rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest overflow-hidden transition-all duration-200 hover:border-outline-variant/60"
