@@ -37,7 +37,7 @@ function ItemCard({ item, featuredKey, href }) {
     const Wrapper   = href ? Link : 'div';
 
     return (
-        <Wrapper href={href} className="group overflow-hidden rounded-2xl bg-white border border-gray-100 hover:border-brand-blue-100 hover:shadow-lg transition-all duration-200 flex flex-col">
+        <Wrapper href={href} className="group overflow-hidden rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest flex flex-col transition-all duration-300 hover:-translate-y-1 md:hover:-translate-y-0 md:hover:bg-surface-container-low h-full">
             {/* Imagen */}
             <div className="relative h-48 bg-gray-100 overflow-hidden shrink-0">
                 {principal ? (
@@ -56,34 +56,36 @@ function ItemCard({ item, featuredKey, href }) {
                     </div>
                 )}
                 {item[featuredKey] && (
-                    <span className="absolute top-3 left-3 flex items-center gap-1 rounded-full bg-brand-gold-400 px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm">
-                        <IconStar /> Destacado
+                    <span className="absolute top-3 left-3 flex items-center gap-1 rounded bg-blue-600/10 border border-blue-600/20 px-2.5 py-1 text-[10px] font-sans font-bold uppercase tracking-wider text-blue-600 shadow-sm">
+                        <IconStar /> DESTACADO
                     </span>
                 )}
             </div>
 
             {/* Contenido */}
-            <div className="flex flex-col flex-1 p-5">
+            <div className="p-6 flex-grow flex flex-col">
                 {(item.anio || item.mes) && (
-                    <p className="text-xs text-brand-gold-500 font-medium mb-1.5">
+                    <p className="font-sans text-xs text-secondary font-medium mb-2">
                         {item.mes ? MESES_LABELS[item.mes] : ''}
                         {item.mes && item.anio ? ' ' : ''}
                         {item.anio ?? ''}
                     </p>
                 )}
-                <h3 className="font-bold text-gray-900 text-[15px] leading-snug line-clamp-2 mb-2">
+                <h3 className="font-serif text-xl font-bold md:font-medium text-primary leading-snug mb-4 group-hover:text-blue-600 transition-colors">
                     {item.titulo}
                 </h3>
                 {item.descripcion && (
                     <div
-                        className="text-sm text-gray-500 line-clamp-3 leading-relaxed prose prose-sm max-w-none"
+                        className="font-sans text-sm text-on-surface-variant line-clamp-3 leading-relaxed prose prose-sm max-w-none mb-4"
                         dangerouslySetInnerHTML={{ __html: item.descripcion }}
                     />
                 )}
                 {href && (
-                    <p className="mt-auto pt-3 text-xs font-medium text-brand-blue-500 group-hover:text-brand-blue-700 transition-colors">
-                        Ver detalle →
-                    </p>
+                    <div className="mt-auto flex items-center justify-between">
+                        <span className="inline-flex items-center text-sm font-sans font-medium text-blue-600 group-hover:text-primary transition-colors cursor-pointer">
+                            Ver detalle <span className="material-symbols-outlined ml-1 text-[18px]">arrow_forward</span>
+                        </span>
+                    </div>
                 )}
             </div>
         </Wrapper>
