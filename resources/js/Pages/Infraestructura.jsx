@@ -1,7 +1,7 @@
 import { Head, Link } from '@inertiajs/react';
 import { useState } from 'react';
 import PublicNavbar from '@/Components/PublicNavbar';
-import PublicFooter from '@/Components/PublicFooter';
+import Footer from '@/Components/Welcome/Footer';
 
 // ─── Iconos ───────────────────────────────────────────────────────────────────
 const IconMail = () => (
@@ -553,9 +553,10 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
                 </section>
 
                 {/* ══════ FOOTER ══════ */}
-                <PublicFooter />
+                <Footer />
 
             </div>
         </>
     );
 }
+

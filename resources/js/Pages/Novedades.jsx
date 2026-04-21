@@ -1,7 +1,7 @@
 import { Head, Link } from '@inertiajs/react';
 import { useState, useMemo } from 'react';
 import PublicNavbar from '@/Components/PublicNavbar';
-import PublicFooter from '@/Components/PublicFooter';
+import Footer from '@/Components/Welcome/Footer';
 
 const MESES_LABELS = {
     1: 'Enero', 2: 'Febrero', 3: 'Marzo', 4: 'Abril',
@@ -16,79 +16,82 @@ const MESES_CORTOS = {
 
 // ─── Iconos ───────────────────────────────────────────────────────────────────
 const IconNewspaper = () => (
-    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
-    </svg>
-);
-const IconStar = () => (
-    <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-    </svg>
+    <span className="material-symbols-outlined text-4xl" style={{ fontVariationSettings: "'FILL' 0" }}>
+        article
+    </span>
 );
 const IconFilter = () => (
-    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z" />
-    </svg>
+    <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 0" }}>
+        filter_list
+    </span>
 );
 
 // ─── Card de novedad ──────────────────────────────────────────────────────────
 function NovedadCard({ novedad }) {
     const tieneMedia = novedad.medio_principal;
+    
+    // Format the date securely based on available parts
+    let dateStr = '';
+    if (novedad.dia || novedad.mes || novedad.anio) {
+        const d = String(novedad.dia || '').padStart(2, '0');
+        const m = MESES_CORTOS[novedad.mes] || '';
+        const y = novedad.anio || '';
+        dateStr = `${d} ${m} ${y}`.trim();
+    }
 
     return (
-        <article className="group flex flex-col rounded-2xl bg-white border border-gray-100 hover:border-brand-blue-100 hover:shadow-lg transition-all duration-200 overflow-hidden">
-            {/* Imagen */}
-            <div className="relative h-44 bg-gray-50 overflow-hidden shrink-0">
+        <article className="bg-surface-container-lowest rounded md:rounded-DEFAULT border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] overflow-hidden flex flex-col group transition-all duration-300 hover:-translate-y-1 md:hover:-translate-y-0 md:hover:bg-surface-container-low h-full">
+            {/* Imagen / placeholder */}
+            <div className="h-48 md:aspect-video w-full relative bg-surface-container-high overflow-hidden shrink-0">
                 {tieneMedia ? (
                     tieneMedia.tipo === 'imagen' ? (
                         <img
                             src={tieneMedia.url}
                             alt={novedad.titulo}
-                            className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                     ) : (
-                        <video src={tieneMedia.url} className="h-full w-full object-cover" muted />
+                        <video src={tieneMedia.url} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" muted loop />
                     )
                 ) : (
-                    <div className="flex h-full items-center justify-center text-gray-200">
+                    <div className="flex h-full items-center justify-center text-outline-variant group-hover:scale-105 transition-transform duration-500">
                         <IconNewspaper />
                     </div>
-                )}
-                {novedad.destacada && (
-                    <span className="absolute top-3 left-3 flex items-center gap-1 rounded-full bg-brand-gold-400 px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm">
-                        <IconStar /> Destacada
-                    </span>
-                )}
-                {(novedad.dia || novedad.mes || novedad.anio) && (
-                    <span className="absolute top-3 right-3 flex flex-col items-center rounded-xl bg-brand-blue-800/90 backdrop-blur-sm px-3 py-1.5 text-white shadow-sm min-w-[44px]">
-                        {novedad.dia && (
-                            <span className="text-base font-bold leading-none">{String(novedad.dia).padStart(2, '0')}</span>
-                        )}
-                        {novedad.mes && (
-                            <span className="text-[10px] uppercase tracking-wider font-medium text-brand-blue-200 leading-none mt-0.5">
-                                {MESES_CORTOS[novedad.mes]}
-                            </span>
-                        )}
-                        {novedad.anio && (
-                            <span className="text-[10px] font-medium text-brand-blue-300/70 leading-none mt-0.5">
-                                {novedad.anio}
-                            </span>
-                        )}
-                    </span>
                 )}
             </div>
 
             {/* Contenido */}
-            <div className="flex flex-col flex-1 p-5">
-                <h3 className="font-bold text-gray-900 text-[15px] leading-snug line-clamp-2 mb-2">
+            <div className="p-6 flex-grow flex flex-col">
+                {/* Date Mobile / Desktop merged style */}
+                {dateStr && (
+                    <div className="font-sans text-xs uppercase tracking-[0.05em] text-secondary mb-3 flex items-center gap-2">
+                        <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 0" }}>calendar_today</span>
+                        <span>{dateStr}</span>
+                    </div>
+                )}
+                
+                <h3 className="font-serif text-xl font-bold md:font-medium text-primary leading-snug mb-4 group-hover:text-tertiary md:group-hover:text-primary-container transition-colors">
                     {novedad.titulo}
                 </h3>
+                
                 {novedad.descripcion && (
                     <div
-                        className="text-sm text-gray-500 line-clamp-4 leading-relaxed prose prose-sm max-w-none"
+                        className="font-sans text-sm text-on-surface-variant line-clamp-3 leading-relaxed prose prose-sm max-w-none mb-4"
                         dangerouslySetInnerHTML={{ __html: novedad.descripcion }}
                     />
                 )}
+                
+                <div className="mt-auto flex items-center justify-between">
+                    <span className="inline-flex items-center text-sm font-sans font-medium text-tertiary group-hover:text-primary transition-colors cursor-pointer">
+                        Leer más <span className="material-symbols-outlined ml-1 text-[18px]">arrow_forward</span>
+                    </span>
+                    {novedad.destacada && (
+                        <div className="bg-tertiary/10 text-tertiary border border-tertiary/20 px-2.5 py-1 rounded text-[10px] uppercase tracking-wider font-sans font-bold flex items-center gap-1">
+                            <span className="material-symbols-outlined text-[12px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                            DESTACADA
+                        </div>
+                    )}
+                </div>
             </div>
         </article>
     );
@@ -131,71 +134,72 @@ export default function Novedades({ novedades = [] }) {
         <>
             <Head title="Novedades – Consejo Escolar de Merlo" />
 
-            <div className="bg-white text-gray-800 font-sans antialiased">
+            <div className="bg-surface text-on-surface font-sans antialiased min-h-screen flex flex-col">
 
                 {/* ══════ NAVBAR ══════ */}
                 <PublicNavbar transparent />
 
                 {/* ══════ HERO ══════ */}
-                <section className="relative min-h-[300px] sm:min-h-[320px] flex flex-col overflow-hidden">
-                    <div className="flex-1 relative" style={{ background: 'linear-gradient(135deg, #1E3F58 0%, #2A5678 55%, #B45309 100%)' }}>
+                <section className="relative min-h-[300px] sm:min-h-[320px] flex flex-col overflow-hidden bg-primary">
+                    <div className="flex-1 relative">
                         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} />
-                        <div className="absolute -right-32 -bottom-32 w-[400px] h-[400px] rounded-full border border-white/[0.04]" />
-                        <div className="absolute -right-20 -bottom-20 w-[280px] h-[280px] rounded-full border border-white/[0.06]" />
+                        <div className="absolute -right-32 -bottom-32 w-[400px] h-[400px] rounded-full bg-primary-container/20 blur-3xl" />
+                        <div className="absolute -right-20 -bottom-20 w-[280px] h-[280px] rounded-full bg-tertiary/10 blur-3xl" />
 
-                        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-24 pb-12">
-                            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 mb-6 rounded-full bg-white/[0.08] backdrop-blur-sm text-brand-blue-100 text-sm font-medium tracking-wide uppercase border border-white/[0.08]">
-                                <span className="w-2 h-2 rounded-full bg-brand-gold-400 animate-pulse" />
+                        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-32 pb-12">
+                            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 mb-6 rounded-full bg-white/[0.08] backdrop-blur-sm text-tertiary-fixed-dim text-sm font-medium tracking-wide uppercase border border-white/[0.08]">
+                                <span className="w-2 h-2 rounded-full bg-tertiary-fixed-dim animate-pulse" />
                                 Consejo Escolar de Merlo
                             </div>
 
-                            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-[1.08] tracking-tight">
-                                Novedades<span className="text-brand-gold-400">.</span>
+                            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight">
+                                Novedades<span className="text-tertiary">.</span>
                             </h1>
-                            <div className="mt-4 w-16 h-1 bg-brand-gold-400 rounded-full" />
-                            <p className="mt-4 text-base sm:text-lg text-brand-blue-200/90 font-light">
-                                Últimas noticias y novedades del Consejo Escolar de Merlo · {novedades.length} publicaciones
+                            <div className="mt-6 w-24 h-1 bg-tertiary" />
+                            <p className="mt-6 text-base sm:text-lg text-white/80 font-light font-sans max-w-2xl">
+                                Últimas noticias y novedades del Consejo Escolar de Merlo. Explorá todas nuestras publicaciones ({novedades.length} en total).
                             </p>
                         </div>
                     </div>
-                    <div className="shrink-0" style={{ background: 'linear-gradient(135deg, #1E3F58 0%, #2A5678 55%, #B45309 100%)' }}>
-                        <svg viewBox="0 0 1440 56" className="w-full block text-white" preserveAspectRatio="none">
+                    {/* SVG Transition to Surface */}
+                    <div className="shrink-0 bg-primary">
+                        <svg viewBox="0 0 1440 56" className="w-full block text-surface" preserveAspectRatio="none">
                             <path fill="currentColor" d="M0,32L80,37.3C160,43,320,53,480,53.3C640,53,800,43,960,37.3C1120,32,1280,32,1360,32L1440,32L1440,56L1360,56C1280,56,1120,56,960,56C800,56,640,56,480,56C320,56,160,56,80,56L0,56Z" />
                         </svg>
                     </div>
                 </section>
 
                 {/* ══════ FILTROS Y LISTADO ══════ */}
-                <section className="py-12 sm:py-16">
+                <section className="py-12 sm:py-16 flex-grow">
                     <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
 
                         {/* Barra de filtros */}
-                        <div className="flex flex-wrap items-center gap-3 mb-8 pb-6 border-b border-gray-100">
-                            <span className="flex items-center gap-1.5 text-sm font-semibold text-gray-600">
-                                <IconFilter /> Filtrar:
+                        <div className="flex flex-wrap items-center gap-4 mb-10 pb-6 border-b border-outline-variant/20">
+                            <span className="flex items-center gap-1.5 text-sm font-semibold text-secondary font-sans uppercase tracking-wider">
+                                <IconFilter /> Filtrar
                             </span>
 
                             {/* Solo destacadas */}
                             <button
                                 onClick={() => setSoloDestacadas(!soloDestacadas)}
-                                className={`flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-lg border font-medium transition-colors ${
+                                className={`flex items-center gap-1.5 text-sm px-4 py-2 rounded border font-sans font-medium transition-colors ${
                                     soloDestacadas
-                                        ? 'bg-brand-gold-50 border-brand-gold-300 text-brand-gold-700'
-                                        : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300'
+                                        ? 'bg-tertiary-container border-tertiary text-on-tertiary-container'
+                                        : 'bg-surface-container-lowest border-outline-variant/30 text-on-surface-variant hover:border-outline-variant/60 hover:bg-surface-container-low'
                                 }`}
                             >
-                                <IconStar />
+                                <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: soloDestacadas ? "'FILL' 1" : "'FILL' 0" }}>star</span>
                                 Destacadas
                             </button>
 
                             {/* Filtro año */}
                             <div className="flex items-center gap-2">
-                                <label htmlFor="filtro-anio" className="text-sm text-gray-500">Año</label>
+                                <label htmlFor="filtro-anio" className="text-sm font-sans font-medium text-on-surface-variant">Año</label>
                                 <select
                                     id="filtro-anio"
                                     value={anioFiltro}
                                     onChange={e => handleAnioChange(e.target.value)}
-                                    className="text-sm border border-gray-200 rounded-lg px-3 py-1.5 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-blue-300 focus:border-transparent"
+                                    className="text-sm font-sans border border-outline-variant/30 rounded px-3 py-2 bg-surface-container-lowest text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent cursor-pointer"
                                 >
                                     <option value="">Todos</option>
                                     {anios.map(a => (
@@ -206,13 +210,13 @@ export default function Novedades({ novedades = [] }) {
 
                             {/* Filtro mes */}
                             <div className="flex items-center gap-2">
-                                <label htmlFor="filtro-mes" className="text-sm text-gray-500">Mes</label>
+                                <label htmlFor="filtro-mes" className="text-sm font-sans font-medium text-on-surface-variant">Mes</label>
                                 <select
                                     id="filtro-mes"
                                     value={mesFiltro}
                                     onChange={e => setMesFiltro(e.target.value)}
                                     disabled={mesesDisponibles.length === 0}
-                                    className="text-sm border border-gray-200 rounded-lg px-3 py-1.5 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-blue-300 focus:border-transparent disabled:opacity-40 disabled:cursor-not-allowed"
+                                    className="text-sm font-sans border border-outline-variant/30 rounded px-3 py-2 bg-surface-container-lowest text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                                 >
                                     <option value="">Todos</option>
                                     {mesesDisponibles.map(m => (
@@ -224,37 +228,34 @@ export default function Novedades({ novedades = [] }) {
                             {hayFiltros && (
                                 <button
                                     onClick={limpiar}
-                                    className="flex items-center gap-1 text-sm text-brand-blue-500 hover:text-brand-blue-700 font-medium transition-colors"
+                                    className="flex items-center gap-1 text-sm font-sans text-secondary hover:text-primary font-medium transition-colors"
                                 >
-                                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
+                                    <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 0" }}>close</span>
                                     Limpiar
                                 </button>
                             )}
 
-                            <span className="ml-auto text-sm text-gray-400">
+                            <span className="ml-auto text-sm font-sans text-secondary-fixed-dim bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-medium">
                                 {filtradas.length} {filtradas.length === 1 ? 'novedad' : 'novedades'}
-                                {hayFiltros ? ' encontradas' : ''}
                             </span>
                         </div>
 
                         {/* Grid */}
                         {filtradas.length === 0 ? (
-                            <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-200 py-20 text-gray-400">
+                            <div className="flex flex-col items-center justify-center rounded border-2 border-dashed border-outline-variant/30 bg-surface-container-lowest py-24 text-outline">
                                 <IconNewspaper />
-                                <p className="mt-3 text-base font-medium">No hay novedades con los filtros seleccionados</p>
+                                <p className="mt-4 text-base font-sans font-medium text-on-surface-variant">No hay novedades con los filtros seleccionados</p>
                                 {hayFiltros && (
                                     <button
                                         onClick={limpiar}
-                                        className="mt-4 text-sm text-brand-blue-500 hover:text-brand-blue-700 font-medium transition-colors"
+                                        className="mt-6 text-sm px-6 py-2 bg-primary text-on-primary rounded hover:bg-primary-container hover:text-on-primary-container font-sans font-medium transition-colors shadow-sm"
                                     >
                                         Limpiar filtros
                                     </button>
                                 )}
                             </div>
                         ) : (
-                            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                                 {filtradas.map(n => (
                                     <NovedadCard key={n.id} novedad={n} />
                                 ))}
@@ -262,14 +263,12 @@ export default function Novedades({ novedades = [] }) {
                         )}
 
                         {/* Volver */}
-                        <div className="mt-12 flex justify-center">
+                        <div className="mt-16 flex justify-center">
                             <Link
                                 href="/"
-                                className="inline-flex items-center gap-2 px-6 py-3 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200"
+                                className="inline-flex items-center gap-2 px-6 py-3 border border-outline-variant/40 bg-surface-container-lowest rounded text-sm font-sans font-medium text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all duration-300 shadow-sm"
                             >
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-                                </svg>
+                                <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 0" }}>arrow_back</span>
                                 Volver al inicio
                             </Link>
                         </div>
@@ -277,9 +276,10 @@ export default function Novedades({ novedades = [] }) {
                 </section>
 
                 {/* ══════ FOOTER ══════ */}
-                <PublicFooter />
+                <Footer />
 
             </div>
         </>
     );
 }
+

@@ -1,6 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
 import PublicNavbar from '@/Components/PublicNavbar';
-import PublicFooter from '@/Components/PublicFooter';
+import Footer from '@/Components/Welcome/Footer';
 
 // ─── Iconos ───────────────────────────────────────────────────────────────────
 const IconMail = () => (
@@ -351,9 +351,10 @@ export default function CooperacionEscolar({ items, correos }) {
                 </section>
 
                 {/* ══════ FOOTER ══════ */}
-                <PublicFooter />
+                <Footer />
 
             </div>
         </>
     );
 }
+

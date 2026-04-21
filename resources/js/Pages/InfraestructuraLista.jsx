@@ -1,7 +1,7 @@
 import { Head, Link } from '@inertiajs/react';
 import { useState, useMemo } from 'react';
 import PublicNavbar from '@/Components/PublicNavbar';
-import PublicFooter from '@/Components/PublicFooter';
+import Footer from '@/Components/Welcome/Footer';
 
 const MESES_LABELS = {
     1: 'Enero', 2: 'Febrero', 3: 'Marzo', 4: 'Abril',
@@ -279,9 +279,10 @@ export default function InfraestructuraLista({ items, tipo }) {
                 </section>
 
                 {/* ══════ FOOTER ══════ */}
-                <PublicFooter />
+                <Footer />
 
             </div>
         </>
     );
 }
+

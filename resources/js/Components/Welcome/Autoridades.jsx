@@ -30,7 +30,7 @@ export default function Autoridades({ autoridades = [] }) {
 
     const vocales = autoridades.length > 0
         ? autoridades.filter((a) => a.tipo === 'vocal')
-        : FALLBACK_VOCALES.map((v, i) => ({ id: i, cargo: '', nombre: v, foto: null }));
+        : FALLBACK_VOCALES.map((v, i) => ({ id: i, cargo: `${i+1}º VOCAL`, nombre: v, foto: null }));
 
     return (
         <section id="autoridades" className="relative">
@@ -41,137 +41,106 @@ export default function Autoridades({ autoridades = [] }) {
                 </svg>
             </div>
 
-            {/* Contenido sobre fondo oscuro */}
+            {/* Contenido sobre fondo oscuro original (mantener según instrucción) */}
             <div className="bg-gradient-to-br from-brand-blue-800 via-brand-blue-700 to-brand-blue-900 relative overflow-hidden">
-                {/* Patrón sutil */}
+                {/* Patrón sutil original */}
                 <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")'}} />
 
-                <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-20 sm:py-24">
+                <div className="relative max-w-[1200px] mx-auto px-6 sm:px-8 py-20 sm:py-24">
 
-                    {/* Encabezado */}
-                    <div className="text-center mb-14">
-                        <p className="text-xs font-semibold text-brand-gold-400 tracking-[0.2em] uppercase mb-4">Equipo de trabajo</p>
-                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
-                            Autoridades
-                        </h2>
-                        <div className="mt-5 w-16 h-1 bg-brand-gold-400 mx-auto rounded-full" />
-                    </div>
+                    {/* Encabezado Autoridades (Nuevo estilo) */}
+                    <header className="flex flex-col items-center text-center space-y-4 mb-16 md:mb-20">
+                        <h1 className="font-serif text-5xl md:text-6xl font-bold tracking-tight text-white">Autoridades</h1>
+                        <div className="h-1 w-24 bg-tertiary mx-auto mt-6 mb-8"></div>
+                        <h2 className="font-sans text-sm uppercase tracking-[0.2em] text-tertiary-fixed-dim">EQUIPO DE TRABAJO</h2>
+                    </header>
 
-                    {/* Principales */}
+                    {/* Principales / Executive Board */}
                     {principales.length > 0 && (
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-16">
+                        <section className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-20 md:mb-24">
                             {principales.map((a, i) => (
-                                <div key={a.id ?? i} className="group rounded-2xl border border-white/10 bg-white/[0.05] backdrop-blur-sm overflow-hidden flex flex-col">
-                                    {/* Imagen */}
-                                    <div className="relative w-full aspect-[3/4] bg-white/[0.04] overflow-hidden">
-                                        {a.foto ? (
+                                <article key={a.id ?? i} className="bg-surface-container-lowest/5 backdrop-blur-xl border border-outline-variant/20 rounded flex flex-col md:flex-row shadow-2xl shadow-black/20 overflow-hidden group hover:bg-surface-container-lowest/10 transition-all duration-300 relative">
+                                    <div className="absolute top-0 left-0 w-full h-1 md:w-1 md:h-full bg-tertiary scale-x-0 md:scale-y-0 group-hover:scale-x-100 md:group-hover:scale-y-100 transition-transform origin-left md:origin-top duration-300 z-10"></div>
+                                    
+                                    {/* Mostrar imagen si existe (combinación de diseño desktop) */}
+                                    {a.foto && (
+                                        <div className="hidden md:block md:w-2/5 aspect-[4/5] md:aspect-auto relative bg-surface-variant">
                                             <img
                                                 src={`/images/${a.foto}`}
                                                 alt={a.nombre}
-                                                className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                                className="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-500"
                                             />
-                                        ) : (
-                                            <div className="w-full h-full flex flex-col items-center justify-center gap-3 text-white/20">
-                                                <IconUser />
-                                                <span className="text-xs tracking-widest uppercase text-white/20">Sin foto</span>
-                                            </div>
-                                        )}
-                                        {/* Gradiente inferior */}
-                                        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/60 to-transparent" />
-                                    </div>
+                                        </div>
+                                    )}
 
-                                    {/* Info */}
-                                    <div className="px-5 py-5 flex-1 flex flex-col justify-center border-t border-white/[0.06]">
-                                        <p className="text-[11px] font-bold text-brand-gold-400 uppercase tracking-[0.15em] mb-1.5">{a.cargo}</p>
-                                        <p className="font-semibold text-white text-[15px] leading-snug">{a.nombre}</p>
+                                    <div className={`p-6 md:p-8 flex flex-col justify-center ${a.foto ? 'md:w-3/5' : 'w-full'}`}>
+                                        <h3 className="font-serif text-lg md:text-2xl text-tertiary-fixed-dim md:text-white mb-2 uppercase md:capitalize tracking-wide md:tracking-normal">{a.cargo}</h3>
+                                        <p className="font-sans text-xl md:text-lg font-medium text-white md:text-on-surface-variant md:text-white/80">{a.nombre}</p>
                                     </div>
-                                </div>
+                                </article>
                             ))}
-                        </div>
+                        </section>
                     )}
 
                     {/* Vocales */}
                     {vocales.length > 0 && (
-                        <div className="max-w-5xl mx-auto">
-                            <h3 className="text-lg font-semibold text-white text-center mb-7">Vocales</h3>
-                            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <section className="mt-8 flex flex-col gap-8">
+                            <header className="flex items-center gap-4">
+                                <h2 className="font-serif text-3xl font-bold text-white">Vocales</h2>
+                                <div className="h-[1px] flex-grow bg-outline-variant/20"></div>
+                            </header>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                                 {vocales.map((v, i) => (
-                                    <div key={v.id ?? i} className="flex items-center gap-4 rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-3.5">
-                                        {/* Avatar o foto */}
-                                        <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 border border-white/10 bg-white/[0.06]">
-                                            {v.foto ? (
-                                                <img
-                                                    src={`/images/${v.foto}`}
-                                                    alt={v.nombre}
-                                                    className="w-full h-full object-cover object-top"
-                                                />
-                                            ) : (
-                                                <div className="w-full h-full flex items-center justify-center text-white/30">
-                                                    <IconUser />
-                                                </div>
-                                            )}
-                                        </div>
-                                        <div className="min-w-0">
-                                            {v.cargo && (
-                                                <p className="text-[11px] font-bold text-brand-gold-400 uppercase tracking-[0.1em] truncate">{v.cargo}</p>
-                                            )}
-                                            <span className="text-[14px] text-brand-blue-100 leading-snug">{v.nombre}</span>
-                                            {v.area && (
-                                                <p className="text-[11px] text-white/40 mt-0.5 truncate">{v.area}</p>
-                                            )}
-                                        </div>
-                                    </div>
+                                    <article key={v.id ?? i} className="p-5 border border-outline-variant/10 rounded bg-primary-container/20 flex flex-col gap-1 hover:bg-primary-container/30 transition-colors">
+                                        <h4 className="font-serif text-sm text-tertiary-fixed-dim uppercase">{v.cargo || `${i+1}º VOCAL`}</h4>
+                                        <p className="font-sans text-lg text-white/90">{v.nombre}</p>
+                                        {v.area && (
+                                            <p className="font-sans text-xs text-white/50 mt-1 truncate">{v.area}</p>
+                                        )}
+                                    </article>
                                 ))}
                             </div>
-                        </div>
+                        </section>
                     )}
 
-                    {/* ── Separador visual ── */}
-                    <div className="relative max-w-5xl mx-auto my-20 sm:my-24">
+                    {/* ── Separador visual antes del contacto ── */}
+                    <div className="relative max-w-5xl mx-auto my-20 md:my-32">
                         <div className="border-t border-white/10" />
                     </div>
 
-                    {/* ══════ CONTACTO ══════ */}
+                    {/* ══════ CONTACTO (Rediseñado con el nuevo estilo) ══════ */}
                     <div className="max-w-7xl mx-auto" id="contacto">
-
                         {/* Encabezado */}
-                        <div className="text-center mb-16">
-                            <p className="text-xs font-semibold text-brand-gold-400 tracking-[0.2em] uppercase mb-4">Encontranos</p>
-                            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
-                                Contacto
-                            </h2>
-                            <div className="mt-5 w-16 h-1 bg-brand-gold-400 mx-auto rounded-full" />
-                        </div>
+                        <header className="flex flex-col items-center text-center space-y-4 mb-16 md:mb-20">
+                            <h2 className="font-serif text-4xl md:text-5xl font-bold tracking-tight text-white">Contacto</h2>
+                            <div className="h-1 w-24 bg-tertiary mx-auto mt-6 mb-8"></div>
+                            <p className="font-sans text-sm uppercase tracking-[0.2em] text-tertiary-fixed-dim">ENCONTRANOS</p>
+                        </header>
 
                         {/* Info cards */}
-                        <div className="grid sm:grid-cols-3 gap-5 max-w-5xl mx-auto mb-10">
-                            <div className="rounded-xl border border-white/10 bg-white/[0.05] p-6 text-center">
-                                <div className="w-12 h-12 rounded-xl bg-brand-gold-400/10 flex items-center justify-center mx-auto mb-4">
-                                    <svg className="w-6 h-6 text-brand-gold-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                                    </svg>
+                        <div className="grid sm:grid-cols-3 gap-6 max-w-5xl mx-auto mb-12">
+                            <div className="bg-surface-container-lowest/5 backdrop-blur-xl border border-outline-variant/20 rounded-xl p-8 text-center flex flex-col items-center hover:bg-surface-container-lowest/10 transition-colors">
+                                <div className="w-14 h-14 rounded-full bg-primary-container/30 flex items-center justify-center mb-6 text-tertiary-fixed-dim">
+                                    <span className="material-symbols-outlined text-3xl" style={{ fontVariationSettings: "'FILL' 0" }}>location_on</span>
                                 </div>
-                                <p className="text-xs font-semibold text-brand-gold-400 uppercase tracking-wider mb-2">Dirección</p>
-                                <p className="text-[15px] text-brand-blue-100 leading-relaxed">Av. Calle Real 208/212<br />Merlo Centro</p>
+                                <h3 className="font-serif text-sm font-bold text-tertiary-fixed-dim uppercase tracking-widest mb-3">Dirección</h3>
+                                <p className="font-sans text-base text-white/90 leading-relaxed">Av. Calle Real 208/212<br />Merlo Centro</p>
                             </div>
-                            <div className="rounded-xl border border-white/10 bg-white/[0.05] p-6 text-center">
-                                <div className="w-12 h-12 rounded-xl bg-brand-gold-400/10 flex items-center justify-center mx-auto mb-4">
-                                    <svg className="w-6 h-6 text-brand-gold-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-                                    </svg>
+                            
+                            <div className="bg-surface-container-lowest/5 backdrop-blur-xl border border-outline-variant/20 rounded-xl p-8 text-center flex flex-col items-center hover:bg-surface-container-lowest/10 transition-colors">
+                                <div className="w-14 h-14 rounded-full bg-primary-container/30 flex items-center justify-center mb-6 text-tertiary-fixed-dim">
+                                    <span className="material-symbols-outlined text-3xl" style={{ fontVariationSettings: "'FILL' 0" }}>call</span>
                                 </div>
-                                <p className="text-xs font-semibold text-brand-gold-400 uppercase tracking-wider mb-2">Teléfono</p>
-                                <p className="text-[15px] text-brand-blue-100">0220-482-5836</p>
+                                <h3 className="font-serif text-sm font-bold text-tertiary-fixed-dim uppercase tracking-widest mb-3">Teléfono</h3>
+                                <p className="font-sans text-base text-white/90">0220-482-5836</p>
                             </div>
-                            <div className="rounded-xl border border-white/10 bg-white/[0.05] p-6 text-center">
-                                <div className="w-12 h-12 rounded-xl bg-brand-gold-400/10 flex items-center justify-center mx-auto mb-4">
-                                    <svg className="w-6 h-6 text-brand-gold-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
+                            
+                            <div className="bg-surface-container-lowest/5 backdrop-blur-xl border border-outline-variant/20 rounded-xl p-8 text-center flex flex-col items-center hover:bg-surface-container-lowest/10 transition-colors">
+                                <div className="w-14 h-14 rounded-full bg-primary-container/30 flex items-center justify-center mb-6 text-tertiary-fixed-dim">
+                                    <span className="material-symbols-outlined text-3xl" style={{ fontVariationSettings: "'FILL' 0" }}>schedule</span>
                                 </div>
-                                <p className="text-xs font-semibold text-brand-gold-400 uppercase tracking-wider mb-2">Horario</p>
-                                <p className="text-[15px] text-brand-blue-100">Lunes a viernes<br />de 8 a 16 hs</p>
+                                <h3 className="font-serif text-sm font-bold text-tertiary-fixed-dim uppercase tracking-widest mb-3">Horario</h3>
+                                <p className="font-sans text-base text-white/90">Lunes a viernes<br />de 8 a 16 hs</p>
                             </div>
                         </div>
 
@@ -179,12 +148,12 @@ export default function Autoridades({ autoridades = [] }) {
                         <div className="text-center mt-10">
                             <Link
                                 href="/contacto"
-                                className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-brand-gold-400 text-white text-base font-semibold rounded-lg hover:bg-brand-gold-500 transition-all duration-200 shadow-lg shadow-brand-gold-400/20"
+                                className="inline-flex items-center gap-3 px-8 py-4 bg-tertiary text-on-tertiary text-lg font-sans font-semibold rounded hover:bg-tertiary-container hover:text-on-tertiary-container transition-all duration-300 group"
                             >
                                 Ver más información de contacto
-                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                                </svg>
+                                <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform" style={{ fontVariationSettings: "'FILL' 0" }}>
+                                    arrow_forward
+                                </span>
                             </Link>
                         </div>
                     </div>

@@ -1,6 +1,6 @@
 import { Head } from '@inertiajs/react';
 import PublicNavbar from '@/Components/PublicNavbar';
-import PublicFooter from '@/Components/PublicFooter';
+import Footer from '@/Components/Welcome/Footer';
 import Hero from '@/Components/Welcome/Hero';
 import Institucional from '@/Components/Welcome/Institucional';
 import Funciones from '@/Components/Welcome/Funciones';
@@ -30,8 +30,9 @@ export default function Welcome({ autoridades = [], novedades = [] }) {
                 <Composicion />
                 <Autoridades autoridades={autoridades} />
                 <Novedades novedades={novedades} />
-                <PublicFooter />
+                <Footer scrollTo={scrollTo} />
             </div>
         </>
     );
 }
+
