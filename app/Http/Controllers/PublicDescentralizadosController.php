@@ -11,7 +11,8 @@ class PublicDescentralizadosController extends Controller
 {
     public function index(): Response
     {
-        $trabajos = TrabajoMenor::where('tipo', 'descentralizados')
+        $destacados = TrabajoMenor::where('tipo', 'descentralizados')
+            ->where('destacado', true)
             ->with('medioPrincipal')
             ->orderByDesc('anio')
             ->orderByDesc('mes')
@@ -21,8 +22,33 @@ class PublicDescentralizadosController extends Controller
         $area = Area::where('slug', 'descentralizados')->with('correosActivos')->first();
 
         return Inertia::render('Descentralizados', [
+            'destacados' => $destacados,
+            'correos'    => $area?->correosActivos ?? collect(),
+        ]);
+    }
+
+    public function listTrabajos(): Response
+    {
+        $trabajos = TrabajoMenor::where('tipo', 'descentralizados')
+            ->with('medioPrincipal')
+            ->orderByDesc('anio')
+            ->orderByDesc('mes')
+            ->orderByDesc('id')
+            ->get();
+
+        return Inertia::render('DescentralizadosLista', [
             'trabajos' => $trabajos,
-            'correos'  => $area?->correosActivos ?? collect(),
+        ]);
+    }
+
+    public function show(TrabajoMenor $trabajoMenor): Response
+    {
+        abort_unless($trabajoMenor->tipo === 'descentralizados', 404);
+
+        $trabajoMenor->load(['medios' => fn ($q) => $q->orderByDesc('es_principal')->orderBy('id')]);
+
+        return Inertia::render('DescentralizadosShow', [
+            'trabajo' => $trabajoMenor,
         ]);
     }
 }

@@ -1,4 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
+import { useState } from 'react';
 import PublicNavbar from '@/Components/PublicNavbar';
 import Footer from '@/Components/Welcome/Footer';
 
@@ -91,20 +92,15 @@ const SERVICIOS = [
 
 // ─── Tarjeta de trabajo ───────────────────────────────────────────────────────
 function TrabajoCard({ item }) {
-    const fecha = [MESES[item.mes], item.anio].filter(Boolean).join(' ');
+    const fecha     = [MESES[item.mes], item.anio].filter(Boolean).join(' ');
     const principal = item.medio_principal;
 
     return (
         <div className="group overflow-hidden rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest transition-all duration-300 hover:-translate-y-1 md:hover:-translate-y-0 md:hover:bg-surface-container-low flex flex-col h-full">
-            {/* Imagen / Video */}
             <div className="relative h-48 bg-surface-container-high overflow-hidden border-b border-outline-variant/20">
                 {principal ? (
                     principal.tipo === 'imagen' ? (
-                        <img
-                            src={principal.url}
-                            alt={item.titulo}
-                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
+                        <img src={principal.url} alt={item.titulo} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                     ) : (
                         <video src={principal.url} className="h-full w-full object-cover" muted />
                     )
@@ -115,23 +111,17 @@ function TrabajoCard({ item }) {
                         </svg>
                     </div>
                 )}
-                {item.destacado && (
-                    <span className="absolute top-3 left-3 flex items-center gap-1 rounded px-2.5 py-1 text-[11px] font-sans font-bold uppercase tracking-wider text-white shadow-sm bg-cyan-600">
-                        <IconStar /> Destacado
-                    </span>
-                )}
+                <span className="absolute top-3 left-3 flex items-center gap-1 rounded px-2.5 py-1 text-[11px] font-sans font-bold uppercase tracking-wider text-white shadow-sm bg-cyan-600">
+                    <IconStar /> Destacado
+                </span>
                 {fecha && (
                     <span className="absolute top-3 right-3 rounded bg-white/90 border border-outline-variant/20 px-2 py-0.5 text-[10px] font-sans font-bold uppercase tracking-wider text-secondary shadow-sm">
                         {fecha}
                     </span>
                 )}
             </div>
-
-            {/* Contenido */}
             <div className="flex flex-1 flex-col p-5">
-                <h3 className="font-serif font-bold text-primary text-[15px] leading-snug line-clamp-2">
-                    {item.titulo}
-                </h3>
+                <h3 className="font-serif font-bold text-primary text-[15px] leading-snug line-clamp-2">{item.titulo}</h3>
                 {item.descripcion && (
                     <div
                         className="mt-3 prose prose-sm max-w-none text-secondary font-sans text-xs leading-relaxed line-clamp-3"
@@ -143,8 +133,88 @@ function TrabajoCard({ item }) {
     );
 }
 
+// ─── Carrusel de destacados ───────────────────────────────────────────────────
+function DestacadosCarrusel({ destacados }) {
+    const [idx, setIdx] = useState(0);
+    const total       = destacados.length;
+    const showArrows  = total > 3;
+    const prev        = () => setIdx((i) => (i - 1 + total) % total);
+    const next        = () => setIdx((i) => (i + 1) % total);
+
+    const desktopCards = [0, 1, 2].map((offset) => destacados[(idx + offset) % total]);
+    const mobileCard   = destacados[idx];
+
+    return (
+        <section className="py-16 sm:py-20 bg-surface-container-low">
+            <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+
+                <div className="max-w-xl mb-10">
+                    <p className="font-serif text-xs font-bold text-cyan-600 tracking-[0.2em] uppercase mb-4">Historial de trabajos</p>
+                    <h2 className="font-serif text-3xl md:text-5xl text-primary font-bold md:font-medium tracking-tight mb-3 md:mb-4">
+                        Trabajos destacados
+                    </h2>
+                    <p className="mt-4 text-secondary text-base font-light font-sans leading-relaxed">
+                        Registro de los trabajos de fumigación, análisis de agua, provisión de agua y saneamiento realizados en los establecimientos del distrito.
+                    </p>
+                </div>
+
+                {/* Desktop: 3 cards */}
+                <div className="hidden md:grid grid-cols-3 gap-6">
+                    {desktopCards.map((item, i) => (
+                        <TrabajoCard key={`${item.id}-${i}`} item={item} />
+                    ))}
+                </div>
+
+                {/* Mobile: 1 card */}
+                <div className="md:hidden">
+                    <TrabajoCard key={mobileCard.id} item={mobileCard} />
+                </div>
+
+                {/* Navegación */}
+                {(showArrows || total > 1) && (
+                    <div className="flex items-center justify-center gap-4 mt-8">
+                        {showArrows && (
+                            <button onClick={prev} aria-label="Anterior" className="flex items-center justify-center w-10 h-10 rounded-full border border-outline-variant/40 bg-surface-container-lowest text-on-surface-variant hover:bg-cyan-600 hover:text-white hover:border-cyan-600 transition-all duration-200 shadow-sm">
+                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+                            </button>
+                        )}
+
+                        <div className="flex items-center gap-1.5">
+                            {destacados.map((_, i) => (
+                                <button
+                                    key={i}
+                                    onClick={() => setIdx(i)}
+                                    aria-label={`Ir al trabajo ${i + 1}`}
+                                    className={`h-2 rounded-full transition-all duration-200 ${i === idx ? 'bg-cyan-600 w-4' : 'bg-outline-variant/40 w-2 hover:bg-outline-variant'}`}
+                                />
+                            ))}
+                        </div>
+
+                        {showArrows && (
+                            <button onClick={next} aria-label="Siguiente" className="flex items-center justify-center w-10 h-10 rounded-full border border-outline-variant/40 bg-surface-container-lowest text-on-surface-variant hover:bg-cyan-600 hover:text-white hover:border-cyan-600 transition-all duration-200 shadow-sm">
+                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+                            </button>
+                        )}
+                    </div>
+                )}
+
+                {/* CTA */}
+                <div className="flex justify-center mt-10">
+                    <Link
+                        href="/areas/descentralizados/trabajos"
+                        className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-cyan-600 text-white font-sans text-sm uppercase tracking-wide font-semibold rounded hover:bg-cyan-700 transition-all duration-300 shadow-md active:scale-[0.98]"
+                    >
+                        Ver todos los trabajos
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+                    </Link>
+                </div>
+            </div>
+        </section>
+    );
+}
+
 // ─── Página principal ─────────────────────────────────────────────────────────
-export default function Descentralizados({ trabajos, correos }) {
+export default function Descentralizados({ destacados = [], correos }) {
     return (
         <>
             <Head title="Descentralizados – Consejo Escolar de Merlo" />
@@ -220,33 +290,14 @@ export default function Descentralizados({ trabajos, correos }) {
                     </div>
                 </section>
 
-                {/* ══════ TRABAJOS MENORES ══════ */}
-                {trabajos.length > 0 && (
-                    <section className="py-16 sm:py-20 bg-surface-container-low">
-                        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-
-                            <div className="max-w-xl mb-10">
-                                <p className="font-serif text-xs font-bold text-cyan-600 tracking-[0.2em] uppercase mb-4">Historial de trabajos</p>
-                                <h2 className="font-serif text-3xl md:text-5xl text-primary font-bold md:font-medium tracking-tight mb-3 md:mb-4">
-                                    Trabajos realizados
-                                </h2>
-                                <p className="mt-4 text-secondary text-base font-light font-sans leading-relaxed">
-                                    Registro de los trabajos de fumigación, análisis de agua, provisión de agua y saneamiento realizados en los establecimientos del distrito.
-                                </p>
-                            </div>
-
-                            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                                {trabajos.map((item) => (
-                                    <TrabajoCard key={item.id} item={item} />
-                                ))}
-                            </div>
-                        </div>
-                    </section>
+                {/* ══════ TRABAJOS DESTACADOS (CARRUSEL) ══════ */}
+                {destacados.length > 0 && (
+                    <DestacadosCarrusel destacados={destacados} />
                 )}
 
                 {/* ══════ CONTACTO ══════ */}
                 <section className="relative">
-                    <div className={trabajos.length > 0 ? 'bg-surface-container-low' : 'bg-surface'}>
+                    <div className={destacados.length > 0 ? 'bg-surface-container-low' : 'bg-surface'}>
                         <svg viewBox="0 0 1440 56" className="w-full block text-primary" preserveAspectRatio="none">
                             <path fill="currentColor" d="M0,32L80,37.3C160,43,320,53,480,53.3C640,53,800,43,960,37.3C1120,32,1280,32,1360,32L1440,32L1440,56L1360,56C1280,56,1120,56,960,56C800,56,640,56,480,56C320,56,160,56,80,56L0,56Z" />
                         </svg>

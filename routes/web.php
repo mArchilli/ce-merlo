@@ -56,6 +56,8 @@ Route::get('/areas/patrimonio', [PublicPatrimonioController::class, 'index'])->n
 Route::get('/areas/cooperacion-escolar', [PublicCooperacionEscolarController::class, 'index'])->name('areas.cooperacion_escolar');
 Route::get('/areas/sae', [PublicSaeController::class, 'index'])->name('areas.sae');
 Route::get('/areas/descentralizados', [PublicDescentralizadosController::class, 'index'])->name('areas.descentralizados');
+Route::get('/areas/descentralizados/trabajos', [PublicDescentralizadosController::class, 'listTrabajos'])->name('areas.descentralizados.trabajos');
+Route::get('/areas/descentralizados/trabajos/{trabajoMenor}', [PublicDescentralizadosController::class, 'show'])->name('areas.descentralizados.show');
 
 Route::get('/contacto', function () {
     $organismos = \App\Models\OrganismoVinculado::orderBy('orden')->orderBy('id')->get();

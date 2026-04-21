@@ -49,6 +49,16 @@ const IconExternalLink = () => (
         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
     </svg>
 );
+const IconChevronLeft = () => (
+    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+    </svg>
+);
+const IconChevronRight = () => (
+    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+    </svg>
+);
 
 // ─── Card de obra / trabajo menor ─────────────────────────────────────────────
 function ItemCard({ item, featuredKey, href }) {
@@ -101,6 +111,72 @@ function ItemCard({ item, featuredKey, href }) {
                 )}
             </div>
         </Wrapper>
+    );
+}
+
+// ─── Carrusel de destacados ───────────────────────────────────────────────────
+function InfraCarrusel({ items, featuredKey, getHref }) {
+    const [idx, setIdx] = useState(0);
+    const total = items.length;
+    const cols  = Math.min(total, 3);
+    const showDesktopNav = total > 3;
+    const showMobileNav  = total > 1;
+
+    const prev = () => setIdx(i => (i - 1 + total) % total);
+    const next = () => setIdx(i => (i + 1) % total);
+
+    const gridClass = cols === 1 ? 'grid-cols-1' : cols === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-3';
+
+    return (
+        <div>
+            {/* Desktop */}
+            <div className={`hidden sm:grid ${gridClass} gap-5`}>
+                {Array.from({ length: cols }, (_, offset) => {
+                    const item = items[(idx + offset) % total];
+                    return <ItemCard key={`${item.id}-${offset}`} item={item} featuredKey={featuredKey} href={getHref?.(item)} />;
+                })}
+            </div>
+
+            {/* Mobile – 1 card */}
+            <div className="sm:hidden">
+                <ItemCard item={items[idx % total]} featuredKey={featuredKey} href={getHref?.(items[idx % total])} />
+            </div>
+
+            {/* Desktop navigation */}
+            {showDesktopNav && (
+                <div className="hidden sm:flex items-center justify-center gap-4 mt-8">
+                    <button onClick={prev} aria-label="Anterior" className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600/10 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors">
+                        <IconChevronLeft />
+                    </button>
+                    <div className="flex gap-1.5">
+                        {Array.from({ length: total }, (_, i) => (
+                            <button
+                                key={i}
+                                onClick={() => setIdx(i)}
+                                aria-label={`Ir a ${i + 1}`}
+                                className={`rounded-full transition-all duration-200 ${i === idx ? 'w-5 h-2 bg-blue-600' : 'w-2 h-2 bg-blue-200 hover:bg-blue-400'}`}
+                            />
+                        ))}
+                    </div>
+                    <button onClick={next} aria-label="Siguiente" className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600/10 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors">
+                        <IconChevronRight />
+                    </button>
+                </div>
+            )}
+
+            {/* Mobile navigation */}
+            {showMobileNav && (
+                <div className="flex sm:hidden items-center justify-center gap-4 mt-5">
+                    <button onClick={prev} aria-label="Anterior" className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600/10 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors">
+                        <IconChevronLeft />
+                    </button>
+                    <span className="text-xs text-gray-500">{(idx % total) + 1} / {total}</span>
+                    <button onClick={next} aria-label="Siguiente" className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600/10 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors">
+                        <IconChevronRight />
+                    </button>
+                </div>
+            )}
+        </div>
     );
 }
 
@@ -264,7 +340,7 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
                             </button>
                         </div>
 
-                        {/* Grid obras destacadas */}
+                        {/* Carrusel obras destacadas */}
                         {tab === 'obras' && (
                             obrasDestacadas.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center rounded-none md:rounded border-2 border-dashed border-outline-variant/30 py-20 text-outline-variant">
@@ -272,11 +348,11 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
                                     <p className="mt-3 text-base font-medium font-sans">No hay obras destacadas aún</p>
                                 </div>
                             ) : (
-                                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                                    {obrasDestacadas.map((obra) => (
-                                        <ItemCard key={obra.id} item={obra} featuredKey="destacada" href={`/areas/infraestructura/${obra.id}`} />
-                                    ))}
-                                </div>
+                                <InfraCarrusel
+                                    items={obrasDestacadas}
+                                    featuredKey="destacada"
+                                    getHref={obra => `/areas/infraestructura/${obra.id}`}
+                                />
                             )
                         )}
                         {tab === 'obras' && (
@@ -292,7 +368,7 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
                             </div>
                         )}
 
-                        {/* Grid trabajos menores destacados */}
+                        {/* Carrusel trabajos menores destacados */}
                         {tab === 'trabajos' && (
                             trabajosDestacados.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center rounded-none md:rounded border-2 border-dashed border-outline-variant/30 py-20 text-outline-variant">
@@ -300,11 +376,10 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
                                     <p className="mt-3 text-base font-medium font-sans">No hay trabajos menores destacados aún</p>
                                 </div>
                             ) : (
-                                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                                    {trabajosDestacados.map((t) => (
-                                        <ItemCard key={t.id} item={t} featuredKey="destacado" />
-                                    ))}
-                                </div>
+                                <InfraCarrusel
+                                    items={trabajosDestacados}
+                                    featuredKey="destacado"
+                                />
                             )
                         )}
                         {tab === 'trabajos' && (
