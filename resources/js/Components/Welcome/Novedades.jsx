@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Link } from '@inertiajs/react';
 
 const MESES = {
@@ -83,17 +83,39 @@ function NovedadCard({ novedad }) {
 
 export default function Novedades({ novedades = [] }) {
     const [idx, setIdx] = useState(0);
+    const scrollRef = useRef(null);
 
     if (novedades.length === 0) return null;
 
-    const total       = novedades.length;
-    const showArrows  = total > 3;
-    const prev        = () => setIdx((i) => (i - 1 + total) % total);
-    const next        = () => setIdx((i) => (i + 1) % total);
+    const total      = novedades.length;
+    const showArrows = total > 3;
 
-    // 3 cards on desktop, 1 on mobile — picked circularly
+    const scrollToIdx = (newIdx) => {
+        const clamped = Math.max(0, Math.min(newIdx, total - 1));
+        setIdx(clamped);
+        if (!scrollRef.current) return;
+        const el = scrollRef.current;
+        const child = el.children[clamped];
+        if (!child) return;
+        const childCenter = child.offsetLeft + child.offsetWidth / 2;
+        el.scrollTo({ left: childCenter - el.clientWidth / 2, behavior: 'smooth' });
+    };
+
+    const handleScroll = () => {
+        if (!scrollRef.current) return;
+        const el = scrollRef.current;
+        const center = el.scrollLeft + el.clientWidth / 2;
+        let closestIdx = 0;
+        let minDist = Infinity;
+        Array.from(el.children).forEach((child, i) => {
+            const dist = Math.abs((child.offsetLeft + child.offsetWidth / 2) - center);
+            if (dist < minDist) { minDist = dist; closestIdx = i; }
+        });
+        setIdx(closestIdx);
+    };
+
+    // 3 cards on desktop, picked circularly
     const desktopCards = [0, 1, 2].map((offset) => novedades[(idx + offset) % total]);
-    const mobileCard   = novedades[idx];
 
     return (
         <section id="novedades" className="bg-surface text-on-surface py-16 md:py-24">
@@ -119,40 +141,44 @@ export default function Novedades({ novedades = [] }) {
                         ))}
                     </div>
 
-                    {/* Mobile: 1 card */}
-                    <div className="md:hidden">
-                        <NovedadCard key={mobileCard.id} novedad={mobileCard} />
+                    {/* Mobile – scroll-snap con peek de cards adyacentes */}
+                    <div
+                        ref={scrollRef}
+                        onScroll={handleScroll}
+                        className="md:hidden flex overflow-x-auto snap-x snap-mandatory gap-3 -mx-6 px-[8%] pb-1 overscroll-x-contain"
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                    >
+                        {novedades.map((n) => (
+                            <div key={n.id} className="snap-center shrink-0 w-[84%]">
+                                <NovedadCard novedad={n} />
+                            </div>
+                        ))}
                     </div>
 
-                    {/* Navigation arrows */}
+                    {/* Navegación desktop */}
                     {showArrows && (
-                        <div className="flex items-center justify-center gap-4 mt-8">
+                        <div className="hidden md:flex items-center justify-center gap-4 mt-8">
                             <button
-                                onClick={prev}
+                                onClick={() => setIdx((i) => (i - 1 + total) % total)}
                                 aria-label="Anterior"
                                 className="flex items-center justify-center w-10 h-10 rounded-full border border-outline-variant/40 bg-surface-container-lowest text-on-surface-variant hover:bg-primary hover:text-on-primary hover:border-primary transition-all duration-200 shadow-sm"
                             >
                                 <span className="material-symbols-outlined text-[20px]">chevron_left</span>
                             </button>
-
-                            {/* Dots */}
                             <div className="flex items-center gap-1.5">
                                 {novedades.map((_, i) => (
                                     <button
                                         key={i}
                                         onClick={() => setIdx(i)}
                                         aria-label={`Ir a novedad ${i + 1}`}
-                                        className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                                            i === idx
-                                                ? 'bg-primary w-4'
-                                                : 'bg-outline-variant/40 hover:bg-outline-variant'
+                                        className={`h-2 rounded-full transition-all duration-200 ${
+                                            i === idx ? 'bg-primary w-4' : 'w-2 bg-outline-variant/40 hover:bg-outline-variant'
                                         }`}
                                     />
                                 ))}
                             </div>
-
                             <button
-                                onClick={next}
+                                onClick={() => setIdx((i) => (i + 1) % total)}
                                 aria-label="Siguiente"
                                 className="flex items-center justify-center w-10 h-10 rounded-full border border-outline-variant/40 bg-surface-container-lowest text-on-surface-variant hover:bg-primary hover:text-on-primary hover:border-primary transition-all duration-200 shadow-sm"
                             >
@@ -161,19 +187,37 @@ export default function Novedades({ novedades = [] }) {
                         </div>
                     )}
 
-                    {/* Dots only (no arrows) when ≤3 novedades */}
-                    {!showArrows && total > 1 && (
-                        <div className="flex items-center justify-center gap-1.5 mt-8 md:hidden">
-                            {novedades.map((_, i) => (
-                                <button
-                                    key={i}
-                                    onClick={() => setIdx(i)}
-                                    aria-label={`Ir a novedad ${i + 1}`}
-                                    className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                                        i === idx ? 'bg-primary w-4' : 'bg-outline-variant/40 hover:bg-outline-variant'
-                                    }`}
-                                />
-                            ))}
+                    {/* Navegación mobile */}
+                    {total > 1 && (
+                        <div className="flex md:hidden items-center justify-center gap-3 mt-5">
+                            <button
+                                onClick={() => scrollToIdx(idx - 1)}
+                                disabled={idx === 0}
+                                aria-label="Anterior"
+                                className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                            >
+                                <span className="material-symbols-outlined text-[20px]">chevron_left</span>
+                            </button>
+                            <div className="flex gap-1.5">
+                                {novedades.map((_, i) => (
+                                    <button
+                                        key={i}
+                                        onClick={() => scrollToIdx(i)}
+                                        aria-label={`Ir a novedad ${i + 1}`}
+                                        className={`rounded-full transition-all duration-200 ${
+                                            i === idx ? 'w-5 h-2 bg-primary' : 'w-2 h-2 bg-outline-variant/40 hover:bg-outline-variant'
+                                        }`}
+                                    />
+                                ))}
+                            </div>
+                            <button
+                                onClick={() => scrollToIdx(idx + 1)}
+                                disabled={idx === total - 1}
+                                aria-label="Siguiente"
+                                className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                            >
+                                <span className="material-symbols-outlined text-[20px]">chevron_right</span>
+                            </button>
                         </div>
                     )}
                 </div>
