@@ -56,7 +56,7 @@ function ItemCard({ item, featuredKey, href }) {
     const Wrapper   = href ? Link : 'div';
 
     return (
-        <Wrapper href={href} className="group overflow-hidden rounded-2xl bg-white border border-gray-100 hover:border-brand-blue-100 hover:shadow-lg transition-all duration-200 flex flex-col">
+        <Wrapper href={href} className="group overflow-hidden rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest flex flex-col transition-all duration-300 hover:-translate-y-1 md:hover:-translate-y-0 md:hover:bg-surface-container-low h-full">
             {/* Imagen */}
             <div className="relative h-48 bg-gray-100 overflow-hidden shrink-0">
                 {principal ? (
@@ -75,27 +75,29 @@ function ItemCard({ item, featuredKey, href }) {
                     </div>
                 )}
                 {item[featuredKey] && (
-                    <span className="absolute top-3 left-3 flex items-center gap-1 rounded-full bg-brand-gold-400 px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm">
-                        <IconStar /> Destacado
+                    <span className="absolute top-3 left-3 flex items-center gap-1 rounded bg-blue-600/10 border border-blue-600/20 px-2.5 py-1 text-[10px] font-sans font-bold uppercase tracking-wider text-blue-600 shadow-sm">
+                        <IconStar /> DESTACADO
                     </span>
                 )}
             </div>
 
             {/* Contenido */}
-            <div className="flex flex-col flex-1 p-5">
-                <h3 className="font-bold text-gray-900 text-[15px] leading-snug line-clamp-2 mb-2">
+            <div className="p-6 flex-grow flex flex-col">
+                <h3 className="font-serif text-xl font-bold md:font-medium text-primary leading-snug mb-4 group-hover:text-blue-600 transition-colors">
                     {item.titulo}
                 </h3>
                 {item.descripcion && (
                     <div
-                        className="text-sm text-gray-500 line-clamp-3 leading-relaxed prose prose-sm max-w-none"
+                        className="font-sans text-sm text-on-surface-variant line-clamp-3 leading-relaxed prose prose-sm max-w-none mb-4"
                         dangerouslySetInnerHTML={{ __html: item.descripcion }}
                     />
                 )}
                 {href && (
-                    <p className="mt-auto pt-3 text-xs font-medium text-brand-blue-500 group-hover:text-brand-blue-700 transition-colors">
-                        Ver detalle →
-                    </p>
+                    <div className="mt-auto flex items-center justify-between">
+                        <span className="inline-flex items-center text-sm font-sans font-medium text-blue-600 group-hover:text-primary transition-colors cursor-pointer">
+                            Ver detalle <span className="material-symbols-outlined ml-1 text-[18px]">arrow_forward</span>
+                        </span>
+                    </div>
                 )}
             </div>
         </Wrapper>
@@ -117,40 +119,39 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
         <>
             <Head title="Infraestructura – Consejo Escolar de Merlo" />
 
-            <div className="bg-white text-gray-800 font-sans antialiased">
+            <div className="bg-surface text-on-surface font-sans antialiased min-h-screen flex flex-col">
 
                 {/* ══════ HEADER ══════ */}
                 <PublicNavbar transparent />
 
                 {/* ══════ HERO ══════ */}
-                <section className="relative min-h-[380px] sm:min-h-[420px] flex flex-col overflow-hidden">
-                    <div className="flex-1 relative" style={{ background: 'linear-gradient(135deg, #1E3F58 0%, #2A5678 55%, #B45309 100%)' }}>
+                <section className="relative min-h-[380px] sm:min-h-[420px] flex flex-col overflow-hidden bg-primary">
+                    <div className="flex-1 relative">
                         {/* Patrón sutil */}
-                        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} />
+                        <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")'}} />
                         {/* Círculos decorativos */}
-                        <div className="absolute -right-32 -bottom-32 w-[400px] h-[400px] rounded-full border border-white/[0.04]" />
-                        <div className="absolute -right-20 -bottom-20 w-[280px] h-[280px] rounded-full border border-white/[0.06]" />
+                        <div className="absolute -right-32 -bottom-32 w-[400px] h-[400px] rounded-full bg-blue-600/20 blur-3xl" />
+                        <div className="absolute -right-20 -bottom-20 w-[280px] h-[280px] rounded-full bg-blue-500/10 blur-3xl" />
 
-                        <div className="relative flex items-center h-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-24 pb-16">
+                        <div className="relative flex items-center h-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-32 pb-16">
                             <div className="max-w-2xl">
-                                <div className="inline-flex items-center gap-2.5 px-4 py-1.5 mb-6 rounded-full bg-white/[0.08] backdrop-blur-sm text-brand-blue-100 text-sm font-medium tracking-wide uppercase border border-white/[0.08]">
-                                    <span className="w-2 h-2 rounded-full bg-brand-gold-400 animate-pulse" />
+                                <div className="inline-flex items-center gap-2.5 px-4 py-1.5 mb-6 rounded-none md:rounded bg-white/[0.08] backdrop-blur-sm text-blue-300 text-sm font-medium tracking-wide uppercase border border-white/[0.08]">
+                                    <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
                                     Consejo Escolar de Merlo
                                 </div>
-                                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.08] tracking-tight">
+                                <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.08] tracking-tight">
                                     Infraestructura
-                                    <span className="text-brand-gold-400">.</span>
+                                    <span className="text-blue-500">.</span>
                                 </h1>
-                                <div className="mt-5 w-20 h-1 bg-brand-gold-400 rounded-full" />
-                                <p className="mt-5 text-lg sm:text-xl text-brand-blue-200/90 leading-relaxed max-w-xl font-light">
+                                <p className="mt-6 text-lg sm:text-xl text-white/80 leading-relaxed max-w-xl font-light font-sans">
                                     Nos encargamos del mantenimiento, refacción y construcción de la infraestructura de los establecimientos educativos del distrito de Merlo.
                                 </p>
                             </div>
                         </div>
                     </div>
                     {/* Onda inferior */}
-                    <div className="shrink-0" style={{ background: 'linear-gradient(135deg, #1E3F58 0%, #2A5678 55%, #B45309 100%)' }}>
-                        <svg viewBox="0 0 1440 56" className="w-full block text-white" preserveAspectRatio="none">
+                    <div className="shrink-0 bg-primary">
+                        <svg viewBox="0 0 1440 56" className="w-full block text-surface" preserveAspectRatio="none">
                             <path fill="currentColor" d="M0,32L80,37.3C160,43,320,53,480,53.3C640,53,800,43,960,37.3C1120,32,1280,32,1360,32L1440,32L1440,56L1360,56C1280,56,1120,56,960,56C800,56,640,56,480,56C320,56,160,56,80,56L0,56Z" />
                         </svg>
                     </div>
@@ -161,51 +162,50 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
                     <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
 
                         <div className="max-w-xl mb-14">
-                            <p className="text-xs font-semibold text-brand-gold-500 tracking-[0.2em] uppercase mb-4">Sobre el área</p>
-                            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
+                            <p className="font-serif text-xs font-bold text-blue-600 tracking-[0.2em] uppercase mb-4">Sobre el área</p>
+                            <h2 className="font-serif text-3xl md:text-5xl text-primary font-bold md:font-medium tracking-tight mb-3 md:mb-4">
                                 ¿Qué hace el área de Infraestructura?
                             </h2>
-                            <div className="mt-5 w-16 h-1 bg-brand-gold-400 rounded-full" />
-                            <p className="mt-5 text-gray-500 text-base font-light leading-relaxed">
+                            <p className="mt-4 text-secondary text-base font-light font-sans leading-relaxed">
                                 El área de Infraestructura del Consejo Escolar de Merlo gestiona todo lo relacionado con el estado físico y edilicio de los establecimientos educativos del distrito.
                             </p>
                         </div>
 
                         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {/* Card 1 */}
-                            <div className="group flex flex-col gap-4 rounded-2xl border border-brand-blue-100 bg-white p-7 hover:bg-brand-blue-50/60 hover:border-brand-blue-200 transition-all duration-200">
-                                <div className="w-13 h-13 w-12 h-12 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center shrink-0 group-hover:bg-amber-100 transition-colors">
+                            <div className="group flex flex-col gap-4 rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest p-7 hover:bg-surface-container-low hover:border-outline-variant/60 transition-all duration-200">
+                                <div className="w-12 h-12 rounded-none md:rounded bg-blue-600/10 text-blue-600 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                                     <IconBuilding />
                                 </div>
                                 <div>
-                                    <p className="font-bold text-gray-900 text-[15px] mb-2">Obras de infraestructura</p>
-                                    <p className="text-gray-500 text-sm leading-relaxed">
+                                    <p className="font-serif font-bold text-primary text-[15px] mb-2">Obras de infraestructura</p>
+                                    <p className="font-sans text-secondary text-sm leading-relaxed">
                                         Supervisión y gestión de obras de refacción, ampliación y construcción de edificios escolares en todo el distrito.
                                     </p>
                                 </div>
                             </div>
 
                             {/* Card 2 */}
-                            <div className="group flex flex-col gap-4 rounded-2xl border border-brand-blue-100 bg-white p-7 hover:bg-brand-blue-50/60 hover:border-brand-blue-200 transition-all duration-200">
-                                <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center shrink-0 group-hover:bg-amber-100 transition-colors">
+                            <div className="group flex flex-col gap-4 rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest p-7 hover:bg-surface-container-low hover:border-outline-variant/60 transition-all duration-200">
+                                <div className="w-12 h-12 rounded-none md:rounded bg-blue-600/10 text-blue-600 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                                     <IconWrench />
                                 </div>
                                 <div>
-                                    <p className="font-bold text-gray-900 text-[15px] mb-2">Trabajos de mantenimiento</p>
-                                    <p className="text-gray-500 text-sm leading-relaxed">
+                                    <p className="font-serif font-bold text-primary text-[15px] mb-2">Trabajos de mantenimiento</p>
+                                    <p className="font-sans text-secondary text-sm leading-relaxed">
                                         Coordinación de tareas de mantenimiento preventivo y correctivo para garantizar el buen estado de los establecimientos.
                                     </p>
                                 </div>
                             </div>
 
                             {/* Card 3 */}
-                            <div className="group flex flex-col gap-4 rounded-2xl border border-brand-blue-100 bg-white p-7 hover:bg-brand-blue-50/60 hover:border-brand-blue-200 transition-all duration-200">
-                                <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center shrink-0 group-hover:bg-amber-100 transition-colors">
+                            <div className="group flex flex-col gap-4 rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest p-7 hover:bg-surface-container-low hover:border-outline-variant/60 transition-all duration-200">
+                                <div className="w-12 h-12 rounded-none md:rounded bg-blue-600/10 text-blue-600 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                                     <IconShield />
                                 </div>
                                 <div>
-                                    <p className="font-bold text-gray-900 text-[15px] mb-2">Control y seguimiento</p>
-                                    <p className="text-gray-500 text-sm leading-relaxed">
+                                    <p className="font-serif font-bold text-primary text-[15px] mb-2">Control y seguimiento</p>
+                                    <p className="font-sans text-secondary text-sm leading-relaxed">
                                         Verificación del cumplimiento de los estándares de seguridad y habilitación de los espacios educativos del municipio.
                                     </p>
                                 </div>
@@ -221,29 +221,28 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
                     <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
 
                         <div className="max-w-xl mb-10">
-                            <p className="text-xs font-semibold text-brand-gold-500 tracking-[0.2em] uppercase mb-4">Gestión</p>
-                            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
+                            <p className="font-serif text-xs font-bold text-blue-600 tracking-[0.2em] uppercase mb-4">Gestión</p>
+                            <h2 className="font-serif text-3xl md:text-5xl text-primary font-bold md:font-medium tracking-tight mb-3 md:mb-4">
                                 Obras y trabajos
                             </h2>
-                            <div className="mt-5 w-16 h-1 bg-brand-gold-400 rounded-full" />
-                            <p className="mt-4 text-gray-500 text-base font-light leading-relaxed">
+                            <p className="mt-4 text-secondary text-base font-light font-sans leading-relaxed">
                                 Conocé los proyectos en curso y los trabajos realizados en los establecimientos del distrito.
                             </p>
                         </div>
 
                         {/* Tabs */}
-                        <div className="flex gap-1 border-b border-gray-200 mb-8">
+                        <div className="flex gap-1 border-b border-outline-variant/30 mb-8">
                             <button
                                 onClick={() => setTab('obras')}
                                 className={`px-6 py-3 text-sm font-semibold transition-colors border-b-2 -mb-px ${
                                     tab === 'obras'
-                                        ? 'border-brand-gold-400 text-brand-gold-600'
-                                        : 'border-transparent text-gray-500 hover:text-gray-700'
+                                        ? 'border-blue-600 text-blue-600'
+                                        : 'border-transparent text-secondary hover:text-primary'
                                 }`}
                             >
                                 Obras
-                                <span className={`ml-2 rounded-full px-2 py-0.5 text-xs font-bold ${
-                                    tab === 'obras' ? 'bg-brand-gold-100 text-brand-gold-700' : 'bg-gray-100 text-gray-500'
+                                <span className={`ml-2 rounded px-2 py-0.5 text-xs font-bold ${
+                                    tab === 'obras' ? 'bg-blue-600/10 text-blue-600' : 'bg-surface-container-highest text-secondary'
                                 }`}>
                                     {obras.length}
                                 </span>
@@ -252,13 +251,13 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
                                 onClick={() => setTab('trabajos')}
                                 className={`px-6 py-3 text-sm font-semibold transition-colors border-b-2 -mb-px ${
                                     tab === 'trabajos'
-                                        ? 'border-brand-gold-400 text-brand-gold-600'
-                                        : 'border-transparent text-gray-500 hover:text-gray-700'
+                                        ? 'border-blue-600 text-blue-600'
+                                        : 'border-transparent text-secondary hover:text-primary'
                                 }`}
                             >
                                 Trabajos menores
-                                <span className={`ml-2 rounded-full px-2 py-0.5 text-xs font-bold ${
-                                    tab === 'trabajos' ? 'bg-brand-gold-100 text-brand-gold-700' : 'bg-gray-100 text-gray-500'
+                                <span className={`ml-2 rounded px-2 py-0.5 text-xs font-bold ${
+                                    tab === 'trabajos' ? 'bg-blue-600/10 text-blue-600' : 'bg-surface-container-highest text-secondary'
                                 }`}>
                                     {trabajosMenores.length}
                                 </span>
@@ -268,9 +267,9 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
                         {/* Grid obras destacadas */}
                         {tab === 'obras' && (
                             obrasDestacadas.length === 0 ? (
-                                <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-200 py-20 text-gray-400">
+                                <div className="flex flex-col items-center justify-center rounded-none md:rounded border-2 border-dashed border-outline-variant/30 py-20 text-outline-variant">
                                     <IconBuilding />
-                                    <p className="mt-3 text-base font-medium">No hay obras destacadas aún</p>
+                                    <p className="mt-3 text-base font-medium font-sans">No hay obras destacadas aún</p>
                                 </div>
                             ) : (
                                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
@@ -296,9 +295,9 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
                         {/* Grid trabajos menores destacados */}
                         {tab === 'trabajos' && (
                             trabajosDestacados.length === 0 ? (
-                                <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-200 py-20 text-gray-400">
+                                <div className="flex flex-col items-center justify-center rounded-none md:rounded border-2 border-dashed border-outline-variant/30 py-20 text-outline-variant">
                                     <IconWrench />
-                                    <p className="mt-3 text-base font-medium">No hay trabajos menores destacados aún</p>
+                                    <p className="mt-3 text-base font-medium font-sans">No hay trabajos menores destacados aún</p>
                                 </div>
                             ) : (
                                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
@@ -325,25 +324,24 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
 
                 {/* ══════ DOCUMENTOS PDF ══════ */}
                 {documentos.length > 0 && (
-                    <section className="py-16 sm:py-20 bg-gray-50/60">
+                    <section className="py-16 sm:py-20 bg-surface-container-low">
                         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
 
                             <div className="max-w-xl mb-10">
-                                <p className="text-xs font-semibold text-brand-gold-500 tracking-[0.2em] uppercase mb-4">Documentación</p>
-                                <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
+                                <p className="font-serif text-xs font-bold text-blue-600 tracking-[0.2em] uppercase mb-4">Documentación</p>
+                                <h2 className="font-serif text-3xl md:text-5xl text-primary font-bold md:font-medium tracking-tight mb-3 md:mb-4">
                                     Documentos y publicaciones
                                 </h2>
-                                <div className="mt-5 w-16 h-1 bg-brand-gold-400 rounded-full" />
-                                <p className="mt-4 text-gray-500 text-base font-light leading-relaxed">
+                                <p className="mt-4 text-secondary text-base font-light font-sans leading-relaxed">
                                     Informes, actas y publicaciones oficiales del área de Infraestructura.
                                 </p>
                             </div>
 
                             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                                 {documentos.map((doc) => (
-                                    <div key={doc.id} className="group flex flex-col rounded-2xl bg-white border border-gray-100 hover:border-brand-blue-100 hover:shadow-lg transition-all duration-200 overflow-hidden">
+                                    <div key={doc.id} className="group flex flex-col rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest transition-all duration-200 overflow-hidden hover:bg-surface-container-low">
                                         {/* Miniatura iframe */}
-                                        <div className="relative bg-gray-50 border-b border-gray-100 overflow-hidden" style={{ height: '200px' }}>
+                                        <div className="relative bg-surface-container-high border-b border-outline-variant/20 overflow-hidden" style={{ height: '200px' }}>
                                             {doc.pdf_url ? (
                                                 <iframe
                                                     src={`${doc.pdf_url}#toolbar=0&navpanes=0&scrollbar=0`}
@@ -351,12 +349,12 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
                                                     className="w-full h-full border-0 pointer-events-none"
                                                 />
                                             ) : (
-                                                <div className="flex h-full items-center justify-center text-gray-300">
+                                                <div className="flex h-full items-center justify-center text-outline-variant">
                                                     <IconPdf />
                                                 </div>
                                             )}
                                             {(doc.mes || doc.anio) && (
-                                                <span className="absolute top-2 right-2 rounded-lg bg-white/90 border border-gray-200 px-2 py-0.5 text-xs font-medium text-gray-600">
+                                                <span className="absolute top-2 right-2 rounded bg-white/90 border border-outline-variant/20 px-2 py-0.5 text-[10px] font-sans font-bold uppercase tracking-wider text-secondary">
                                                     {doc.mes ? `${MESES[doc.mes - 1]} ` : ''}{doc.anio ?? ''}
                                                 </span>
                                             )}
@@ -365,13 +363,13 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
                                         {/* Info */}
                                         <div className="flex flex-col flex-1 p-4">
                                             <div className="flex items-start gap-2 mb-1">
-                                                <span className="text-red-400 shrink-0 mt-0.5"><IconPdf /></span>
-                                                <h3 className="font-bold text-gray-900 text-[14px] leading-snug line-clamp-2">{doc.titulo}</h3>
+                                                <span className="text-blue-600 shrink-0 mt-0.5"><IconPdf /></span>
+                                                <h3 className="font-serif font-bold text-primary text-[14px] leading-snug line-clamp-2">{doc.titulo}</h3>
                                             </div>
                                             {doc.descripcion && (
-                                                <p className="mt-1 text-xs text-gray-500 line-clamp-2 leading-relaxed">{doc.descripcion}</p>
+                                                <p className="mt-1 text-xs font-sans text-secondary line-clamp-2 leading-relaxed">{doc.descripcion}</p>
                                             )}
-                                            <div className="mt-auto flex items-center gap-2 pt-3 border-t border-gray-100 mt-4">
+                                            <div className="mt-auto flex items-center gap-2 pt-3 border-t border-outline-variant/20 mt-4">
                                                 {doc.pdf_url && (
                                                     <>
                                                         <button
@@ -403,9 +401,9 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
                 {/* Visor PDF modal */}
                 {previewUrl && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={() => setPreviewUrl(null)}>
-                        <div className="relative flex w-full max-w-5xl flex-col rounded-2xl bg-white shadow-2xl overflow-hidden" style={{ height: '90vh' }} onClick={(e) => e.stopPropagation()}>
-                            <div className="flex items-center justify-between border-b px-6 py-4 shrink-0">
-                                <h2 className="text-sm font-semibold text-gray-800 truncate pr-4">{previewTitulo}</h2>
+                        <div className="relative flex w-full max-w-5xl flex-col rounded-none md:rounded bg-surface-container-lowest shadow-2xl overflow-hidden" style={{ height: '90vh' }} onClick={(e) => e.stopPropagation()}>
+                            <div className="flex items-center justify-between border-b border-outline-variant/20 px-6 py-4 shrink-0">
+                                <h2 className="text-sm font-semibold text-primary truncate pr-4">{previewTitulo}</h2>
                                 <button onClick={() => setPreviewUrl(null)} className="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors">
                                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
                                 </button>
@@ -425,24 +423,23 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
 
                 {/* ══════ CONTACTO ══════ */}
                 <section className="relative">
-                    <div className="bg-white">
-                        <svg viewBox="0 0 1440 56" className="w-full block text-brand-blue-800" preserveAspectRatio="none">
+                    <div className="bg-surface-container-low">
+                        <svg viewBox="0 0 1440 56" className="w-full block text-primary" preserveAspectRatio="none">
                             <path fill="currentColor" d="M0,32L80,37.3C160,43,320,53,480,53.3C640,53,800,43,960,37.3C1120,32,1280,32,1360,32L1440,32L1440,56L1360,56C1280,56,1120,56,960,56C800,56,640,56,480,56C320,56,160,56,80,56L0,56Z" />
                         </svg>
                     </div>
-                    <div className="bg-gradient-to-br from-brand-blue-800 via-brand-blue-700 to-brand-blue-900 relative overflow-hidden">
+                    <div className="bg-primary relative overflow-hidden">
                         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} />
 
                         <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16 sm:py-20">
 
                             {/* Encabezado centrado */}
                             <div className="text-center mb-12">
-                                <p className="text-xs font-semibold text-brand-gold-400 tracking-[0.2em] uppercase mb-4">¿Tenés una consulta?</p>
-                                <h2 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight">
+                                <p className="font-serif text-xs font-bold text-blue-400 tracking-[0.2em] uppercase mb-4">¿Tenés una consulta?</p>
+                                <h2 className="font-serif text-3xl md:text-5xl text-white font-bold md:font-medium tracking-tight mb-6">
                                     Contactate con Infraestructura
                                 </h2>
-                                <div className="mt-5 w-16 h-1 bg-brand-gold-400 mx-auto rounded-full" />
-                                <p className="mt-5 text-brand-blue-200/90 text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto">
+                                <p className="mt-5 text-white/80 text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto">
                                     Para reportar problemas en establecimientos escolares o consultar sobre obras en curso, no dudes en comunicarte con nosotros.
                                 </p>
                             </div>
@@ -464,9 +461,9 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
                                         return (
                                             <div
                                                 key={c.id}
-                                                className="group flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.07] backdrop-blur-sm p-6 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200"
+                                                className="group flex items-start gap-4 rounded-none md:rounded border border-white/10 bg-white/[0.07] backdrop-blur-sm p-6 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)]"
                                             >
-                                                <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-colors ${iconBg}`}>
+                                                <div className={`w-12 h-12 rounded-none md:rounded flex items-center justify-center shrink-0 transition-colors ${iconBg}`}>
                                                     <CardIcon />
                                                 </div>
                                                 <div className="min-w-0 flex-1">
@@ -522,11 +519,10 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
                                 </div>
                             )}
 
-                            {/* Botones */}
-                            <div className="flex flex-wrap items-center justify-center gap-4">
+                            <div className="flex flex-wrap items-center justify-center gap-4 mt-12">
                                 <Link
                                     href="/contacto"
-                                    className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-brand-gold-400 text-white text-base font-semibold rounded-lg hover:bg-brand-gold-500 transition-all duration-200 shadow-lg shadow-brand-gold-400/20"
+                                    className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-blue-600 text-white font-sans text-sm font-bold uppercase tracking-wide rounded hover:bg-blue-700 transition-all duration-300 shadow-md active:scale-95"
                                 >
                                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
@@ -535,7 +531,7 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
                                 </Link>
                                 <Link
                                     href="/"
-                                    className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/20 text-white text-base font-medium rounded-lg hover:bg-white/10 transition-all duration-200"
+                                    className="inline-flex items-center gap-2.5 px-7 py-3.5 border border-outline-variant/40 bg-white/[0.05] text-white font-sans text-sm font-medium uppercase tracking-wide rounded hover:bg-white/10 transition-all duration-300 active:scale-95"
                                 >
                                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
@@ -545,8 +541,8 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
                             </div>
                         </div>
                     </div>
-                    <div className="bg-gradient-to-br from-brand-blue-800 via-brand-blue-700 to-brand-blue-900">
-                        <svg viewBox="0 0 1440 56" className="w-full block text-white" preserveAspectRatio="none">
+                    <div className="bg-primary">
+                        <svg viewBox="0 0 1440 56" className="w-full block text-surface-container-lowest" preserveAspectRatio="none">
                             <path fill="currentColor" d="M0,32L80,37.3C160,43,320,53,480,53.3C640,53,800,43,960,37.3C1120,32,1280,32,1360,32L1440,32L1440,56L1360,56C1280,56,1120,56,960,56C800,56,640,56,480,56C320,56,160,56,80,56L0,56Z" />
                         </svg>
                     </div>

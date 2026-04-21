@@ -109,10 +109,9 @@ export default function Contacto() {
                         {/* Encabezado */}
                         <div className="max-w-xl mb-12">
                             <p className="font-serif text-xs font-bold text-tertiary tracking-[0.2em] uppercase mb-4">Información</p>
-                            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-primary leading-tight">
+                            <h2 className="font-serif text-3xl md:text-5xl text-primary font-bold md:font-medium tracking-tight mb-3 md:mb-4">
                                 ¿Cómo nos encontrás?
                             </h2>
-                            <div className="mt-5 w-16 h-1 bg-tertiary rounded-full" />
                             <p className="mt-4 text-secondary text-base font-light font-sans leading-relaxed">
                                 Podés visitarnos en nuestra sede, llamarnos o escribirnos por correo electrónico.
                             </p>
@@ -123,9 +122,9 @@ export default function Contacto() {
                             {CONTACTO_INFO.map((item, i) => (
                                 <div
                                     key={i}
-                                    className="group flex flex-col items-center text-center gap-4 rounded-2xl border border-outline-variant/30 bg-surface-container-lowest p-7 hover:bg-surface-container-low hover:border-outline-variant/60 transition-all duration-200 shadow-sm"
+                                    className="group flex flex-col items-center text-center gap-4 rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest p-7 hover:bg-surface-container-low hover:border-outline-variant/60 transition-all duration-200"
                                 >
-                                    <div className="w-14 h-14 rounded-xl bg-primary-container/20 text-primary flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
+                                    <div className="w-14 h-14 rounded-none md:rounded bg-primary-container/20 text-primary flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
                                         <span className="material-symbols-outlined text-[28px]" style={{ fontVariationSettings: "'FILL' 0" }}>{item.icon}</span>
                                     </div>
                                     <div>
@@ -146,15 +145,14 @@ export default function Contacto() {
                         {/* Encabezado */}
                         <div className="max-w-xl mb-12">
                             <p className="font-serif text-xs font-bold text-tertiary tracking-[0.2em] uppercase mb-4">Ubicación</p>
-                            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-primary leading-tight">
+                            <h2 className="font-serif text-3xl md:text-5xl text-primary font-bold md:font-medium tracking-tight mb-3 md:mb-4">
                                 Nuestra sede
                             </h2>
-                            <div className="mt-5 w-16 h-1 bg-tertiary rounded-full" />
                         </div>
 
                         <div className="grid lg:grid-cols-5 gap-8">
                             {/* Mapa */}
-                            <div className="lg:col-span-3 rounded-2xl overflow-hidden border border-outline-variant/30 h-[350px] sm:h-[420px] shadow-sm">
+                            <div className="lg:col-span-3 rounded-none md:rounded overflow-hidden border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] h-[350px] sm:h-[420px]">
                                 <iframe
                                     title="Ubicación Consejo Escolar de Merlo"
                                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3280.8!2d-58.7276!3d-34.6714!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcbf3a0b1c7b3d%3A0x0!2sAv.%20Calle%20Real%20208%2C%20Merlo%2C%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1"
@@ -168,9 +166,9 @@ export default function Contacto() {
 
                             {/* Cómo llegar */}
                             <div className="lg:col-span-2 space-y-5">
-                                <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-lowest p-6 shadow-sm">
+                                <div className="rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest p-6">
                                     <div className="flex items-start gap-4">
-                                        <div className="w-10 h-10 rounded-lg bg-primary-container/20 text-primary flex items-center justify-center shrink-0">
+                                        <div className="w-10 h-10 rounded-none md:rounded bg-primary-container/20 text-primary flex items-center justify-center shrink-0">
                                             <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 0" }}>location_on</span>
                                         </div>
                                         <div>
@@ -182,9 +180,9 @@ export default function Contacto() {
                                     </div>
                                 </div>
 
-                                <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-lowest p-6 shadow-sm">
+                                <div className="rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest p-6">
                                     <div className="flex items-start gap-4">
-                                        <div className="w-10 h-10 rounded-lg bg-primary-container/20 text-primary flex items-center justify-center shrink-0">
+                                        <div className="w-10 h-10 rounded-none md:rounded bg-primary-container/20 text-primary flex items-center justify-center shrink-0">
                                             <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 0" }}>directions_transit</span>
                                         </div>
                                         <div>
@@ -196,9 +194,9 @@ export default function Contacto() {
                                     </div>
                                 </div>
 
-                                <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-lowest p-6 shadow-sm">
+                                <div className="rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest p-6">
                                     <div className="flex items-start gap-4">
-                                        <div className="w-10 h-10 rounded-lg bg-primary-container/20 text-primary flex items-center justify-center shrink-0">
+                                        <div className="w-10 h-10 rounded-none md:rounded bg-primary-container/20 text-primary flex items-center justify-center shrink-0">
                                             <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 0" }}>schedule</span>
                                         </div>
                                         <div>
@@ -223,11 +221,9 @@ export default function Contacto() {
                             {/* Columna izquierda - Texto */}
                             <div className="lg:col-span-2">
                                 <p className="font-serif text-xs font-bold text-tertiary tracking-[0.2em] uppercase mb-4">Ayuda</p>
-                                <h2 className="font-serif text-3xl sm:text-4xl font-bold text-primary leading-tight">
-                                    Preguntas<br />
-                                    <span className="text-secondary-fixed-dim">frecuentes</span>
+                                <h2 className="font-serif text-3xl md:text-5xl text-primary font-bold md:font-medium tracking-tight mb-3 md:mb-4">
+                                    Preguntas frecuentes
                                 </h2>
-                                <div className="mt-5 w-16 h-1 bg-tertiary rounded-full" />
                                 <p className="mt-6 text-secondary text-base font-light font-sans leading-relaxed">
                                     Estas son las consultas más comunes que recibimos. Si tu pregunta no está aquí, no dudes en contactarnos.
                                 </p>
@@ -238,7 +234,7 @@ export default function Contacto() {
                                 {FAQ.map((item, i) => (
                                     <div
                                         key={i}
-                                        className="rounded-xl border border-outline-variant/20 bg-surface-container-lowest overflow-hidden transition-all duration-200 hover:border-outline-variant/60 shadow-sm"
+                                        className="rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest overflow-hidden transition-all duration-200 hover:border-outline-variant/60"
                                     >
                                         <button
                                             onClick={() => toggleFaq(i)}
@@ -272,10 +268,9 @@ export default function Contacto() {
 
                         <div className="max-w-xl mb-12">
                             <p className="font-serif text-xs font-bold text-tertiary tracking-[0.2em] uppercase mb-4">Red institucional</p>
-                            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-primary leading-tight">
+                            <h2 className="font-serif text-3xl md:text-5xl text-primary font-bold md:font-medium tracking-tight mb-3 md:mb-4">
                                 Organismos vinculados
                             </h2>
-                            <div className="mt-5 w-16 h-1 bg-tertiary rounded-full" />
                             <p className="mt-4 text-secondary text-base font-light font-sans leading-relaxed">
                                 Organismos e instituciones con los que el Consejo Escolar de Merlo trabaja de manera coordinada en el distrito.
                             </p>
@@ -310,9 +305,9 @@ export default function Contacto() {
                             ].map((org, i) => (
                                 <div
                                     key={i}
-                                    className="group flex flex-col gap-5 rounded-2xl border border-outline-variant/30 bg-surface-container-lowest p-6 hover:bg-surface-container-low hover:border-outline-variant/60 transition-all duration-200 shadow-sm"
+                                    className="group flex flex-col gap-5 rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest p-6 hover:bg-surface-container-low hover:border-outline-variant/60 transition-all duration-200"
                                 >
-                                    <div className="w-12 h-12 rounded-xl bg-primary-container/20 text-primary flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
+                                    <div className="w-12 h-12 rounded-none md:rounded bg-primary-container/20 text-primary flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
                                         <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: "'FILL' 0" }}>{org.icon}</span>
                                     </div>
                                     <div className="flex-1">
@@ -338,17 +333,16 @@ export default function Contacto() {
                 {/* ══════ CTA ══════ */}
                 <section className="py-16 sm:py-24">
                     <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
-                        <div className="bg-primary rounded-3xl p-8 sm:p-16 text-center relative overflow-hidden shadow-2xl">
+                        <div className="bg-primary rounded-none md:rounded p-8 sm:p-16 text-center relative overflow-hidden shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] border border-outline-variant/20">
                             <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")'}} />
                             <div className="absolute -top-32 -right-32 w-[300px] h-[300px] rounded-full bg-primary-container/20 blur-3xl pointer-events-none" />
                             <div className="absolute -bottom-20 -left-20 w-[200px] h-[200px] rounded-full bg-tertiary/20 blur-3xl pointer-events-none" />
 
                             <div className="relative z-10">
                                 <p className="font-serif text-xs font-bold text-tertiary tracking-[0.2em] uppercase mb-4">¿Tenés alguna consulta?</p>
-                                <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white leading-tight mb-4">
+                                <h2 className="font-serif text-3xl md:text-5xl text-white font-bold md:font-medium tracking-tight mb-6">
                                     Estamos para ayudarte
                                 </h2>
-                                <div className="w-16 h-1 bg-tertiary mx-auto rounded-full mb-6" />
                                 <p className="font-sans text-white/80 text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto mb-8">
                                     No dudes en acercarte o comunicarte con nosotros. Te atenderemos de la mejor manera para resolver tus consultas.
                                 </p>

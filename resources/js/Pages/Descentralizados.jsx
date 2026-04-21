@@ -95,36 +95,33 @@ function TrabajoCard({ item }) {
     const principal = item.medio_principal;
 
     return (
-        <div className="group overflow-hidden rounded-2xl bg-white border border-gray-100 hover:border-teal-100 hover:shadow-lg transition-all duration-200 flex flex-col">
+        <div className="group overflow-hidden rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest transition-all duration-300 hover:-translate-y-1 md:hover:-translate-y-0 md:hover:bg-surface-container-low flex flex-col h-full">
             {/* Imagen / Video */}
-            <div className="relative h-48 bg-gray-100 overflow-hidden">
+            <div className="relative h-48 bg-surface-container-high overflow-hidden border-b border-outline-variant/20">
                 {principal ? (
                     principal.tipo === 'imagen' ? (
                         <img
                             src={principal.url}
                             alt={item.titulo}
-                            className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                     ) : (
                         <video src={principal.url} className="h-full w-full object-cover" muted />
                     )
                 ) : (
-                    <div className="flex h-full items-center justify-center text-gray-300">
+                    <div className="flex h-full items-center justify-center text-outline-variant/50">
                         <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                     </div>
                 )}
                 {item.destacado && (
-                    <span
-                        className="absolute top-3 left-3 flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm"
-                        style={{ backgroundColor: PAGE_COLOR }}
-                    >
+                    <span className="absolute top-3 left-3 flex items-center gap-1 rounded px-2.5 py-1 text-[11px] font-sans font-bold uppercase tracking-wider text-white shadow-sm bg-cyan-600">
                         <IconStar /> Destacado
                     </span>
                 )}
                 {fecha && (
-                    <span className="absolute top-3 right-3 rounded-lg bg-white/90 backdrop-blur-sm border border-gray-200 px-2.5 py-1 text-xs font-medium text-gray-600 shadow-sm">
+                    <span className="absolute top-3 right-3 rounded bg-white/90 border border-outline-variant/20 px-2 py-0.5 text-[10px] font-sans font-bold uppercase tracking-wider text-secondary shadow-sm">
                         {fecha}
                     </span>
                 )}
@@ -132,12 +129,12 @@ function TrabajoCard({ item }) {
 
             {/* Contenido */}
             <div className="flex flex-1 flex-col p-5">
-                <h3 className="font-bold text-gray-900 text-[15px] leading-snug line-clamp-2">
+                <h3 className="font-serif font-bold text-primary text-[15px] leading-snug line-clamp-2">
                     {item.titulo}
                 </h3>
                 {item.descripcion && (
                     <div
-                        className="mt-2 prose prose-sm max-w-none text-gray-500 leading-relaxed line-clamp-3"
+                        className="mt-3 prose prose-sm max-w-none text-secondary font-sans text-xs leading-relaxed line-clamp-3"
                         dangerouslySetInnerHTML={{ __html: item.descripcion }}
                     />
                 )}
@@ -152,40 +149,39 @@ export default function Descentralizados({ trabajos, correos }) {
         <>
             <Head title="Descentralizados – Consejo Escolar de Merlo" />
 
-            <div className="bg-white text-gray-800 font-sans antialiased">
+            <div className="bg-surface text-on-surface font-sans antialiased min-h-screen flex flex-col">
 
                 {/* ══════ HEADER ══════ */}
                 <PublicNavbar transparent />
 
                 {/* ══════ HERO ══════ */}
-                <section className="relative min-h-[380px] sm:min-h-[420px] flex flex-col overflow-hidden">
-                    <div className="flex-1 relative" style={{ background: 'linear-gradient(135deg, #1E3F58 0%, #134E4A 55%, #0D9488 100%)' }}>
+                <section className="relative min-h-[380px] sm:min-h-[420px] flex flex-col overflow-hidden bg-primary">
+                    <div className="flex-1 relative">
                         {/* Patrón sutil */}
-                        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} />
+                        <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")'}} />
                         {/* Círculos decorativos */}
-                        <div className="absolute -right-32 -bottom-32 w-[400px] h-[400px] rounded-full border border-white/[0.04]" />
-                        <div className="absolute -right-20 -bottom-20 w-[280px] h-[280px] rounded-full border border-white/[0.06]" />
+                        <div className="absolute -right-32 -bottom-32 w-[400px] h-[400px] rounded-full bg-cyan-600/20 blur-3xl" />
+                        <div className="absolute -right-20 -bottom-20 w-[280px] h-[280px] rounded-full bg-cyan-500/10 blur-3xl" />
 
-                        <div className="relative flex items-center h-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-24 pb-16">
+                        <div className="relative flex items-center h-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-32 pb-16">
                             <div className="max-w-2xl">
-                                <div className="inline-flex items-center gap-2.5 px-4 py-1.5 mb-6 rounded-full bg-white/[0.08] backdrop-blur-sm text-brand-blue-100 text-sm font-medium tracking-wide uppercase border border-white/[0.08]">
-                                    <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: PAGE_COLOR }} />
+                                <div className="inline-flex items-center gap-2.5 px-4 py-1.5 mb-6 rounded-none md:rounded bg-white/[0.08] backdrop-blur-sm text-cyan-300 text-sm font-medium tracking-wide uppercase border border-white/[0.08]">
+                                    <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
                                     Consejo Escolar de Merlo
                                 </div>
-                                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.08] tracking-tight">
+                                <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.08] tracking-tight">
                                     Descentralizados
-                                    <span style={{ color: PAGE_COLOR }}>.</span>
+                                    <span className="text-cyan-500">.</span>
                                 </h1>
-                                <div className="mt-5 w-20 h-1 rounded-full" style={{ backgroundColor: PAGE_COLOR }} />
-                                <p className="mt-5 text-lg sm:text-xl text-brand-blue-200/90 leading-relaxed max-w-xl font-light">
+                                <p className="mt-6 text-lg sm:text-xl text-white/80 leading-relaxed max-w-xl font-light font-sans">
                                     Área del Consejo Escolar de Merlo encargada de la higiene, salubridad y mantenimiento preventivo de los establecimientos educativos del distrito.
                                 </p>
                             </div>
                         </div>
                     </div>
                     {/* Onda inferior */}
-                    <div className="shrink-0" style={{ background: 'linear-gradient(135deg, #1E3F58 0%, #134E4A 55%, #0D9488 100%)' }}>
-                        <svg viewBox="0 0 1440 56" className="w-full block text-white" preserveAspectRatio="none">
+                    <div className="bg-primary">
+                        <svg viewBox="0 0 1440 56" className="w-full block text-surface-container-lowest" preserveAspectRatio="none">
                             <path fill="currentColor" d="M0,32L80,37.3C160,43,320,53,480,53.3C640,53,800,43,960,37.3C1120,32,1280,32,1360,32L1440,32L1440,56L1360,56C1280,56,1120,56,960,56C800,56,640,56,480,56C320,56,160,56,80,56L0,56Z" />
                         </svg>
                     </div>
@@ -196,12 +192,11 @@ export default function Descentralizados({ trabajos, correos }) {
                     <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
 
                         <div className="max-w-xl mb-14">
-                            <p className="text-xs font-semibold tracking-[0.2em] uppercase mb-4" style={{ color: PAGE_COLOR }}>Sobre el área</p>
-                            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
+                            <p className="font-serif text-xs font-bold text-cyan-600 tracking-[0.2em] uppercase mb-4">Sobre el área</p>
+                            <h2 className="font-serif text-3xl md:text-5xl text-primary font-bold md:font-medium tracking-tight mb-3 md:mb-4">
                                 ¿Qué hace el área de Descentralizados?
                             </h2>
-                            <div className="mt-5 w-16 h-1 rounded-full" style={{ backgroundColor: PAGE_COLOR }} />
-                            <p className="mt-5 text-gray-500 text-base font-light leading-relaxed">
+                            <p className="mt-4 text-secondary text-base font-light font-sans leading-relaxed">
                                 El área de Descentralizados del Consejo Escolar de Merlo gestiona los servicios de higiene y mantenimiento sanitario en todos los establecimientos educativos del distrito, asegurando condiciones adecuadas de salubridad para alumnos, docentes y personal.
                             </p>
                         </div>
@@ -210,17 +205,14 @@ export default function Descentralizados({ trabajos, correos }) {
                             {SERVICIOS.map((s) => (
                                 <div
                                     key={s.titulo}
-                                    className="group flex flex-col gap-4 rounded-2xl border border-gray-100 bg-white p-6 hover:border-teal-200 hover:bg-teal-50/50 transition-all duration-200"
+                                    className="group flex flex-col gap-4 rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest p-6 hover:bg-surface-container-low hover:border-outline-variant/60 transition-all duration-200"
                                 >
-                                    <div
-                                        className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 text-white transition-colors"
-                                        style={{ backgroundColor: PAGE_COLOR }}
-                                    >
+                                    <div className="w-12 h-12 rounded-none md:rounded bg-cyan-600/10 text-cyan-600 flex items-center justify-center shrink-0 group-hover:bg-cyan-600 group-hover:text-white transition-colors">
                                         {s.icon}
                                     </div>
                                     <div>
-                                        <p className="font-bold text-gray-900 text-[15px] mb-2">{s.titulo}</p>
-                                        <p className="text-gray-500 text-sm leading-relaxed">{s.desc}</p>
+                                        <p className="font-serif font-bold text-primary text-[15px] mb-2">{s.titulo}</p>
+                                        <p className="font-sans text-secondary text-sm leading-relaxed">{s.desc}</p>
                                     </div>
                                 </div>
                             ))}
@@ -230,16 +222,15 @@ export default function Descentralizados({ trabajos, correos }) {
 
                 {/* ══════ TRABAJOS MENORES ══════ */}
                 {trabajos.length > 0 && (
-                    <section className="py-16 sm:py-20 bg-gray-50">
+                    <section className="py-16 sm:py-20 bg-surface-container-low">
                         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
 
                             <div className="max-w-xl mb-10">
-                                <p className="text-xs font-semibold tracking-[0.2em] uppercase mb-4" style={{ color: PAGE_COLOR }}>Historial de trabajos</p>
-                                <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
+                                <p className="font-serif text-xs font-bold text-cyan-600 tracking-[0.2em] uppercase mb-4">Historial de trabajos</p>
+                                <h2 className="font-serif text-3xl md:text-5xl text-primary font-bold md:font-medium tracking-tight mb-3 md:mb-4">
                                     Trabajos realizados
                                 </h2>
-                                <div className="mt-5 w-16 h-1 rounded-full" style={{ backgroundColor: PAGE_COLOR }} />
-                                <p className="mt-4 text-gray-500 text-base font-light leading-relaxed">
+                                <p className="mt-4 text-secondary text-base font-light font-sans leading-relaxed">
                                     Registro de los trabajos de fumigación, análisis de agua, provisión de agua y saneamiento realizados en los establecimientos del distrito.
                                 </p>
                             </div>
@@ -255,23 +246,22 @@ export default function Descentralizados({ trabajos, correos }) {
 
                 {/* ══════ CONTACTO ══════ */}
                 <section className="relative">
-                    <div className={trabajos.length > 0 ? 'bg-gray-50' : 'bg-white'}>
-                        <svg viewBox="0 0 1440 56" className="w-full block text-brand-blue-800" preserveAspectRatio="none">
+                    <div className={trabajos.length > 0 ? 'bg-surface-container-low' : 'bg-surface'}>
+                        <svg viewBox="0 0 1440 56" className="w-full block text-primary" preserveAspectRatio="none">
                             <path fill="currentColor" d="M0,32L80,37.3C160,43,320,53,480,53.3C640,53,800,43,960,37.3C1120,32,1280,32,1360,32L1440,32L1440,56L1360,56C1280,56,1120,56,960,56C800,56,640,56,480,56C320,56,160,56,80,56L0,56Z" />
                         </svg>
                     </div>
-                    <div className="bg-gradient-to-br from-brand-blue-800 via-brand-blue-700 to-brand-blue-900 relative overflow-hidden">
+                    <div className="bg-primary relative overflow-hidden">
                         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} />
 
                         <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16 sm:py-20">
 
                             <div className="text-center mb-12">
-                                <p className="text-xs font-semibold tracking-[0.2em] uppercase mb-4" style={{ color: '#5EEAD4' }}>¿Necesitás solicitar un servicio?</p>
-                                <h2 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight">
+                                <p className="font-serif text-xs font-bold text-cyan-400 tracking-[0.2em] uppercase mb-4">¿Necesitás solicitar un servicio?</p>
+                                <h2 className="font-serif text-3xl md:text-5xl text-white font-bold md:font-medium tracking-tight mb-6">
                                     Contactate con Descentralizados
                                 </h2>
-                                <div className="mt-5 w-16 h-1 mx-auto rounded-full" style={{ backgroundColor: PAGE_COLOR }} />
-                                <p className="mt-5 text-brand-blue-200/90 text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto">
+                                <p className="mt-5 text-white/80 text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto">
                                     Para solicitar fumigación, análisis de agua, provisión de bidones, desagote de pozo o limpieza de tanque en tu establecimiento, comunicate con nuestra área.
                                 </p>
                             </div>
@@ -285,27 +275,27 @@ export default function Descentralizados({ trabajos, correos }) {
                                             ? 'bg-green-400/20 text-green-300 group-hover:bg-green-400/30'
                                             : isPhoneOnly
                                             ? 'bg-sky-400/20 text-sky-300 group-hover:bg-sky-400/30'
-                                            : 'bg-teal-400/20 text-teal-300 group-hover:bg-teal-400/30';
+                                            : 'bg-cyan-400/20 text-cyan-300 group-hover:bg-cyan-400/30';
                                         const CardIcon = c.es_whatsapp ? IconWhatsApp : isPhoneOnly ? IconPhone : IconMail;
 
                                         return (
                                             <div
                                                 key={c.id}
-                                                className="group flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.07] backdrop-blur-sm p-6 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200"
+                                                className="group flex items-start gap-4 rounded-none md:rounded border border-white/10 bg-white/[0.07] backdrop-blur-sm p-6 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)]"
                                             >
-                                                <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-colors ${iconBg}`}>
+                                                <div className={`w-12 h-12 rounded-none md:rounded flex items-center justify-center shrink-0 transition-colors ${iconBg}`}>
                                                     <CardIcon />
                                                 </div>
                                                 <div className="min-w-0 flex-1">
                                                     {c.descripcion && (
-                                                        <p className="text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: '#5EEAD4' }}>
+                                                        <p className="text-xs font-semibold uppercase tracking-wider mb-1.5 text-cyan-400">
                                                             {c.descripcion}
                                                         </p>
                                                     )}
 
                                                     {c.correo && (
                                                         <a href={`mailto:${c.correo}`} className="group/link">
-                                                            <span className="font-semibold text-white text-sm break-all group-hover/link:text-teal-300 transition-colors">
+                                                            <span className="font-semibold text-white text-sm break-all group-hover/link:text-cyan-300 transition-colors">
                                                                 {c.correo}
                                                             </span>
                                                         </a>
@@ -321,7 +311,7 @@ export default function Descentralizados({ trabajos, correos }) {
                                                             <span className={`font-semibold text-sm break-all transition-colors ${
                                                                 c.es_whatsapp
                                                                     ? 'text-green-300 group-hover/link:text-green-200'
-                                                                    : 'text-white group-hover/link:text-teal-300'
+                                                                    : 'text-white group-hover/link:text-cyan-300'
                                                             }`}>
                                                                 {c.telefono}
                                                             </span>
@@ -347,18 +337,17 @@ export default function Descentralizados({ trabajos, correos }) {
                                 </div>
                             )}
 
-                            <div className="flex flex-wrap items-center justify-center gap-4">
+                            <div className="flex flex-wrap items-center justify-center gap-4 mt-12">
                                 <Link
                                     href="/contacto"
-                                    className="inline-flex items-center gap-2.5 px-7 py-3.5 text-white text-base font-semibold rounded-lg hover:opacity-90 transition-all duration-200 shadow-lg"
-                                    style={{ backgroundColor: PAGE_COLOR, boxShadow: `0 8px 20px ${PAGE_COLOR}33` }}
+                                    className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-cyan-600 text-white font-sans text-sm font-bold uppercase tracking-wide rounded hover:bg-cyan-700 transition-all duration-300 shadow-md active:scale-95"
                                 >
                                     <IconMail />
                                     Ir a Contacto
                                 </Link>
                                 <Link
                                     href="/"
-                                    className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/20 text-white text-base font-medium rounded-lg hover:bg-white/10 transition-all duration-200"
+                                    className="inline-flex items-center gap-2.5 px-7 py-3.5 border border-outline-variant/40 bg-white/[0.05] text-white font-sans text-sm font-medium uppercase tracking-wide rounded hover:bg-white/10 transition-all duration-300 active:scale-95"
                                 >
                                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
