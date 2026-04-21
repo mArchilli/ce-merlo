@@ -29,8 +29,7 @@ const IconFilter = () => (
 // ─── Card de novedad ──────────────────────────────────────────────────────────
 function NovedadCard({ novedad }) {
     const tieneMedia = novedad.medio_principal;
-    
-    // Format the date securely based on available parts
+
     let dateStr = '';
     if (novedad.dia || novedad.mes || novedad.anio) {
         const d = String(novedad.dia || '').padStart(2, '0');
@@ -40,60 +39,61 @@ function NovedadCard({ novedad }) {
     }
 
     return (
-        <article className="bg-surface-container-lowest rounded md:rounded-DEFAULT border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] overflow-hidden flex flex-col group transition-all duration-300 hover:-translate-y-1 md:hover:-translate-y-0 md:hover:bg-surface-container-low h-full">
-            {/* Imagen / placeholder */}
-            <div className="h-48 md:aspect-video w-full relative bg-surface-container-high overflow-hidden shrink-0">
-                {tieneMedia ? (
-                    tieneMedia.tipo === 'imagen' ? (
-                        <img
-                            src={tieneMedia.url}
-                            alt={novedad.titulo}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
+        <Link href={`/novedades/${novedad.id}`} className="block h-full">
+            <article className="bg-surface-container-lowest rounded md:rounded-DEFAULT border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] overflow-hidden flex flex-col group transition-all duration-300 hover:-translate-y-1 md:hover:-translate-y-0 md:hover:bg-surface-container-low h-full">
+                {/* Imagen / placeholder */}
+                <div className="h-48 md:aspect-video w-full relative bg-surface-container-high overflow-hidden shrink-0">
+                    {tieneMedia ? (
+                        tieneMedia.tipo === 'imagen' ? (
+                            <img
+                                src={tieneMedia.url}
+                                alt={novedad.titulo}
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                        ) : (
+                            <video src={tieneMedia.url} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" muted loop />
+                        )
                     ) : (
-                        <video src={tieneMedia.url} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" muted loop />
-                    )
-                ) : (
-                    <div className="flex h-full items-center justify-center text-outline-variant group-hover:scale-105 transition-transform duration-500">
-                        <IconNewspaper />
-                    </div>
-                )}
-            </div>
-
-            {/* Contenido */}
-            <div className="p-6 flex-grow flex flex-col">
-                {/* Date Mobile / Desktop merged style */}
-                {dateStr && (
-                    <div className="font-sans text-xs uppercase tracking-[0.05em] text-secondary mb-3 flex items-center gap-2">
-                        <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 0" }}>calendar_today</span>
-                        <span>{dateStr}</span>
-                    </div>
-                )}
-                
-                <h3 className="font-serif text-xl font-bold md:font-medium text-primary leading-snug mb-4 group-hover:text-tertiary md:group-hover:text-primary-container transition-colors">
-                    {novedad.titulo}
-                </h3>
-                
-                {novedad.descripcion && (
-                    <div
-                        className="font-sans text-sm text-on-surface-variant line-clamp-3 leading-relaxed prose prose-sm max-w-none mb-4"
-                        dangerouslySetInnerHTML={{ __html: novedad.descripcion }}
-                    />
-                )}
-                
-                <div className="mt-auto flex items-center justify-between">
-                    <span className="inline-flex items-center text-sm font-sans font-medium text-tertiary group-hover:text-primary transition-colors cursor-pointer">
-                        Leer más <span className="material-symbols-outlined ml-1 text-[18px]">arrow_forward</span>
-                    </span>
-                    {novedad.destacada && (
-                        <div className="bg-tertiary/10 text-tertiary border border-tertiary/20 px-2.5 py-1 rounded text-[10px] uppercase tracking-wider font-sans font-bold flex items-center gap-1">
-                            <span className="material-symbols-outlined text-[12px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                            DESTACADA
+                        <div className="flex h-full items-center justify-center text-outline-variant group-hover:scale-105 transition-transform duration-500">
+                            <IconNewspaper />
                         </div>
                     )}
                 </div>
-            </div>
-        </article>
+
+                {/* Contenido */}
+                <div className="p-6 flex-grow flex flex-col">
+                    {dateStr && (
+                        <div className="font-sans text-xs uppercase tracking-[0.05em] text-secondary mb-3 flex items-center gap-2">
+                            <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 0" }}>calendar_today</span>
+                            <span>{dateStr}</span>
+                        </div>
+                    )}
+
+                    <h3 className="font-serif text-xl font-bold md:font-medium text-primary leading-snug mb-4 group-hover:text-tertiary md:group-hover:text-primary-container transition-colors">
+                        {novedad.titulo}
+                    </h3>
+
+                    {novedad.descripcion && (
+                        <div
+                            className="font-sans text-sm text-on-surface-variant line-clamp-3 leading-relaxed prose prose-sm max-w-none mb-4"
+                            dangerouslySetInnerHTML={{ __html: novedad.descripcion }}
+                        />
+                    )}
+
+                    <div className="mt-auto flex items-center justify-between">
+                        <span className="inline-flex items-center text-sm font-sans font-medium text-tertiary group-hover:text-primary transition-colors">
+                            Leer más <span className="material-symbols-outlined ml-1 text-[18px]">arrow_forward</span>
+                        </span>
+                        {novedad.destacada && (
+                            <div className="bg-tertiary/10 text-tertiary border border-tertiary/20 px-2.5 py-1 rounded text-[10px] uppercase tracking-wider font-sans font-bold flex items-center gap-1">
+                                <span className="material-symbols-outlined text-[12px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                                DESTACADA
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </article>
+        </Link>
     );
 }
 

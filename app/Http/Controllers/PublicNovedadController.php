@@ -22,4 +22,15 @@ class PublicNovedadController extends Controller
             'novedades' => $novedades,
         ]);
     }
+
+    public function show(Novedad $novedad): Response
+    {
+        abort_unless($novedad->activa, 404);
+
+        $novedad->load('medios');
+
+        return Inertia::render('NovedadShow', [
+            'novedad' => $novedad,
+        ]);
+    }
 }

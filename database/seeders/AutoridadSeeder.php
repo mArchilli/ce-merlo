@@ -14,18 +14,20 @@ class AutoridadSeeder extends Seeder
     {
         $autoridades = [
             // Autoridades principales
-            ['nombre' => 'Lic. María José Barrionuevo', 'cargo' => 'Presidenta',      'tipo' => 'principal', 'orden' => 1],
-            ['nombre' => 'Pablo Robinson Duarte',        'cargo' => 'Vicepresidente',  'tipo' => 'principal', 'orden' => 2],
-            ['nombre' => 'Gabriel Aniceto González',     'cargo' => 'Tesorero',        'tipo' => 'principal', 'orden' => 3],
-            ['nombre' => 'Juan Carlos Ojeda',            'cargo' => 'Secretario',      'tipo' => 'principal', 'orden' => 4],
+            ['nombre' => 'Maria Jose Barrionuevo', 'cargo' => 'Presidenta',                'tipo' => 'principal', 'area' => null, 'orden' => 1],
+            ['nombre' => 'Marcelo Bazz',            'cargo' => 'Vicepresidente',            'tipo' => 'principal', 'area' => null, 'orden' => 2],
+            ['nombre' => 'Sergio Arias',            'cargo' => 'Tesorero',                  'tipo' => 'principal', 'area' => null, 'orden' => 3],
+            ['nombre' => 'Adriana Schmahl',         'cargo' => 'Secretario del Cuerpo',     'tipo' => 'principal', 'area' => null, 'orden' => 4],
+            ['nombre' => 'Francisco Sosa',          'cargo' => 'Secretario Administrativo', 'tipo' => 'principal', 'area' => null, 'orden' => 5],
+            ['nombre' => 'Mariela Ruiz Díaz',       'cargo' => 'Secretario Técnico',        'tipo' => 'principal', 'area' => null, 'orden' => 6],
 
             // Vocales
-            ['nombre' => 'Aldio Mario Capece',    'cargo' => '1º Vocal', 'tipo' => 'vocal', 'orden' => 1],
-            ['nombre' => 'Laura Leguizamón',      'cargo' => '2º Vocal', 'tipo' => 'vocal', 'orden' => 2],
-            ['nombre' => 'Juan Sebastián Azarko', 'cargo' => '3º Vocal', 'tipo' => 'vocal', 'orden' => 3],
-            ['nombre' => 'Hugo Osvaldo Gerstner', 'cargo' => '4º Vocal', 'tipo' => 'vocal', 'orden' => 4],
-            ['nombre' => 'Nilda Gabriela Zapata', 'cargo' => '5º Vocal', 'tipo' => 'vocal', 'orden' => 5],
-            ['nombre' => 'María Graciela Scutella','cargo' => '6º Vocal', 'tipo' => 'vocal', 'orden' => 6],
+            ['nombre' => 'William García',   'cargo' => 'Vocal', 'tipo' => 'vocal', 'area' => 'Infraestructura',      'orden' => 1],
+            ['nombre' => 'Mariela Suárez',   'cargo' => 'Vocal', 'tipo' => 'vocal', 'area' => 'Recursos Humanos',     'orden' => 2],
+            ['nombre' => 'Sergio Arias',     'cargo' => 'Vocal', 'tipo' => 'vocal', 'area' => 'SAE / Compras',        'orden' => 3],
+            ['nombre' => 'Juan Carlos Ojeda','cargo' => 'Vocal', 'tipo' => 'vocal', 'area' => 'Cooperación Escolar',  'orden' => 4],
+            ['nombre' => 'Yésica Costas',    'cargo' => 'Vocal', 'tipo' => 'vocal', 'area' => 'Patrimonio',           'orden' => 5],
+            ['nombre' => 'Noelias Delgado',  'cargo' => 'Vocal', 'tipo' => 'vocal', 'area' => 'Descentralizados',     'orden' => 6],
         ];
 
         foreach ($autoridades as $data) {
@@ -33,6 +35,7 @@ class AutoridadSeeder extends Seeder
                 'nombre' => $data['nombre'],
                 'cargo'  => $data['cargo'],
                 'tipo'   => $data['tipo'],
+                'area'   => $data['area'],
                 'orden'  => $data['orden'],
                 'foto'   => null,
                 'activa' => true,
