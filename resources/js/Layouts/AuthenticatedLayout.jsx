@@ -71,6 +71,11 @@ const IconTool = () => (
         <path strokeLinecap="round" strokeLinejoin="round" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" />
     </svg>
 );
+const IconNetwork = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18zM3.6 9h16.8M3.6 15h16.8M12 3a12 12 0 010 18M12 3a12 12 0 000 18" />
+    </svg>
+);
 
 export default function AuthenticatedLayout({ header, pageTitle, pageSubtitle, pageColor, pageAction, children }) {
     const user = usePage().props.auth.user;
@@ -112,8 +117,9 @@ export default function AuthenticatedLayout({ header, pageTitle, pageSubtitle, p
         {
             title: 'Comunicación',
             items: [
-                { label: 'Novedades',   icon: <IconNewspaper />, href: route('novedades.index'),   routeName: 'novedades.index',   activeColor: '#5796C2' },
-                { label: 'Autoridades', icon: <IconUsers />,     href: route('autoridades.index'), routeName: 'autoridades.index', activeColor: '#A78BFA' },
+                { label: 'Novedades',    icon: <IconNewspaper />, href: route('novedades.index'),   routeName: 'novedades.index',   activeColor: '#5796C2' },
+                { label: 'Autoridades',  icon: <IconUsers />,     href: route('autoridades.index'), routeName: 'autoridades.index', activeColor: '#A78BFA' },
+                { label: 'Organismos',   icon: <IconNetwork />,   href: route('organismos.index'),  routeName: 'organismos.index',  activeColor: '#0284C7' },
             ],
         },
         {

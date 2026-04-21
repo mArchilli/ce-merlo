@@ -5,6 +5,7 @@ use App\Http\Controllers\InfraestructuraDocumentoController;
 use App\Http\Controllers\AutoridadController;
 use App\Http\Controllers\NovedadController;
 use App\Http\Controllers\ObraController;
+use App\Http\Controllers\OrganismoVinculadoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicDescentralizadosController;
 use App\Http\Controllers\PublicInfraestructuraController;
@@ -56,8 +57,11 @@ Route::get('/areas/sae', [PublicSaeController::class, 'index'])->name('areas.sae
 Route::get('/areas/descentralizados', [PublicDescentralizadosController::class, 'index'])->name('areas.descentralizados');
 
 Route::get('/contacto', function () {
+    $organismos = \App\Models\OrganismoVinculado::orderBy('orden')->orderBy('id')->get();
+
     return Inertia::render('Contacto', [
-        'canLogin' => Route::has('login'),
+        'canLogin'   => Route::has('login'),
+        'organismos' => $organismos,
     ]);
 })->name('contacto');
 
@@ -143,6 +147,12 @@ Route::prefix('admin')->group(function () {
         Route::post('/sae', [SaeController::class, 'store'])->name('sae.store');
         Route::put('/sae/{sae}', [SaeController::class, 'update'])->name('sae.update');
         Route::delete('/sae/{sae}', [SaeController::class, 'destroy'])->name('sae.destroy');
+
+        // Organismos vinculados
+        Route::get('/organismos', [OrganismoVinculadoController::class, 'index'])->name('organismos.index');
+        Route::post('/organismos', [OrganismoVinculadoController::class, 'store'])->name('organismos.store');
+        Route::put('/organismos/{organismo}', [OrganismoVinculadoController::class, 'update'])->name('organismos.update');
+        Route::delete('/organismos/{organismo}', [OrganismoVinculadoController::class, 'destroy'])->name('organismos.destroy');
     });
 
 });

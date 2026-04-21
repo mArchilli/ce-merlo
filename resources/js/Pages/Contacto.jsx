@@ -52,7 +52,7 @@ const FAQ = [
 ];
 
 /* ─── Componente principal ─── */
-export default function Contacto() {
+export default function Contacto({ organismos = [] }) {
     const [openFaq, setOpenFaq] = useState(null);
 
     const toggleFaq = (index) => {
@@ -277,42 +277,17 @@ export default function Contacto() {
                         </div>
 
                         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                            {[
-                                {
-                                    nombre: 'Jefatura Distrital',
-                                    responsable: 'Hugo Rosa',
-                                    cargo: 'Jefe Distrital',
-                                    icon: 'account_balance',
-                                },
-                                {
-                                    nombre: 'Secretaría de Educación',
-                                    responsable: 'Silvana Zahana',
-                                    cargo: 'Secretaria de Educación',
-                                    icon: 'school',
-                                },
-                                {
-                                    nombre: 'Sede Inspectores de Nivel',
-                                    responsable: 'Hugo Rosa',
-                                    cargo: 'Inspector Jefe Distrital',
-                                    icon: 'admin_panel_settings',
-                                },
-                                {
-                                    nombre: 'Dirección Provincial de Infraestructura Escolar (DPIe)',
-                                    responsable: 'Karina Morales',
-                                    cargo: 'Inspectora Regional',
-                                    icon: 'architecture',
-                                },
-                            ].map((org, i) => (
+                            {organismos.map((org) => (
                                 <div
-                                    key={i}
+                                    key={org.id}
                                     className="group flex flex-col gap-5 rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest p-6 hover:bg-surface-container-low hover:border-outline-variant/60 transition-all duration-200"
                                 >
                                     <div className="w-12 h-12 rounded-none md:rounded bg-primary-container/20 text-primary flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
-                                        <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: "'FILL' 0" }}>{org.icon}</span>
+                                        <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: "'FILL' 0" }}>account_balance</span>
                                     </div>
                                     <div className="flex-1">
                                         <p className="font-serif font-bold text-primary text-[15px] leading-snug mb-3">
-                                            {org.nombre}
+                                            {org.titulo}
                                         </p>
                                         <div className="flex items-center gap-2">
                                             <div className="w-7 h-7 rounded-full bg-tertiary/10 text-tertiary flex items-center justify-center shrink-0">
@@ -321,6 +296,9 @@ export default function Contacto() {
                                             <div>
                                                 <p className="font-sans text-sm font-bold text-primary">{org.responsable}</p>
                                                 <p className="font-sans text-xs text-secondary">{org.cargo}</p>
+                                                {org.direccion && (
+                                                    <p className="font-sans text-xs text-secondary mt-0.5">{org.direccion}</p>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
