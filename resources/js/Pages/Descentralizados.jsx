@@ -1,5 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import PublicNavbar from '@/Components/PublicNavbar';
 import Footer from '@/Components/Welcome/Footer';
 
@@ -136,13 +136,35 @@ function TrabajoCard({ item }) {
 // ─── Carrusel de destacados ───────────────────────────────────────────────────
 function DestacadosCarrusel({ destacados }) {
     const [idx, setIdx] = useState(0);
-    const total       = destacados.length;
-    const showArrows  = total > 3;
-    const prev        = () => setIdx((i) => (i - 1 + total) % total);
-    const next        = () => setIdx((i) => (i + 1) % total);
+    const scrollRef = useRef(null);
+    const total      = destacados.length;
+    const showArrows = total > 3;
+
+    const scrollToIdx = (newIdx) => {
+        const clamped = Math.max(0, Math.min(newIdx, total - 1));
+        setIdx(clamped);
+        if (!scrollRef.current) return;
+        const el = scrollRef.current;
+        const child = el.children[clamped];
+        if (!child) return;
+        const childCenter = child.offsetLeft + child.offsetWidth / 2;
+        el.scrollTo({ left: childCenter - el.clientWidth / 2, behavior: 'smooth' });
+    };
+
+    const handleScroll = () => {
+        if (!scrollRef.current) return;
+        const el = scrollRef.current;
+        const center = el.scrollLeft + el.clientWidth / 2;
+        let closestIdx = 0;
+        let minDist = Infinity;
+        Array.from(el.children).forEach((child, i) => {
+            const dist = Math.abs((child.offsetLeft + child.offsetWidth / 2) - center);
+            if (dist < minDist) { minDist = dist; closestIdx = i; }
+        });
+        setIdx(closestIdx);
+    };
 
     const desktopCards = [0, 1, 2].map((offset) => destacados[(idx + offset) % total]);
-    const mobileCard   = destacados[idx];
 
     return (
         <section className="py-16 sm:py-20 bg-surface-container-low">
@@ -165,20 +187,30 @@ function DestacadosCarrusel({ destacados }) {
                     ))}
                 </div>
 
-                {/* Mobile: 1 card */}
-                <div className="md:hidden">
-                    <TrabajoCard key={mobileCard.id} item={mobileCard} />
+                {/* Mobile – scroll-snap con peek de cards adyacentes */}
+                <div
+                    ref={scrollRef}
+                    onScroll={handleScroll}
+                    className="md:hidden flex overflow-x-auto snap-x snap-mandatory gap-3 -mx-6 px-[8%] pb-1 overscroll-x-contain"
+                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                >
+                    {destacados.map((item) => (
+                        <div key={item.id} className="snap-center shrink-0 w-[84%]">
+                            <TrabajoCard item={item} />
+                        </div>
+                    ))}
                 </div>
 
-                {/* Navegación */}
-                {(showArrows || total > 1) && (
-                    <div className="flex items-center justify-center gap-4 mt-8">
-                        {showArrows && (
-                            <button onClick={prev} aria-label="Anterior" className="flex items-center justify-center w-10 h-10 rounded-full border border-outline-variant/40 bg-surface-container-lowest text-on-surface-variant hover:bg-cyan-600 hover:text-white hover:border-cyan-600 transition-all duration-200 shadow-sm">
-                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
-                            </button>
-                        )}
-
+                {/* Navegación desktop */}
+                {showArrows && (
+                    <div className="hidden md:flex items-center justify-center gap-4 mt-8">
+                        <button
+                            onClick={() => setIdx((i) => (i - 1 + total) % total)}
+                            aria-label="Anterior"
+                            className="flex items-center justify-center w-10 h-10 rounded-full border border-outline-variant/40 bg-surface-container-lowest text-on-surface-variant hover:bg-cyan-600 hover:text-white hover:border-cyan-600 transition-all duration-200 shadow-sm"
+                        >
+                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+                        </button>
                         <div className="flex items-center gap-1.5">
                             {destacados.map((_, i) => (
                                 <button
@@ -189,12 +221,45 @@ function DestacadosCarrusel({ destacados }) {
                                 />
                             ))}
                         </div>
+                        <button
+                            onClick={() => setIdx((i) => (i + 1) % total)}
+                            aria-label="Siguiente"
+                            className="flex items-center justify-center w-10 h-10 rounded-full border border-outline-variant/40 bg-surface-container-lowest text-on-surface-variant hover:bg-cyan-600 hover:text-white hover:border-cyan-600 transition-all duration-200 shadow-sm"
+                        >
+                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+                        </button>
+                    </div>
+                )}
 
-                        {showArrows && (
-                            <button onClick={next} aria-label="Siguiente" className="flex items-center justify-center w-10 h-10 rounded-full border border-outline-variant/40 bg-surface-container-lowest text-on-surface-variant hover:bg-cyan-600 hover:text-white hover:border-cyan-600 transition-all duration-200 shadow-sm">
-                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
-                            </button>
-                        )}
+                {/* Navegación mobile */}
+                {total > 1 && (
+                    <div className="flex md:hidden items-center justify-center gap-3 mt-5">
+                        <button
+                            onClick={() => scrollToIdx(idx - 1)}
+                            disabled={idx === 0}
+                            aria-label="Anterior"
+                            className="flex h-9 w-9 items-center justify-center rounded-full bg-cyan-600/10 text-cyan-600 hover:bg-cyan-600 hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                        >
+                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+                        </button>
+                        <div className="flex gap-1.5">
+                            {destacados.map((_, i) => (
+                                <button
+                                    key={i}
+                                    onClick={() => scrollToIdx(i)}
+                                    aria-label={`Ir al trabajo ${i + 1}`}
+                                    className={`rounded-full transition-all duration-200 ${i === idx ? 'w-5 h-2 bg-cyan-600' : 'w-2 h-2 bg-cyan-200 hover:bg-cyan-400'}`}
+                                />
+                            ))}
+                        </div>
+                        <button
+                            onClick={() => scrollToIdx(idx + 1)}
+                            disabled={idx === total - 1}
+                            aria-label="Siguiente"
+                            className="flex h-9 w-9 items-center justify-center rounded-full bg-cyan-600/10 text-cyan-600 hover:bg-cyan-600 hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                        >
+                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+                        </button>
                     </div>
                 )}
 

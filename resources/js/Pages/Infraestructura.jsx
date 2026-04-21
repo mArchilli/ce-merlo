@@ -1,5 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import PublicNavbar from '@/Components/PublicNavbar';
 import Footer from '@/Components/Welcome/Footer';
 
@@ -117,13 +117,35 @@ function ItemCard({ item, featuredKey, href }) {
 // ─── Carrusel de destacados ───────────────────────────────────────────────────
 function InfraCarrusel({ items, featuredKey, getHref }) {
     const [idx, setIdx] = useState(0);
+    const scrollRef = useRef(null);
     const total = items.length;
     const cols  = Math.min(total, 3);
     const showDesktopNav = total > 3;
     const showMobileNav  = total > 1;
 
-    const prev = () => setIdx(i => (i - 1 + total) % total);
-    const next = () => setIdx(i => (i + 1) % total);
+    const scrollToIdx = (newIdx) => {
+        const clamped = Math.max(0, Math.min(newIdx, total - 1));
+        setIdx(clamped);
+        if (!scrollRef.current) return;
+        const el = scrollRef.current;
+        const child = el.children[clamped];
+        if (!child) return;
+        const childCenter = child.offsetLeft + child.offsetWidth / 2;
+        el.scrollTo({ left: childCenter - el.clientWidth / 2, behavior: 'smooth' });
+    };
+
+    const handleScroll = () => {
+        if (!scrollRef.current) return;
+        const el = scrollRef.current;
+        const center = el.scrollLeft + el.clientWidth / 2;
+        let closestIdx = 0;
+        let minDist = Infinity;
+        Array.from(el.children).forEach((child, i) => {
+            const dist = Math.abs((child.offsetLeft + child.offsetWidth / 2) - center);
+            if (dist < minDist) { minDist = dist; closestIdx = i; }
+        });
+        setIdx(closestIdx);
+    };
 
     const gridClass = cols === 1 ? 'grid-cols-1' : cols === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-3';
 
@@ -137,15 +159,28 @@ function InfraCarrusel({ items, featuredKey, getHref }) {
                 })}
             </div>
 
-            {/* Mobile – 1 card */}
-            <div className="sm:hidden">
-                <ItemCard item={items[idx % total]} featuredKey={featuredKey} href={getHref?.(items[idx % total])} />
+            {/* Mobile – scroll-snap con peek de cards adyacentes */}
+            <div
+                ref={scrollRef}
+                onScroll={handleScroll}
+                className="sm:hidden flex overflow-x-auto snap-x snap-mandatory gap-3 -mx-6 px-[8%] pb-1 overscroll-x-contain"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+                {items.map((item) => (
+                    <div key={item.id} className="snap-center shrink-0 w-[84%]">
+                        <ItemCard item={item} featuredKey={featuredKey} href={getHref?.(item)} />
+                    </div>
+                ))}
             </div>
 
             {/* Desktop navigation */}
             {showDesktopNav && (
                 <div className="hidden sm:flex items-center justify-center gap-4 mt-8">
-                    <button onClick={prev} aria-label="Anterior" className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600/10 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors">
+                    <button
+                        onClick={() => setIdx(i => (i - 1 + total) % total)}
+                        aria-label="Anterior"
+                        className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600/10 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors"
+                    >
                         <IconChevronLeft />
                     </button>
                     <div className="flex gap-1.5">
@@ -158,7 +193,11 @@ function InfraCarrusel({ items, featuredKey, getHref }) {
                             />
                         ))}
                     </div>
-                    <button onClick={next} aria-label="Siguiente" className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600/10 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors">
+                    <button
+                        onClick={() => setIdx(i => (i + 1) % total)}
+                        aria-label="Siguiente"
+                        className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600/10 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors"
+                    >
                         <IconChevronRight />
                     </button>
                 </div>
@@ -166,12 +205,31 @@ function InfraCarrusel({ items, featuredKey, getHref }) {
 
             {/* Mobile navigation */}
             {showMobileNav && (
-                <div className="flex sm:hidden items-center justify-center gap-4 mt-5">
-                    <button onClick={prev} aria-label="Anterior" className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600/10 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors">
+                <div className="flex sm:hidden items-center justify-center gap-3 mt-5">
+                    <button
+                        onClick={() => scrollToIdx(idx - 1)}
+                        disabled={idx === 0}
+                        aria-label="Anterior"
+                        className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600/10 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                    >
                         <IconChevronLeft />
                     </button>
-                    <span className="text-xs text-gray-500">{(idx % total) + 1} / {total}</span>
-                    <button onClick={next} aria-label="Siguiente" className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600/10 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors">
+                    <div className="flex gap-1.5">
+                        {Array.from({ length: total }, (_, i) => (
+                            <button
+                                key={i}
+                                onClick={() => scrollToIdx(i)}
+                                aria-label={`Ir a ${i + 1}`}
+                                className={`rounded-full transition-all duration-200 ${i === idx ? 'w-5 h-2 bg-blue-600' : 'w-2 h-2 bg-blue-200 hover:bg-blue-400'}`}
+                            />
+                        ))}
+                    </div>
+                    <button
+                        onClick={() => scrollToIdx(idx + 1)}
+                        disabled={idx === total - 1}
+                        aria-label="Siguiente"
+                        className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600/10 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                    >
                         <IconChevronRight />
                     </button>
                 </div>
