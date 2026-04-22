@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 const NAV_ITEMS = [
     { label: 'Inicio', href: '#inicio' },
     { label: 'Institucional', href: '#institucional' },
-    { label: 'Funcionalidades', href: '#funcionalidades' },
+    { label: 'Funcionamiento', href: '/funcionamiento', isPage: true },
     { label: 'Autoridades', href: '#autoridades' },
     { label: 'Novedades', href: '/novedades', isPage: true },
     { label: 'Recursos Humanos', href: '/areas/recursos-humanos', isPage: true },

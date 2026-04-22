@@ -2,9 +2,10 @@ import { Link, usePage } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 
 const NAV_MAIN = [
-    { label: 'Inicio',      href: '/' },
-    { label: 'Novedades',   href: '/novedades' },
-    { label: 'Contacto',    href: '/contacto' },
+    { label: 'Inicio',         href: '/' },
+    { label: 'Funcionamiento', href: '/funcionamiento' },
+    { label: 'Novedades',      href: '/novedades' },
+    { label: 'Contacto',       href: '/contacto' },
 ];
 
 const NAV_AREAS = [

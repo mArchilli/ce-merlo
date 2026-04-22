@@ -35,14 +35,14 @@ export default function Autoridades({ autoridades = [] }) {
     return (
         <section id="autoridades" className="relative">
             {/* Onda superior — transición desde la sección anterior */}
-            <div className="bg-brand-blue-50/40">
-                <svg viewBox="0 0 1440 56" className="w-full block text-brand-blue-800" preserveAspectRatio="none">
+            <div className="bg-surface">
+                <svg viewBox="0 0 1440 56" className="w-full block text-primary" preserveAspectRatio="none">
                     <path fill="currentColor" d="M0,32L80,37.3C160,43,320,53,480,53.3C640,53,800,43,960,37.3C1120,32,1280,32,1360,32L1440,32L1440,56L1360,56C1280,56,1120,56,960,56C800,56,640,56,480,56C320,56,160,56,80,56L0,56Z" />
                 </svg>
             </div>
 
             {/* Contenido sobre fondo oscuro original (mantener según instrucción) */}
-            <div className="bg-gradient-to-br from-brand-blue-800 via-brand-blue-700 to-brand-blue-900 relative overflow-hidden">
+            <div className="bg-primary relative overflow-hidden">
                 {/* Patrón sutil original */}
                 <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")'}} />
 
@@ -51,7 +51,6 @@ export default function Autoridades({ autoridades = [] }) {
                     {/* Encabezado Autoridades (Nuevo estilo) */}
                     <header className="flex flex-col items-center text-center space-y-4 mb-16 md:mb-20">
                         <h1 className="font-serif text-5xl md:text-6xl font-bold tracking-tight text-white">Autoridades</h1>
-                        <div className="h-1 w-24 bg-tertiary mx-auto mt-6 mb-8"></div>
                         <h2 className="font-sans text-sm uppercase tracking-[0.2em] text-tertiary-fixed-dim">EQUIPO DE TRABAJO</h2>
                     </header>
 
@@ -62,18 +61,23 @@ export default function Autoridades({ autoridades = [] }) {
                                 <article key={a.id ?? i} className="bg-surface-container-lowest/5 backdrop-blur-xl border border-outline-variant/20 rounded flex flex-col md:flex-row shadow-2xl shadow-black/20 overflow-hidden group hover:bg-surface-container-lowest/10 transition-all duration-300 relative">
                                     <div className="absolute top-0 left-0 w-full h-1 md:w-1 md:h-full bg-tertiary scale-x-0 md:scale-y-0 group-hover:scale-x-100 md:group-hover:scale-y-100 transition-transform origin-left md:origin-top duration-300 z-10"></div>
                                     
-                                    {/* Mostrar imagen si existe (combinación de diseño desktop) */}
-                                    {a.foto && (
-                                        <div className="hidden md:block md:w-2/5 aspect-[4/5] md:aspect-auto relative bg-surface-variant">
+                                    {/* Espacio para la foto (placeholder o imagen real) */}
+                                    <div className="hidden md:flex md:w-2/5 aspect-[4/5] md:aspect-auto relative bg-surface-container-lowest/10 items-center justify-center border-r border-outline-variant/10 shrink-0">
+                                        {a.foto ? (
                                             <img
                                                 src={`/images/${a.foto}`}
                                                 alt={a.nombre}
                                                 className="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-500"
                                             />
-                                        </div>
-                                    )}
+                                        ) : (
+                                            <div className="flex flex-col items-center gap-3 p-6 opacity-60">
+                                                <IconUser />
+                                                <span className="font-sans text-[10px] uppercase tracking-widest font-semibold text-center text-white/40">Foto pendiente</span>
+                                            </div>
+                                        )}
+                                    </div>
 
-                                    <div className={`p-6 md:p-8 flex flex-col justify-center ${a.foto ? 'md:w-3/5' : 'w-full'}`}>
+                                    <div className="p-6 md:p-8 flex flex-col justify-center w-full md:w-3/5">
                                         <h3 className="font-serif text-lg md:text-2xl text-tertiary-fixed-dim md:text-white mb-2 uppercase md:capitalize tracking-wide md:tracking-normal">{a.cargo}</h3>
                                         <p className="font-sans text-xl md:text-lg font-medium text-white md:text-on-surface-variant md:text-white/80">{a.nombre}</p>
                                     </div>
@@ -113,30 +117,28 @@ export default function Autoridades({ autoridades = [] }) {
                         {/* Encabezado */}
                         <header className="flex flex-col items-center text-center space-y-4 mb-16 md:mb-20">
                             <h2 className="font-serif text-4xl md:text-5xl font-bold tracking-tight text-white">Contacto</h2>
-                            <div className="h-1 w-24 bg-tertiary mx-auto mt-6 mb-8"></div>
-                            <p className="font-sans text-sm uppercase tracking-[0.2em] text-tertiary-fixed-dim">ENCONTRANOS</p>
                         </header>
 
                         {/* Info cards */}
                         <div className="grid sm:grid-cols-3 gap-6 max-w-5xl mx-auto mb-12">
-                            <div className="bg-surface-container-lowest/5 backdrop-blur-xl border border-outline-variant/20 rounded-xl p-8 text-center flex flex-col items-center hover:bg-surface-container-lowest/10 transition-colors">
-                                <div className="w-14 h-14 rounded-full bg-primary-container/30 flex items-center justify-center mb-6 text-tertiary-fixed-dim">
+                            <div className="bg-surface-container-lowest/5 backdrop-blur-xl border border-outline-variant/20 rounded-none md:rounded p-8 text-center flex flex-col items-center hover:bg-surface-container-lowest/10 transition-colors">
+                                <div className="w-14 h-14 rounded-none md:rounded bg-primary-container/30 flex items-center justify-center mb-6 text-tertiary-fixed-dim">
                                     <span className="material-symbols-outlined text-3xl" style={{ fontVariationSettings: "'FILL' 0" }}>location_on</span>
                                 </div>
                                 <h3 className="font-serif text-sm font-bold text-tertiary-fixed-dim uppercase tracking-widest mb-3">Dirección</h3>
                                 <p className="font-sans text-base text-white/90 leading-relaxed">Av. Calle Real 208/212<br />Merlo Centro</p>
                             </div>
                             
-                            <div className="bg-surface-container-lowest/5 backdrop-blur-xl border border-outline-variant/20 rounded-xl p-8 text-center flex flex-col items-center hover:bg-surface-container-lowest/10 transition-colors">
-                                <div className="w-14 h-14 rounded-full bg-primary-container/30 flex items-center justify-center mb-6 text-tertiary-fixed-dim">
+                            <div className="bg-surface-container-lowest/5 backdrop-blur-xl border border-outline-variant/20 rounded-none md:rounded p-8 text-center flex flex-col items-center hover:bg-surface-container-lowest/10 transition-colors">
+                                <div className="w-14 h-14 rounded-none md:rounded bg-primary-container/30 flex items-center justify-center mb-6 text-tertiary-fixed-dim">
                                     <span className="material-symbols-outlined text-3xl" style={{ fontVariationSettings: "'FILL' 0" }}>call</span>
                                 </div>
                                 <h3 className="font-serif text-sm font-bold text-tertiary-fixed-dim uppercase tracking-widest mb-3">Teléfono</h3>
                                 <p className="font-sans text-base text-white/90">0220-482-5836</p>
                             </div>
                             
-                            <div className="bg-surface-container-lowest/5 backdrop-blur-xl border border-outline-variant/20 rounded-xl p-8 text-center flex flex-col items-center hover:bg-surface-container-lowest/10 transition-colors">
-                                <div className="w-14 h-14 rounded-full bg-primary-container/30 flex items-center justify-center mb-6 text-tertiary-fixed-dim">
+                            <div className="bg-surface-container-lowest/5 backdrop-blur-xl border border-outline-variant/20 rounded-none md:rounded p-8 text-center flex flex-col items-center hover:bg-surface-container-lowest/10 transition-colors">
+                                <div className="w-14 h-14 rounded-none md:rounded bg-primary-container/30 flex items-center justify-center mb-6 text-tertiary-fixed-dim">
                                     <span className="material-symbols-outlined text-3xl" style={{ fontVariationSettings: "'FILL' 0" }}>schedule</span>
                                 </div>
                                 <h3 className="font-serif text-sm font-bold text-tertiary-fixed-dim uppercase tracking-widest mb-3">Horario</h3>
@@ -162,8 +164,8 @@ export default function Autoridades({ autoridades = [] }) {
             </div>
 
             {/* Onda inferior — transición al footer blanco */}
-            <div className="bg-gradient-to-br from-brand-blue-800 via-brand-blue-700 to-brand-blue-900">
-                <svg viewBox="0 0 1440 56" className="w-full block text-white" preserveAspectRatio="none">
+            <div className="bg-primary relative z-10 -mb-px">
+                <svg viewBox="0 0 1440 56" className="w-full block text-surface translate-y-[1px] scale-y-[1.02] origin-bottom" preserveAspectRatio="none">
                     <path fill="currentColor" d="M0,32L80,37.3C160,43,320,53,480,53.3C640,53,800,43,960,37.3C1120,32,1280,32,1360,32L1440,32L1440,56L1360,56C1280,56,1120,56,960,56C800,56,640,56,480,56C320,56,160,56,80,56L0,56Z" />
                 </svg>
             </div>

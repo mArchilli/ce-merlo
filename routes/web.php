@@ -51,6 +51,10 @@ Route::get('/', function () {
 Route::get('/novedades', [PublicNovedadController::class, 'index'])->name('novedades.public');
 Route::get('/novedades/{novedad}', [PublicNovedadController::class, 'show'])->name('novedades.show');
 
+Route::get('/funcionamiento', function () {
+    return Inertia::render('Funcionamiento');
+})->name('funcionamiento');
+
 Route::get('/areas/recursos-humanos', [PublicRecursosHumanosController::class, 'index'])->name('areas.recursos_humanos');
 Route::get('/areas/patrimonio', [PublicPatrimonioController::class, 'index'])->name('areas.patrimonio');
 Route::get('/areas/cooperacion-escolar', [PublicCooperacionEscolarController::class, 'index'])->name('areas.cooperacion_escolar');

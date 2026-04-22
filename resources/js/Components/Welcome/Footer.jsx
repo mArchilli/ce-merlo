@@ -1,5 +1,4 @@
 import { Link } from '@inertiajs/react';
-import { NAV_ITEMS } from './Header';
 
 export default function Footer({ scrollTo }) {
     return (
@@ -18,16 +17,18 @@ export default function Footer({ scrollTo }) {
                 <div className="absolute bottom-0 -left-16 w-[300px] h-[300px] rounded-full bg-primary-fixed/5 blur-3xl pointer-events-none" />
                 <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} />
 
-                <div className="relative max-w-[1200px] mx-auto px-6 sm:px-8 pt-16 pb-10">
+                <div className="relative max-w-[1200px] mx-auto px-6 sm:px-8 pt-20 pb-10">
 
                     {/* ── Fila superior: marca + descripción ── */}
                     <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8 pb-14 border-b border-white/10">
                         {/* Identidad */}
                         <div className="max-w-sm">
                             <div className="flex items-center gap-4 mb-6">
-                                <div className="w-14 h-14 rounded-2xl bg-white/[0.05] border border-white/10 backdrop-blur-sm flex items-center justify-center shrink-0 shadow-inner">
-                                    <span className="text-white font-serif font-bold text-xl tracking-tight">CE</span>
-                                </div>
+                                <img
+                                    src="/logo-consejo-de-merlo.png"
+                                    alt="Logo Consejo Escolar de Merlo"
+                                    className="h-14 w-auto object-contain drop-shadow-md"
+                                />
                                 <div>
                                     <span className="block text-xl font-serif font-bold text-white leading-snug">Consejo Escolar de Merlo</span>
                                     <span className="block text-xs font-sans text-secondary-fixed-dim mt-0.5">Provincia de Buenos Aires</span>
@@ -59,9 +60,9 @@ export default function Footer({ scrollTo }) {
                             ].map((item) => (
                                 <div
                                     key={item.label}
-                                    className="flex flex-col gap-3 rounded-xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] transition-colors backdrop-blur-sm p-5"
+                                    className="flex flex-col gap-3 rounded-none md:rounded border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] transition-colors backdrop-blur-sm p-5"
                                 >
-                                    <div className="w-10 h-10 rounded-lg bg-primary-container/40 text-tertiary-fixed-dim flex items-center justify-center shrink-0">
+                                    <div className="w-10 h-10 rounded-none md:rounded bg-primary-container/40 text-tertiary-fixed-dim flex items-center justify-center shrink-0">
                                         <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 0" }}>{item.icon}</span>
                                     </div>
                                     <div>
@@ -73,31 +74,35 @@ export default function Footer({ scrollTo }) {
                         </div>
                     </div>
 
-                    {/* ── Fila media: navegación ── */}
-                    <div className="py-12 border-b border-white/10">
-                        <p className="font-serif text-[11px] font-bold text-tertiary-fixed-dim uppercase tracking-[0.2em] mb-6">Navegación</p>
-                        <nav className="flex flex-wrap gap-x-8 gap-y-3">
-                            {NAV_ITEMS.map((item) =>
-                                item.isPage ? (
-                                    <Link
-                                        key={item.href}
-                                        href={item.href}
-                                        className="font-sans text-sm text-secondary-fixed-dim hover:text-white transition-colors"
-                                    >
-                                        {item.label}
-                                    </Link>
-                                ) : (
-                                    <a
-                                        key={item.href}
-                                        href={item.href}
-                                        onClick={scrollTo ? (e) => scrollTo(e, item.href) : undefined}
-                                        className="font-sans text-sm text-secondary-fixed-dim hover:text-white transition-colors cursor-pointer"
-                                    >
-                                        {item.label}
-                                    </a>
-                                )
-                            )}
-                        </nav>
+                    {/* ── Fila media: navegación y áreas ── */}
+                    <div className="py-12 border-b border-white/10 flex flex-col md:flex-row justify-between gap-12 lg:gap-16">
+                        {/* Navegación */}
+                        <div>
+                            <p className="font-serif text-[11px] font-bold text-tertiary-fixed-dim uppercase tracking-[0.2em] mb-6">Navegación</p>
+                            <nav className="flex gap-8 sm:gap-16">
+                                <div className="flex flex-col gap-3">
+                                    <Link href="/" className="font-sans text-sm text-secondary-fixed-dim hover:text-white transition-colors">Inicio</Link>
+                                    <Link href="/funcionamiento" className="font-sans text-sm text-secondary-fixed-dim hover:text-white transition-colors">Funcionamiento</Link>
+                                </div>
+                                <div className="flex flex-col gap-3">
+                                    <Link href="/novedades" className="font-sans text-sm text-secondary-fixed-dim hover:text-white transition-colors">Novedades</Link>
+                                    <Link href="/contacto" className="font-sans text-sm text-secondary-fixed-dim hover:text-white transition-colors">Contacto</Link>
+                                </div>
+                            </nav>
+                        </div>
+
+                        {/* Áreas */}
+                        <div className="md:w-3/5 lg:w-1/2">
+                            <p className="font-serif text-[11px] font-bold text-tertiary-fixed-dim uppercase tracking-[0.2em] mb-6">Áreas</p>
+                            <nav className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-3">
+                                <Link href="/areas/infraestructura" className="font-sans text-sm text-secondary-fixed-dim hover:text-white transition-colors">Infraestructura</Link>
+                                <Link href="/areas/recursos-humanos" className="font-sans text-sm text-secondary-fixed-dim hover:text-white transition-colors">Recursos humanos</Link>
+                                <Link href="/areas/patrimonio" className="font-sans text-sm text-secondary-fixed-dim hover:text-white transition-colors">Patrimonio</Link>
+                                <Link href="/areas/cooperacion-escolar" className="font-sans text-sm text-secondary-fixed-dim hover:text-white transition-colors">Coop. Escolar</Link>
+                                <Link href="/areas/sae" className="font-sans text-sm text-secondary-fixed-dim hover:text-white transition-colors">SAE</Link>
+                                <Link href="/areas/descentralizados" className="font-sans text-sm text-secondary-fixed-dim hover:text-white transition-colors">Descentralizados</Link>
+                            </nav>
+                        </div>
                     </div>
 
                     {/* ── Línea inferior ── */}
@@ -106,12 +111,7 @@ export default function Footer({ scrollTo }) {
                             © {new Date().getFullYear()} Consejo Escolar de Merlo.
                         </p>
                         <div className="flex items-center gap-4">
-                            <span className="font-sans text-xs text-white/50">Powered by <span className="font-semibold text-white/70">PAMPA LABS</span></span>
-                            <div className="flex items-center gap-1.5">
-                                <span className="w-2 h-2 rounded-full bg-primary-fixed-dim/60" />
-                                <span className="w-2 h-2 rounded-full bg-secondary-fixed-dim/60" />
-                                <span className="w-2 h-2 rounded-full bg-tertiary-fixed-dim/80" />
-                            </div>
+                            <span className="font-sans text-sm text-white/50">Powered by <span className="font-semibold text-tertiary-fixed-dim">PAMPA LABS</span></span>
                         </div>
                     </div>
                 </div>

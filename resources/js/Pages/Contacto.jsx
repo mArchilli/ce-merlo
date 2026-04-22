@@ -290,39 +290,45 @@ export default function Contacto({ organismos = [], faqs = [] }) {
                 </section>
 
                 {/* ══════ CTA ══════ */}
-                <section className="py-16 sm:py-24">
-                    <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
-                        <div className="bg-primary rounded-none md:rounded p-8 sm:p-16 text-center relative overflow-hidden shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] border border-outline-variant/20">
-                            <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")'}} />
-                            <div className="absolute -top-32 -right-32 w-[300px] h-[300px] rounded-full bg-primary-container/20 blur-3xl pointer-events-none" />
-                            <div className="absolute -bottom-20 -left-20 w-[200px] h-[200px] rounded-full bg-tertiary/20 blur-3xl pointer-events-none" />
-
-                            <div className="relative z-10">
-                                <p className="font-serif text-xs font-bold text-tertiary tracking-[0.2em] uppercase mb-4">¿Tenés alguna consulta?</p>
-                                <h2 className="font-serif text-3xl md:text-5xl text-white font-bold md:font-medium tracking-tight mb-6">
-                                    Estamos para ayudarte
-                                </h2>
-                                <p className="font-sans text-white/80 text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto mb-8">
-                                    No dudes en acercarte o comunicarte con nosotros. Te atenderemos de la mejor manera para resolver tus consultas.
-                                </p>
-                                <div className="flex flex-wrap items-center justify-center gap-4">
-                                    <a
-                                        href="tel:02204825836"
-                                        className="inline-flex items-center gap-2.5 px-8 py-3 bg-tertiary text-on-tertiary font-sans text-sm font-bold uppercase tracking-wide rounded hover:bg-tertiary-fixed-dim transition-all duration-300 shadow-md active:scale-95"
-                                    >
-                                        <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 0" }}>call</span>
-                                        Llamanos
-                                    </a>
-                                    <Link
-                                        href="/"
-                                        className="inline-flex items-center gap-2.5 px-8 py-3 border border-outline-variant/40 bg-white/[0.05] text-white font-sans text-sm font-medium uppercase tracking-wide rounded hover:bg-white/10 transition-all duration-300 active:scale-95"
-                                    >
-                                        <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 0" }}>arrow_back</span>
-                                        Volver al inicio
-                                    </Link>
-                                </div>
+                <section className="relative">
+                    <div className="bg-surface-container-low">
+                        <svg viewBox="0 0 1440 56" className="w-full block text-primary" preserveAspectRatio="none">
+                            <path fill="currentColor" d="M0,32L80,37.3C160,43,320,53,480,53.3C640,53,800,43,960,37.3C1120,32,1280,32,1360,32L1440,32L1440,56L1360,56C1280,56,1120,56,960,56C800,56,640,56,480,56C320,56,160,56,80,56L0,56Z" />
+                        </svg>
+                    </div>
+                    <div className="bg-primary relative overflow-hidden">
+                        <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")'}} />
+                        
+                        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16 sm:py-20 text-center">
+                            <p className="font-serif text-xs font-bold text-tertiary tracking-[0.2em] uppercase mb-4">¿Tenés alguna consulta?</p>
+                            <h2 className="font-serif text-3xl md:text-5xl text-white font-bold md:font-medium tracking-tight mb-6">
+                                Estamos para ayudarte
+                            </h2>
+                            <p className="font-sans text-white/80 text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto mb-8">
+                                No dudes en acercarte o comunicarte con nosotros. Te atenderemos de la mejor manera para resolver tus consultas.
+                            </p>
+                            <div className="flex flex-wrap items-center justify-center gap-4">
+                                <a
+                                    href="tel:02204825836"
+                                    className="inline-flex items-center gap-2.5 px-8 py-3 bg-tertiary text-on-tertiary font-sans text-sm font-bold uppercase tracking-wide rounded-none md:rounded hover:bg-tertiary-fixed-dim transition-all duration-300 shadow-md active:scale-95"
+                                >
+                                    <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 0" }}>call</span>
+                                    Llamanos
+                                </a>
+                                <Link
+                                    href="/"
+                                    className="inline-flex items-center gap-2.5 px-8 py-3 border border-outline-variant/40 bg-white/[0.05] text-white font-sans text-sm font-medium uppercase tracking-wide rounded-none md:rounded hover:bg-white/10 transition-all duration-300 active:scale-95"
+                                >
+                                    <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 0" }}>arrow_back</span>
+                                    Volver al inicio
+                                </Link>
                             </div>
                         </div>
+                    </div>
+                    <div className="bg-primary">
+                        <svg viewBox="0 0 1440 56" className="w-full block text-surface" preserveAspectRatio="none">
+                            <path fill="currentColor" d="M0,32L80,37.3C160,43,320,53,480,53.3C640,53,800,43,960,37.3C1120,32,1280,32,1360,32L1440,32L1440,56L1360,56C1280,56,1120,56,960,56C800,56,640,56,480,56C320,56,160,56,80,56L0,56Z" />
+                        </svg>
                     </div>
                 </section>
 

@@ -7,11 +7,8 @@ export default function Hero({ scrollTo }) {
                 {/* Patrón sutil */}
                 <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }} />
 
-                {/* Círculos decorativos (MD3 style) */}
-                <div className="absolute -right-32 -bottom-32 w-[500px] h-[500px] rounded-full bg-white/5 blur-3xl" />
-                <div className="absolute -right-20 -bottom-20 w-[350px] h-[350px] rounded-full bg-white/5 blur-3xl" />
 
-                <div className="relative flex items-center justify-between h-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-16 gap-12">
+                <div className="relative flex items-center justify-between h-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-28 pb-16 gap-12">
                     <div className="max-w-2xl">
                         {/* Logo mobile: visible solo en < lg */}
                         <div className="flex lg:hidden mb-8">
@@ -65,17 +62,12 @@ export default function Hero({ scrollTo }) {
                     </div>
                 </div>
 
-                {/* Indicador de scroll */}
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-white/50 animate-bounce">
-                    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                    </svg>
-                </div>
+
             </div>
 
             {/* Onda inferior */}
-            <div className="relative z-10 shrink-0 bg-primary">
-                <svg viewBox="0 0 1440 100" className="w-full block text-surface h-20 sm:h-28" preserveAspectRatio="none">
+            <div className="relative z-10 shrink-0 bg-primary -mb-px">
+                <svg viewBox="0 0 1440 100" className="w-full block text-surface h-20 sm:h-28 translate-y-[1px] scale-y-[1.02] origin-bottom" preserveAspectRatio="none">
                     <path fill="currentColor" d="M0,50L80,58C160,66,320,82,480,84C640,86,800,74,960,62C1120,50,1280,38,1360,32L1440,26L1440,100L1360,100C1280,100,1120,100,960,100C800,100,640,100,480,100C320,100,160,100,80,100L0,100Z" />
                 </svg>
             </div>

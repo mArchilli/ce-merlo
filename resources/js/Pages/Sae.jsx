@@ -351,8 +351,8 @@ export default function Sae({ items, correos }) {
                             </div>
                         </div>
                     </div>
-                    <div className="bg-primary">
-                        <svg viewBox="0 0 1440 56" className="w-full block text-surface-container-lowest" preserveAspectRatio="none">
+                    <div className="bg-primary relative z-10 -mb-px">
+                        <svg viewBox="0 0 1440 56" className="w-full block text-surface translate-y-[1px] scale-y-[1.02] origin-bottom" preserveAspectRatio="none">
                             <path fill="currentColor" d="M0,32L80,37.3C160,43,320,53,480,53.3C640,53,800,43,960,37.3C1120,32,1280,32,1360,32L1440,32L1440,56L1360,56C1280,56,1120,56,960,56C800,56,640,56,480,56C320,56,160,56,80,56L0,56Z" />
                         </svg>
                     </div>
