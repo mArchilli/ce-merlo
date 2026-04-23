@@ -18,14 +18,14 @@ function MediaGallery({ medios }) {
     const current = medios[active];
 
     return (
-        <div className="mb-10">
-            {/* Vista principal */}
-            <div className="w-full rounded-lg overflow-hidden bg-surface-container-high aspect-video mb-3 shadow-md">
+        <div className="space-y-6">
+            {/* Main Viewport */}
+            <div className="relative group rounded-2xl overflow-hidden bg-surface-container-high aspect-video shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-outline-variant/10">
                 {current.tipo === 'imagen' ? (
                     <img
                         src={current.url}
                         alt=""
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                 ) : (
                     <video
@@ -34,25 +34,37 @@ function MediaGallery({ medios }) {
                         className="w-full h-full object-cover"
                     />
                 )}
+                
+                {/* Overlay for multiple items hint */}
+                {medios.length > 1 && (
+                    <div className="absolute bottom-4 right-4 bg-black/50 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full border border-white/20 z-10">
+                        {active + 1} / {medios.length} MEDIOS
+                    </div>
+                )}
             </div>
 
-            {/* Thumbnails */}
+            {/* Bento Grid Thumbnails */}
             {medios.length > 1 && (
-                <div className="flex gap-2 flex-wrap">
+                <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-3">
                     {medios.map((m, i) => (
                         <button
                             key={m.id}
                             onClick={() => setActive(i)}
-                            className={`w-16 h-16 rounded overflow-hidden border-2 transition-all duration-200 shrink-0 ${
-                                i === active ? 'border-primary' : 'border-transparent opacity-60 hover:opacity-100'
+                            className={`relative aspect-square rounded-xl overflow-hidden border-2 transition-all duration-300 ${
+                                i === active 
+                                    ? 'border-tertiary scale-105 shadow-lg z-10' 
+                                    : 'border-transparent opacity-60 hover:opacity-100 hover:scale-105'
                             }`}
                         >
                             {m.tipo === 'imagen' ? (
                                 <img src={m.url} alt="" className="w-full h-full object-cover" />
                             ) : (
                                 <div className="w-full h-full bg-surface-container-highest flex items-center justify-center">
-                                    <span className="material-symbols-outlined text-[20px] text-outline">play_circle</span>
+                                    <span className="material-symbols-outlined text-[24px] text-primary">play_circle</span>
                                 </div>
+                            )}
+                            {i === active && (
+                                <div className="absolute inset-0 bg-tertiary/10" />
                             )}
                         </button>
                     ))}
@@ -80,70 +92,94 @@ export default function NovedadShow({ novedad }) {
 
                 <PublicNavbar transparent />
 
-                {/* Hero */}
-                <section className="relative min-h-[260px] flex flex-col overflow-hidden bg-primary">
-                    <div className="flex-1 relative">
-                        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: CROSS_PATTERN_BG }} />
-                        <div className="absolute -right-32 -bottom-32 w-[400px] h-[400px] rounded-full bg-primary-container/20 blur-3xl" />
+                {/* Premium Hero */}
+                <section className="relative min-h-[400px] sm:min-h-[480px] flex flex-col overflow-hidden bg-primary">
+                    <div className="flex-1 relative flex items-center">
+                        {/* Rich Textures */}
+                        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: CROSS_PATTERN_BG }} />
+                        <div className="absolute -right-40 -top-40 w-[600px] h-[600px] rounded-full bg-tertiary/10 blur-[120px] animate-pulse" />
+                        <div className="absolute -left-20 bottom-0 w-[400px] h-[400px] rounded-full bg-primary-container/20 blur-[100px]" />
 
-                        <div className="relative max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 pt-32 pb-12">
+                        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-32 pb-20 w-full">
                             <Link
                                 href="/novedades"
-                                className="inline-flex items-center gap-1.5 text-white/70 hover:text-white text-sm font-sans mb-6 transition-colors"
+                                className="group inline-flex items-center gap-2 text-white/60 hover:text-white text-xs font-bold uppercase tracking-widest mb-8 transition-all duration-300"
                             >
-                                <span className="material-symbols-outlined text-[18px]">arrow_back</span>
+                                <span className="material-symbols-outlined text-[18px] transition-transform group-hover:-translate-x-1">arrow_back</span>
                                 Volver a novedades
                             </Link>
 
-                            {novedad.destacada && (
-                                <div className="inline-flex items-center gap-1.5 px-3 py-1 mb-4 rounded-full bg-tertiary/20 border border-tertiary/30 text-tertiary-fixed-dim text-xs font-semibold uppercase tracking-wider font-sans">
-                                    <span className="material-symbols-outlined text-[14px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                                    Destacada
+                            <div className="flex flex-col gap-6">
+                                <div className="flex flex-wrap items-center gap-3">
+                                    {novedad.destacada && (
+                                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-tertiary text-on-tertiary text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-tertiary/20">
+                                            <span className="material-symbols-outlined text-[14px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                                            Destacada
+                                        </div>
+                                    )}
+                                    {dateStr && (
+                                        <div className="flex items-center gap-2 px-3 py-1 rounded bg-white/10 backdrop-blur-md border border-white/10 text-white/90 text-[10px] font-bold uppercase tracking-widest">
+                                            <span className="material-symbols-outlined text-[14px]" style={{ fontVariationSettings: "'FILL' 0" }}>calendar_today</span>
+                                            {dateStr}
+                                        </div>
+                                    )}
                                 </div>
-                            )}
 
-                            <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight tracking-tight">
-                                {novedad.titulo}
-                            </h1>
-
-                            {dateStr && (
-                                <div className="mt-4 flex items-center gap-2 text-white/70 text-sm font-sans">
-                                    <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 0" }}>calendar_today</span>
-                                    {dateStr}
-                                </div>
-                            )}
+                                <h1 className="font-serif text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight max-w-4xl">
+                                    {novedad.titulo}<span className="text-tertiary">.</span>
+                                </h1>
+                            </div>
                         </div>
                     </div>
 
+                    {/* Wave Transition */}
                     <div className="shrink-0 bg-primary">
-                        <svg viewBox="0 0 1440 56" className="w-full block text-surface" preserveAspectRatio="none">
-                            <path fill="currentColor" d="M0,32L80,37.3C160,43,320,53,480,53.3C640,53,800,43,960,37.3C1120,32,1280,32,1360,32L1440,32L1440,56L1360,56C1280,56,1120,56,960,56C800,56,640,56,480,56C320,56,160,56,80,56L0,56Z" />
+                        <svg viewBox="0 0 1440 100" className="w-full block text-surface h-20 sm:h-28 translate-y-[1px] scale-y-[1.02] origin-bottom" preserveAspectRatio="none">
+                            <path fill="currentColor" d="M0,50L80,58C160,66,320,82,480,84C640,86,800,74,960,62C1120,50,1280,38,1360,32L1440,26L1440,100L1360,100C1280,100,1120,100,960,100C800,100,640,100,480,100C320,100,160,100,80,100L0,100Z" />
                         </svg>
                     </div>
                 </section>
 
-                {/* Contenido */}
-                <section className="py-12 sm:py-16 flex-grow">
-                    <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
+                {/* Content Section */}
+                <section className="py-16 sm:py-24 bg-surface flex-grow">
+                    <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+                        
+                        <div className="grid grid-cols-1 lg:grid-cols-1 gap-16">
+                            {/* Main Content Area */}
+                            <div className="flex flex-col gap-16">
+                                
+                                <MediaGallery medios={novedad.medios} />
 
-                        <MediaGallery medios={novedad.medios} />
+                                <div className="relative">
+                                    {/* Decorative vertical line */}
+                                    <div className="absolute -left-6 top-0 bottom-0 w-1 bg-tertiary/20 rounded-full hidden md:block" />
+                                    
+                                    {novedad.descripcion ? (
+                                        <div
+                                            className="prose prose-lg sm:prose-xl max-w-none font-sans text-on-surface-variant leading-relaxed 
+                                                prose-headings:font-serif prose-headings:text-primary prose-headings:font-bold
+                                                prose-p:text-on-surface-variant/90 prose-strong:text-primary
+                                                prose-a:text-tertiary prose-a:no-underline hover:prose-a:underline
+                                                prose-img:rounded-2xl prose-img:shadow-xl"
+                                            dangerouslySetInnerHTML={{ __html: novedad.descripcion }}
+                                        />
+                                    ) : (
+                                        <p className="text-on-surface-variant font-sans italic text-lg text-center py-20 bg-surface-container-low rounded-3xl border border-dashed border-outline-variant/30">
+                                            Sin descripción disponible.
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
 
-                        {novedad.descripcion ? (
-                            <div
-                                className="prose prose-lg max-w-none font-sans text-on-surface-variant leading-relaxed"
-                                dangerouslySetInnerHTML={{ __html: novedad.descripcion }}
-                            />
-                        ) : (
-                            <p className="text-on-surface-variant font-sans italic">Sin descripción disponible.</p>
-                        )}
-
-                        <div className="mt-14 pt-8 border-t border-outline-variant/20 flex justify-between items-center">
+                        {/* Bottom Navigation */}
+                        <div className="mt-24 pt-12 border-t border-outline-variant/20 flex justify-center">
                             <Link
                                 href="/novedades"
-                                className="inline-flex items-center gap-2 px-6 py-3 border border-outline-variant/40 bg-surface-container-lowest rounded text-sm font-sans font-medium text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all duration-300 shadow-sm"
+                                className="group inline-flex items-center gap-3 px-8 py-4 border border-outline-variant/40 bg-surface-container-lowest text-sm font-bold uppercase tracking-widest text-on-surface-variant rounded-none md:rounded hover:bg-surface-container-low hover:text-on-surface transition-all duration-300 shadow-sm active:scale-95"
                             >
-                                <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 0" }}>arrow_back</span>
-                                Ver todas las novedades
+                                <span className="material-symbols-outlined text-[20px] transition-transform group-hover:-translate-x-1">arrow_back</span>
+                                Volver a todas las novedades
                             </Link>
                         </div>
                     </div>
