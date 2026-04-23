@@ -438,6 +438,7 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
                                 <InfraCarrusel
                                     items={trabajosDestacados}
                                     featuredKey="destacado"
+                                    getHref={t => `/areas/infraestructura/trabajos/${t.id}`}
                                 />
                             )
                         )}
