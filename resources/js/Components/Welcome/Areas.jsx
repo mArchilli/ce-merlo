@@ -102,7 +102,10 @@ export default function Areas() {
                                                 {area.icon}
                                             </span>
                                         </div>
-                                        <span className="font-sans text-xs uppercase tracking-widest text-on-surface-variant/70 font-semibold bg-surface-container py-1 px-2 rounded">
+                                        <span 
+                                            className="font-sans text-xs uppercase tracking-widest font-bold py-1 px-2.5 rounded text-white shadow-sm"
+                                            style={{ backgroundColor: area.color }}
+                                        >
                                             Área {num}
                                         </span>
                                     </div>
