@@ -1,6 +1,6 @@
 export default function Institucional() {
     return (
-        <section id="institucional" className="bg-surface text-on-surface py-12 md:py-20 lg:py-24 overflow-hidden selection:bg-primary-fixed selection:text-on-primary-fixed">
+        <section id="institucional" className="bg-surface text-on-surface py-12 md:py-20 lg:py-24 overflow-hidden">
             <div className="max-w-7xl mx-auto px-6">
 
                 {/* Hero Section: Intentional Asymmetry */}

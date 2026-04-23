@@ -6,4 +6,12 @@
     h1, h2, h3, h4, h5, h6 {
         @apply font-serif;
     }
+
+    ::selection {
+        @apply bg-primary-container text-on-primary-container;
+    }
+
+    ::-moz-selection {
+        @apply bg-primary-container text-on-primary-container;
+    }
 }

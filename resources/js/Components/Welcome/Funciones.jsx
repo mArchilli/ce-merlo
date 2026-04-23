@@ -9,7 +9,7 @@ const FUNCIONES = [
 
 export default function Funciones() {
     return (
-        <section id="funciones" className="bg-surface text-on-surface py-20 md:py-32 selection:bg-secondary-container selection:text-on-secondary-container">
+        <section id="funciones" className="bg-surface text-on-surface py-20 md:py-32">
             <div className="max-w-[1200px] mx-auto px-6">
                 
                 {/* Header Section */}

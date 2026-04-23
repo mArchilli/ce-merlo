@@ -1,6 +1,6 @@
 export default function Composicion() {
     return (
-        <section id="composicion" className="bg-surface text-on-surface py-20 md:py-32 selection:bg-primary-container selection:text-on-primary-container">
+        <section id="composicion" className="bg-surface text-on-surface py-20 md:py-32">
             <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full">
 
                 {/* Section Header */}

@@ -53,7 +53,7 @@ const AREAS = [
 
 export default function Areas() {
     return (
-        <section id="areas" className="bg-surface text-on-surface py-16 md:py-24 selection:bg-primary-container selection:text-on-primary-container">
+        <section id="areas" className="bg-surface text-on-surface py-16 md:py-24">
             <div className="max-w-7xl mx-auto px-6">
                 
                 {/* Header Section */}
