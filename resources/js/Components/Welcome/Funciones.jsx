@@ -1,10 +1,10 @@
 const FUNCIONES = [
-    { icon: 'account_balance_wallet', title: 'Administración de fondos', desc: 'Coordinacion con Inspectores, directivos y la comunidad educativa por medio de las cooperadoras escolares.' },
-    { icon: 'architecture', title: 'Infraestructura escolar', desc: 'Gestión de infraestructura escolar: mantenimiento, reparaciones y obras.' },
-    { icon: 'local_shipping', title: 'Servicios escolares', desc: 'Supervisión de servicios escolares: comedores, transporte y mobiliario.' },
-    { icon: 'groups', title: 'Coordinación educativa', desc: 'Coordinación con directivos, docentes y la comunidad educativa.' },
-    { icon: 'person_search', title: 'Recursos humanos', desc: 'Designación de personal auxiliar de las instituciones educativas.' },
-    { icon: 'verified', title: 'S.A.E', desc: 'Supervisión de servicios escolares: comedores, transporte y patrimonio de las instituciones escolares.', filled: true },
+    { title: 'Administración de fondos', desc: 'Coordinacion con Inspectores, directivos y la comunidad educativa por medio de las cooperadoras escolares.' },
+    { title: 'Infraestructura escolar', desc: 'Gestión de infraestructura escolar: mantenimiento, reparaciones y obras.' },
+    { title: 'Servicios escolares', desc: 'Supervisión de servicios escolares: comedores, transporte y mobiliario.' },
+    { title: 'Coordinación educativa', desc: 'Coordinación con directivos, docentes y la comunidad educativa.' },
+    { title: 'Recursos humanos', desc: 'Designación de personal auxiliar de las instituciones educativas.' },
+    { title: 'S.A.E', desc: 'Supervisión de servicios escolares: comedores, transporte y patrimonio de las instituciones escolares.' },
 ];
 
 export default function Funciones() {
