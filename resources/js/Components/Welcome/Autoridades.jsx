@@ -1,11 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { CROSS_PATTERN_BG } from '@/Components/patterns';
 
-const IconUser = () => (
-    <svg className="w-10 h-10 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-    </svg>
-);
 
 const FALLBACK_PRINCIPALES = [
     { cargo: 'Presidenta',      nombre: 'Consejero 1' },
@@ -60,23 +55,18 @@ export default function Autoridades({ autoridades = [], areas = [] }) {
                     {principales.length > 0 && (
                         <section className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-20 md:mb-24">
                             {principales.map((a, i) => (
-                                <article key={a.id ?? i} className="bg-surface-container-lowest/5 backdrop-blur-xl border border-outline-variant/20 rounded flex flex-col md:flex-row shadow-2xl shadow-black/20 overflow-hidden group hover:bg-surface-container-lowest/10 transition-all duration-300 relative">
+                                <article key={a.id ?? i} className={`bg-surface-container-lowest/5 backdrop-blur-xl border border-outline-variant/20 rounded flex flex-col shadow-2xl shadow-black/20 overflow-hidden group hover:bg-surface-container-lowest/10 transition-all duration-300 relative ${a.foto ? 'md:flex-row' : ''}`}>
                                     <div className="absolute top-0 left-0 w-full h-1 md:w-1 md:h-full bg-tertiary scale-x-0 md:scale-y-0 group-hover:scale-x-100 md:group-hover:scale-y-100 transition-transform origin-left md:origin-top duration-300 z-10" />
-                                    <div className="hidden md:flex md:w-2/5 aspect-[4/5] md:aspect-auto relative bg-surface-container-lowest/10 items-center justify-center border-r border-outline-variant/10 shrink-0">
-                                        {a.foto ? (
+                                    {a.foto && (
+                                        <div className="hidden md:flex md:w-2/5 md:aspect-auto relative bg-surface-container-lowest/10 items-center justify-center border-r border-outline-variant/10 shrink-0">
                                             <img
                                                 src={`/images/${a.foto}`}
                                                 alt={a.nombre}
                                                 className="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-500"
                                             />
-                                        ) : (
-                                            <div className="flex flex-col items-center gap-3 p-6 opacity-60">
-                                                <IconUser />
-                                                <span className="font-sans text-[10px] uppercase tracking-widest font-semibold text-center text-white/40">Foto pendiente</span>
-                                            </div>
-                                        )}
-                                    </div>
-                                    <div className="p-6 md:p-8 flex flex-col justify-center w-full md:w-3/5">
+                                        </div>
+                                    )}
+                                    <div className={`p-6 md:p-8 flex flex-col justify-center w-full ${a.foto ? 'md:w-3/5' : ''}`}>
                                         <h3 className="font-serif text-lg md:text-2xl text-tertiary-fixed-dim md:text-white mb-2 uppercase md:capitalize tracking-wide md:tracking-normal">{a.cargo}</h3>
                                         <p className="font-sans text-xl md:text-lg font-medium text-white md:text-white/80">{a.nombre}</p>
                                     </div>
@@ -100,19 +90,15 @@ export default function Autoridades({ autoridades = [], areas = [] }) {
                                         className="group border border-outline-variant/10 rounded bg-primary-container/20 overflow-hidden flex flex-col hover:bg-primary-container/30 transition-all duration-300"
                                     >
                                         {/* Imagen */}
-                                        <div className="aspect-[3/4] relative bg-surface-container-lowest/10 flex items-center justify-center overflow-hidden">
-                                            {v.foto ? (
+                                        {v.foto && (
+                                            <div className="aspect-[3/4] relative bg-surface-container-lowest/10 overflow-hidden shrink-0">
                                                 <img
                                                     src={`/images/${v.foto}`}
                                                     alt={v.nombre}
                                                     className="w-full h-full object-cover object-top grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
                                                 />
-                                            ) : (
-                                                <div className="flex flex-col items-center gap-2 opacity-40">
-                                                    <IconUser />
-                                                </div>
-                                            )}
-                                        </div>
+                                            </div>
+                                        )}
                                         {/* Info */}
                                         <div className="p-3 flex flex-col gap-0.5">
                                             <p className="font-serif text-[10px] text-tertiary-fixed-dim uppercase tracking-wider leading-none">
