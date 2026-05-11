@@ -14,12 +14,12 @@ class AutoridadSeeder extends Seeder
     {
         $autoridades = [
             // Autoridades principales
-            ['nombre' => 'Maria Jose Barrionuevo', 'cargo' => 'Presidenta',                'tipo' => 'principal', 'area' => null, 'orden' => 1],
+            ['nombre' => 'Lic. Maria Jose Barrionuevo', 'cargo' => 'Presidenta',                'tipo' => 'principal', 'area' => null, 'orden' => 1],
             ['nombre' => 'Marcelo Bazz',            'cargo' => 'Vicepresidente',            'tipo' => 'principal', 'area' => null, 'orden' => 2],
             ['nombre' => 'Sergio Arias',            'cargo' => 'Tesorero',                  'tipo' => 'principal', 'area' => null, 'orden' => 3],
-            ['nombre' => 'Adriana Schmahl',         'cargo' => 'Secretario del Cuerpo',     'tipo' => 'principal', 'area' => null, 'orden' => 4],
+            ['nombre' => 'Adriana Schmahl',         'cargo' => 'Secretaria del Cuerpo',     'tipo' => 'principal', 'area' => null, 'orden' => 4],
             ['nombre' => 'Francisco Sosa',          'cargo' => 'Secretario Administrativo', 'tipo' => 'principal', 'area' => null, 'orden' => 5],
-            ['nombre' => 'Mariela Ruiz Díaz',       'cargo' => 'Secretario Técnico',        'tipo' => 'principal', 'area' => null, 'orden' => 6],
+            ['nombre' => 'Mariela Ruiz Díaz',       'cargo' => 'Secretaria Técnica',        'tipo' => 'principal', 'area' => null, 'orden' => 6],
 
             // Vocales
             ['nombre' => 'William García',   'cargo' => 'Vocal', 'tipo' => 'vocal', 'area' => 'Infraestructura',      'orden' => 1],

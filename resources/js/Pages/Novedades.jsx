@@ -174,93 +174,106 @@ export default function Novedades({ novedades = [] }) {
                 <section className="py-12 sm:py-16 flex-grow">
                     <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
 
-                        {/* Barra de filtros */}
-                        <div className="flex flex-wrap items-center gap-4 mb-10 pb-6 border-b border-outline-variant/20">
-                            <span className="flex items-center gap-1.5 text-sm font-semibold text-secondary font-sans uppercase tracking-wider">
-                                <IconFilter /> Filtrar
-                            </span>
-
-                            {/* Solo destacadas */}
-                            <button
-                                onClick={() => setSoloDestacadas(!soloDestacadas)}
-                                className={`flex items-center gap-1.5 text-sm px-4 py-2 rounded border font-sans font-medium transition-colors ${
-                                    soloDestacadas
-                                        ? 'bg-tertiary-container border-tertiary text-on-tertiary-container'
-                                        : 'bg-surface-container-lowest border-outline-variant/30 text-on-surface-variant hover:border-outline-variant/60 hover:bg-surface-container-low'
-                                }`}
-                            >
-                                <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: soloDestacadas ? "'FILL' 1" : "'FILL' 0" }}>star</span>
-                                Destacadas
-                            </button>
-
-                            {/* Filtro año */}
-                            <div className="flex items-center gap-2">
-                                <label htmlFor="filtro-anio" className="text-sm font-sans font-medium text-on-surface-variant">Año</label>
-                                <select
-                                    id="filtro-anio"
-                                    value={anioFiltro}
-                                    onChange={e => handleAnioChange(e.target.value)}
-                                    className="text-sm font-sans border border-outline-variant/30 rounded px-3 py-2 bg-surface-container-lowest text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent cursor-pointer"
-                                >
-                                    <option value="">Todos</option>
-                                    {anios.map(a => (
-                                        <option key={a} value={a}>{a}</option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            {/* Filtro mes */}
-                            <div className="flex items-center gap-2">
-                                <label htmlFor="filtro-mes" className="text-sm font-sans font-medium text-on-surface-variant">Mes</label>
-                                <select
-                                    id="filtro-mes"
-                                    value={mesFiltro}
-                                    onChange={e => setMesFiltro(e.target.value)}
-                                    disabled={mesesDisponibles.length === 0}
-                                    className="text-sm font-sans border border-outline-variant/30 rounded px-3 py-2 bg-surface-container-lowest text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-                                >
-                                    <option value="">Todos</option>
-                                    {mesesDisponibles.map(m => (
-                                        <option key={m} value={m}>{MESES_LABELS[m]}</option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            {hayFiltros && (
-                                <button
-                                    onClick={limpiar}
-                                    className="flex items-center gap-1 text-sm font-sans text-secondary hover:text-primary font-medium transition-colors"
-                                >
-                                    <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 0" }}>close</span>
-                                    Limpiar
-                                </button>
-                            )}
-
-                            <span className="ml-auto text-sm font-sans text-secondary-fixed-dim bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-medium">
-                                {filtradas.length} {filtradas.length === 1 ? 'novedad' : 'novedades'}
-                            </span>
-                        </div>
-
-                        {/* Grid */}
-                        {filtradas.length === 0 ? (
-                            <div className="flex flex-col items-center justify-center rounded border-2 border-dashed border-outline-variant/30 bg-surface-container-lowest py-24 text-outline">
-                                <IconNewspaper />
-                                <p className="mt-4 text-base font-sans font-medium text-on-surface-variant">No hay novedades con los filtros seleccionados</p>
-                                {hayFiltros && (
-                                    <button
-                                        onClick={limpiar}
-                                        className="mt-6 text-sm px-6 py-2 bg-primary text-on-primary rounded hover:bg-primary-container hover:text-on-primary-container font-sans font-medium transition-colors shadow-sm"
-                                    >
-                                        Limpiar filtros
-                                    </button>
-                                )}
+                        {novedades.length === 0 ? (
+                            /* Sin novedades cargadas */
+                            <div className="flex flex-col items-center justify-center rounded border-2 border-dashed border-outline-variant/30 bg-surface-container-lowest py-32 text-outline">
+                                <span className="material-symbols-outlined text-5xl text-outline-variant mb-4" style={{ fontVariationSettings: "'FILL' 0" }}>
+                                    newsmode
+                                </span>
+                                <p className="font-serif text-xl text-on-surface-variant font-medium">Aún no hay novedades cargadas</p>
+                                <p className="mt-2 text-sm font-sans text-outline">Las publicaciones aparecerán aquí cuando estén disponibles.</p>
                             </div>
                         ) : (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                                {filtradas.map(n => (
-                                    <NovedadCard key={n.id} novedad={n} />
-                                ))}
-                            </div>
+                            <>
+                                {/* Barra de filtros */}
+                                <div className="flex flex-wrap items-center gap-4 mb-10 pb-6 border-b border-outline-variant/20">
+                                    <span className="flex items-center gap-1.5 text-sm font-semibold text-secondary font-sans uppercase tracking-wider">
+                                        <IconFilter /> Filtrar
+                                    </span>
+
+                                    {/* Solo destacadas */}
+                                    <button
+                                        onClick={() => setSoloDestacadas(!soloDestacadas)}
+                                        className={`flex items-center gap-1.5 text-sm px-4 py-2 rounded border font-sans font-medium transition-colors ${
+                                            soloDestacadas
+                                                ? 'bg-tertiary-container border-tertiary text-on-tertiary-container'
+                                                : 'bg-surface-container-lowest border-outline-variant/30 text-on-surface-variant hover:border-outline-variant/60 hover:bg-surface-container-low'
+                                        }`}
+                                    >
+                                        <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: soloDestacadas ? "'FILL' 1" : "'FILL' 0" }}>star</span>
+                                        Destacadas
+                                    </button>
+
+                                    {/* Filtro año */}
+                                    <div className="flex items-center gap-2">
+                                        <label htmlFor="filtro-anio" className="text-sm font-sans font-medium text-on-surface-variant">Año</label>
+                                        <select
+                                            id="filtro-anio"
+                                            value={anioFiltro}
+                                            onChange={e => handleAnioChange(e.target.value)}
+                                            className="text-sm font-sans border border-outline-variant/30 rounded px-3 py-2 bg-surface-container-lowest text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent cursor-pointer"
+                                        >
+                                            <option value="">Todos</option>
+                                            {anios.map(a => (
+                                                <option key={a} value={a}>{a}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    {/* Filtro mes */}
+                                    <div className="flex items-center gap-2">
+                                        <label htmlFor="filtro-mes" className="text-sm font-sans font-medium text-on-surface-variant">Mes</label>
+                                        <select
+                                            id="filtro-mes"
+                                            value={mesFiltro}
+                                            onChange={e => setMesFiltro(e.target.value)}
+                                            disabled={mesesDisponibles.length === 0}
+                                            className="text-sm font-sans border border-outline-variant/30 rounded px-3 py-2 bg-surface-container-lowest text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                                        >
+                                            <option value="">Todos</option>
+                                            {mesesDisponibles.map(m => (
+                                                <option key={m} value={m}>{MESES_LABELS[m]}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    {hayFiltros && (
+                                        <button
+                                            onClick={limpiar}
+                                            className="flex items-center gap-1 text-sm font-sans text-secondary hover:text-primary font-medium transition-colors"
+                                        >
+                                            <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 0" }}>close</span>
+                                            Limpiar
+                                        </button>
+                                    )}
+
+                                    <span className="ml-auto text-sm font-sans text-secondary-fixed-dim bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-medium">
+                                        {filtradas.length} {filtradas.length === 1 ? 'novedad' : 'novedades'}
+                                    </span>
+                                </div>
+
+                                {/* Grid */}
+                                {filtradas.length === 0 ? (
+                                    <div className="flex flex-col items-center justify-center rounded border-2 border-dashed border-outline-variant/30 bg-surface-container-lowest py-24 text-outline">
+                                        <IconNewspaper />
+                                        <p className="mt-4 text-base font-sans font-medium text-on-surface-variant">No hay novedades con los filtros seleccionados</p>
+                                        {hayFiltros && (
+                                            <button
+                                                onClick={limpiar}
+                                                className="mt-6 text-sm px-6 py-2 bg-primary text-on-primary rounded hover:bg-primary-container hover:text-on-primary-container font-sans font-medium transition-colors shadow-sm"
+                                            >
+                                                Limpiar filtros
+                                            </button>
+                                        )}
+                                    </div>
+                                ) : (
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                                        {filtradas.map(n => (
+                                            <NovedadCard key={n.id} novedad={n} />
+                                        ))}
+                                    </div>
+                                )}
+                            </>
                         )}
 
                         {/* Volver */}

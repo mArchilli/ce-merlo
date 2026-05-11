@@ -402,7 +402,6 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
                                         </span>
                                     </button>
                                 </div>
-<<<<<<< HEAD
                             )}
 
                             {/* Obras */}
@@ -462,30 +461,6 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
                         </div>
                     </section>
                 )}
-=======
-                            ) : (
-                                <InfraCarrusel
-                                    items={trabajosDestacados}
-                                    featuredKey="destacado"
-                                    getHref={t => `/areas/infraestructura/trabajos/${t.id}`}
-                                />
-                            )
-                        )}
-                        {tab === 'trabajos' && (
-                            <div className="mt-8 flex justify-center">
-                                <Link
-                                    href="/areas/infraestructura/trabajos"
-                                    className="inline-flex items-center gap-2.5 px-6 py-3 bg-brand-blue-700 text-white text-sm font-semibold rounded-lg hover:bg-brand-blue-800 transition-all duration-200 shadow-sm"
-                                >
-                                    <IconWrench />
-                                    Ver todos los trabajos menores
-                                    <span className="ml-1 rounded-full bg-white/20 px-2 py-0.5 text-xs font-bold">{trabajosMenores.length}</span>
-                                </Link>
-                            </div>
-                        )}
-                    </div>
-                </section>
->>>>>>> c71df6e9b46fbe3d3dd5f079ccfd3914ba054119
 
                 {/* ══════ DOCUMENTOS PDF ══════ */}
                 {documentos.length > 0 && (
