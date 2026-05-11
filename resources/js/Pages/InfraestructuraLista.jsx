@@ -144,33 +144,34 @@ export default function InfraestructuraLista({ items, tipo }) {
                 <PublicNavbar transparent />
 
                 {/* ══════ HERO ══════ */}
-                <section className="relative min-h-[300px] sm:min-h-[320px] flex flex-col overflow-hidden">
-                    <div className="flex-1 relative" style={{ background: 'linear-gradient(135deg, #1E3F58 0%, #2A5678 55%, #B45309 100%)' }}>
-                        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: CROSS_PATTERN_BG }} />
-                        <div className="absolute -right-32 -bottom-32 w-[400px] h-[400px] rounded-full border border-white/[0.04]" />
-                        <div className="absolute -right-20 -bottom-20 w-[280px] h-[280px] rounded-full border border-white/[0.06]" />
+                <section className="relative min-h-[380px] sm:min-h-[420px] flex flex-col overflow-hidden bg-primary">
+                    <div className="flex-1 relative flex items-center">
+                        {/* Rich Textures */}
+                        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: CROSS_PATTERN_BG }} />
+                        <div className="absolute -left-20 bottom-0 w-[400px] h-[400px] rounded-full bg-[#2563EB]/10 blur-[100px]" />
 
-                        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-24 pb-12">
+                        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-32 pb-20 w-full">
                             {/* Breadcrumb */}
-                            <nav className="flex items-center gap-2 text-brand-blue-200/70 text-sm mb-6">
+                            <nav className="flex items-center gap-2 text-white/40 text-xs font-bold uppercase tracking-widest mb-8">
                                 <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
-                                <span>/</span>
+                                <span className="material-symbols-outlined text-[14px]">chevron_right</span>
                                 <Link href="/areas/infraestructura" className="hover:text-white transition-colors">Infraestructura</Link>
-                                <span>/</span>
-                                <span className="text-white font-medium">{titulo}</span>
+                                <span className="material-symbols-outlined text-[14px]">chevron_right</span>
+                                <span className="text-white">{titulo}</span>
                             </nav>
 
-                            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-[1.08] tracking-tight">
-                                {titulo}<span className="text-brand-gold-400">.</span>
+                            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight max-w-4xl">
+                                {titulo}<span className="text-[#2563EB]">.</span>
                             </h1>
-                            <div className="mt-4 w-16 h-1 bg-brand-gold-400 rounded-full" />
-                            <p className="mt-4 text-base sm:text-lg text-brand-blue-200/90 font-light">
-                                {nombreItem(items.length)} en total · ordenados del más reciente al más antiguo
+                            <p className="mt-6 text-lg text-white/60 font-light font-sans max-w-2xl">
+                                {nombreItem(items.length)} en total · Ordenados cronológicamente para tu seguimiento.
                             </p>
                         </div>
                     </div>
-                    <div className="shrink-0" style={{ background: 'linear-gradient(135deg, #1E3F58 0%, #2A5678 55%, #B45309 100%)' }}>
-                        <svg viewBox="0 0 1440 56" className="w-full block text-white" preserveAspectRatio="none">
+
+                    {/* Wave Transition */}
+                    <div className="shrink-0 bg-primary">
+                        <svg viewBox="0 0 1440 56" className="w-full block text-surface" preserveAspectRatio="none">
                             <path fill="currentColor" d="M0,32L80,37.3C160,43,320,53,480,53.3C640,53,800,43,960,37.3C1120,32,1280,32,1360,32L1440,32L1440,56L1360,56C1280,56,1120,56,960,56C800,56,640,56,480,56C320,56,160,56,80,56L0,56Z" />
                         </svg>
                     </div>
@@ -260,21 +261,19 @@ export default function InfraestructuraLista({ items, tipo }) {
                                         key={item.id}
                                         item={item}
                                         featuredKey={featuredKey}
-                                        href={esObras ? `/areas/infraestructura/${item.id}` : undefined}
+                                        href={esObras ? `/areas/infraestructura/${item.id}` : `/areas/infraestructura/trabajos/${item.id}`}
                                     />
                                 ))}
                             </div>
                         )}
 
                         {/* Volver */}
-                        <div className="mt-12 flex justify-center">
+                        <div className="mt-16 flex justify-center">
                             <Link
                                 href="/areas/infraestructura"
-                                className="inline-flex items-center gap-2 px-6 py-3 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200"
+                                className="group inline-flex items-center gap-3 px-8 py-4 bg-primary text-white text-sm font-bold uppercase tracking-widest rounded-none md:rounded hover:bg-primary/90 transition-all duration-300 shadow-xl shadow-primary/20 active:scale-95"
                             >
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-                                </svg>
+                                <span className="material-symbols-outlined text-[20px] transition-transform group-hover:-translate-x-1">arrow_back</span>
                                 Volver a Infraestructura
                             </Link>
                         </div>

@@ -33,9 +33,9 @@ function TrabajoCard({ item }) {
     return (
         <Link
             href={`/areas/descentralizados/trabajos/${item.id}`}
-            className="group overflow-hidden rounded-2xl bg-white border border-gray-100 hover:border-cyan-200 hover:shadow-lg transition-all duration-200 flex flex-col"
+            className="group overflow-hidden rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest flex flex-col transition-all duration-300 hover:-translate-y-1 md:hover:-translate-y-0 md:hover:bg-surface-container-low h-full"
         >
-            <div className="relative h-48 bg-gray-100 overflow-hidden shrink-0">
+            <div className="relative h-48 bg-surface-container-high overflow-hidden shrink-0 border-b border-outline-variant/10">
                 {principal ? (
                     principal.tipo === 'imagen' ? (
                         <img
@@ -47,37 +47,40 @@ function TrabajoCard({ item }) {
                         <video src={principal.url} className="h-full w-full object-cover" muted />
                     )
                 ) : (
-                    <div className="flex h-full items-center justify-center text-gray-300">
+                    <div className="flex h-full items-center justify-center text-outline-variant/30">
                         <IconTool />
                     </div>
                 )}
                 {item.destacado && (
-                    <span className="absolute top-3 left-3 flex items-center gap-1 rounded-full bg-cyan-600 px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm">
-                        <IconStar /> Destacado
+                    <span className="absolute top-3 left-3 flex items-center gap-1 rounded bg-[#0891B2] px-2.5 py-1 text-[10px] font-sans font-bold uppercase tracking-wider text-white shadow-sm">
+                        <IconStar /> DESTACADO
                     </span>
                 )}
             </div>
 
-            <div className="flex flex-col flex-1 p-5">
+            <div className="flex flex-col flex-1 p-6">
                 {(item.anio || item.mes) && (
-                    <p className="text-xs text-cyan-600 font-medium mb-1.5">
+                    <p className="font-sans text-xs text-[#0891B2] font-bold uppercase tracking-widest mb-3">
                         {item.mes ? MESES_LABELS[item.mes] : ''}
                         {item.mes && item.anio ? ' ' : ''}
                         {item.anio ?? ''}
                     </p>
                 )}
-                <h3 className="font-bold text-gray-900 text-[15px] leading-snug line-clamp-2 mb-2">
+                <h3 className="font-serif text-xl font-bold md:font-medium text-primary leading-snug mb-4 group-hover:text-[#0891B2] transition-colors">
                     {item.titulo}
                 </h3>
                 {item.descripcion && (
                     <div
-                        className="text-sm text-gray-500 line-clamp-3 leading-relaxed prose prose-sm max-w-none"
+                        className="font-sans text-sm text-on-surface-variant line-clamp-3 leading-relaxed prose prose-sm max-w-none mb-4"
                         dangerouslySetInnerHTML={{ __html: item.descripcion }}
                     />
                 )}
-                <p className="mt-auto pt-3 text-xs font-medium text-cyan-600 group-hover:text-cyan-800 transition-colors">
-                    Ver más →
-                </p>
+                
+                <div className="mt-auto flex items-center justify-between">
+                    <span className="inline-flex items-center text-sm font-sans font-bold text-[#0891B2] group-hover:text-primary transition-colors">
+                        Ver detalle <span className="material-symbols-outlined ml-1 text-[18px]">arrow_forward</span>
+                    </span>
+                </div>
             </div>
         </Link>
     );
@@ -124,32 +127,35 @@ export default function DescentralizadosLista({ trabajos = [] }) {
 
                 <PublicNavbar transparent />
 
-                {/* Hero */}
-                <section className="relative min-h-[300px] sm:min-h-[320px] flex flex-col overflow-hidden">
-                    <div className="flex-1 relative" style={{ background: 'linear-gradient(135deg, #1E3F58 0%, #0D9488 100%)' }}>
-                        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: CROSS_PATTERN_BG }} />
-                        <div className="absolute -right-32 -bottom-32 w-[400px] h-[400px] rounded-full bg-cyan-400/10 blur-3xl" />
+                {/* ══════ HERO ══════ */}
+                <section className="relative min-h-[380px] sm:min-h-[420px] flex flex-col overflow-hidden bg-primary">
+                    <div className="flex-1 relative flex items-center">
+                        {/* Rich Textures */}
+                        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: CROSS_PATTERN_BG }} />
+                        <div className="absolute -left-20 bottom-0 w-[400px] h-[400px] rounded-full bg-[#0891B2]/10 blur-[100px]" />
 
-                        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-24 pb-12">
-                            <nav className="flex items-center gap-2 text-white/60 text-sm mb-6">
+                        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-32 pb-20 w-full">
+                            {/* Breadcrumb */}
+                            <nav className="flex items-center gap-2 text-white/40 text-xs font-bold uppercase tracking-widest mb-8">
                                 <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
-                                <span>/</span>
+                                <span className="material-symbols-outlined text-[14px]">chevron_right</span>
                                 <Link href="/areas/descentralizados" className="hover:text-white transition-colors">Descentralizados</Link>
-                                <span>/</span>
-                                <span className="text-white font-medium">Trabajos</span>
+                                <span className="material-symbols-outlined text-[14px]">chevron_right</span>
+                                <span className="text-white">Trabajos</span>
                             </nav>
 
-                            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight tracking-tight">
-                                Trabajos<span className="text-cyan-400">.</span>
+                            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight max-w-4xl">
+                                Trabajos<span className="text-[#0891B2]">.</span>
                             </h1>
-                            <div className="mt-4 w-16 h-1 bg-cyan-400 rounded-full" />
-                            <p className="mt-4 text-base sm:text-lg text-white/80 font-light">
-                                {trabajos.length} {trabajos.length === 1 ? 'trabajo registrado' : 'trabajos registrados'} · del más reciente al más antiguo
+                            <p className="mt-6 text-lg text-white/60 font-light font-sans max-w-2xl">
+                                {trabajos.length} {trabajos.length === 1 ? 'trabajo registrado' : 'trabajos registrados'} · Ordenados cronológicamente para tu seguimiento.
                             </p>
                         </div>
                     </div>
-                    <div className="shrink-0" style={{ background: 'linear-gradient(135deg, #1E3F58 0%, #0D9488 100%)' }}>
-                        <svg viewBox="0 0 1440 56" className="w-full block text-white" preserveAspectRatio="none">
+
+                    {/* Wave Transition */}
+                    <div className="shrink-0 bg-primary">
+                        <svg viewBox="0 0 1440 56" className="w-full block text-surface" preserveAspectRatio="none">
                             <path fill="currentColor" d="M0,32L80,37.3C160,43,320,53,480,53.3C640,53,800,43,960,37.3C1120,32,1280,32,1360,32L1440,32L1440,56L1360,56C1280,56,1120,56,960,56C800,56,640,56,480,56C320,56,160,56,80,56L0,56Z" />
                         </svg>
                     </div>
@@ -245,14 +251,12 @@ export default function DescentralizadosLista({ trabajos = [] }) {
                         )}
 
                         {/* Volver */}
-                        <div className="mt-12 flex justify-center">
+                        <div className="mt-16 flex justify-center">
                             <Link
                                 href="/areas/descentralizados"
-                                className="inline-flex items-center gap-2 px-6 py-3 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200"
+                                className="group inline-flex items-center gap-3 px-8 py-4 bg-primary text-white text-sm font-bold uppercase tracking-widest rounded-none md:rounded hover:bg-primary/90 transition-all duration-300 shadow-xl shadow-primary/20 active:scale-95"
                             >
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-                                </svg>
+                                <span className="material-symbols-outlined text-[20px] transition-transform group-hover:-translate-x-1">arrow_back</span>
                                 Volver a Descentralizados
                             </Link>
                         </div>

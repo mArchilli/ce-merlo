@@ -97,7 +97,10 @@ function TrabajoCard({ item }) {
     const principal = item.medio_principal;
 
     return (
-        <div className="group overflow-hidden rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest transition-all duration-300 hover:-translate-y-1 md:hover:-translate-y-0 md:hover:bg-surface-container-low flex flex-col h-full">
+        <Link 
+            href={`/areas/descentralizados/trabajos/${item.id}`}
+            className="group overflow-hidden rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest transition-all duration-300 hover:-translate-y-1 md:hover:-translate-y-0 md:hover:bg-surface-container-low flex flex-col h-full"
+        >
             <div className="relative h-48 bg-surface-container-high overflow-hidden border-b border-outline-variant/20">
                 {principal ? (
                     principal.tipo === 'imagen' ? (
@@ -122,15 +125,21 @@ function TrabajoCard({ item }) {
                 )}
             </div>
             <div className="flex flex-1 flex-col p-5">
-                <h3 className="font-serif font-bold text-primary text-[15px] leading-snug line-clamp-2">{item.titulo}</h3>
+                <h3 className="font-serif font-bold text-primary text-[15px] leading-snug line-clamp-2 group-hover:text-[#0891B2] transition-colors">{item.titulo}</h3>
                 {item.descripcion && (
                     <div
-                        className="mt-3 prose prose-sm max-w-none text-secondary font-sans text-xs leading-relaxed line-clamp-3"
+                        className="mt-3 prose prose-sm max-w-none text-secondary font-sans text-xs leading-relaxed line-clamp-3 mb-4"
                         dangerouslySetInnerHTML={{ __html: item.descripcion }}
                     />
                 )}
+                
+                <div className="mt-auto flex items-center justify-between">
+                    <span className="inline-flex items-center text-sm font-sans font-bold text-[#0891B2] group-hover:text-primary transition-colors">
+                        Ver detalle <span className="material-symbols-outlined ml-1 text-[18px]">arrow_forward</span>
+                    </span>
+                </div>
             </div>
-        </div>
+        </Link>
     );
 }
 

@@ -77,4 +77,18 @@ class PublicInfraestructuraController extends Controller
             'obra' => $obra,
         ]);
     }
+
+    public function showTrabajo(TrabajoMenor $trabajoMenor): Response
+    {
+        $trabajoMenor->load(['medios' => fn ($q) => $q->orderByDesc('es_principal')->orderBy('id')]);
+
+        // Mapeamos para que ViewObra lo entienda como 'obra'
+        // y normalizamos 'destacado' a 'destacada'
+        $item = $trabajoMenor->toArray();
+        $item['destacada'] = $trabajoMenor->destacado;
+
+        return Inertia::render('ViewObra', [
+            'obra' => (object) $item,
+        ]);
+    }
 }
