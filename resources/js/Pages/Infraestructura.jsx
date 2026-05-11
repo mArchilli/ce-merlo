@@ -243,7 +243,9 @@ function InfraCarrusel({ items, featuredKey, getHref }) {
 const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
 export default function Infraestructura({ obras, trabajosMenores, correos, documentos = [] }) {
-    const [tab, setTab] = useState('obras');
+    const hasObras    = obras.length > 0;
+    const hasTrabajos = trabajosMenores.length > 0;
+    const [tab, setTab] = useState(hasObras ? 'obras' : 'trabajos');
     const [previewUrl, setPreviewUrl] = useState(null);
     const [previewTitulo, setPreviewTitulo] = useState('');
 
@@ -352,109 +354,113 @@ export default function Infraestructura({ obras, trabajosMenores, correos, docum
 
 
                 {/* ══════ OBRAS Y TRABAJOS MENORES ══════ */}
-                <section className="py-16 sm:py-20">
-                    <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+                {(hasObras || hasTrabajos) && (
+                    <section className="py-16 sm:py-20">
+                        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
 
-                        <div className="max-w-xl mb-10">
-                            <p className="font-serif text-xs font-bold text-blue-600 tracking-[0.2em] uppercase mb-4">Gestión</p>
-                            <h2 className="font-serif text-3xl md:text-5xl text-primary font-bold md:font-medium tracking-tight mb-3 md:mb-4">
-                                Obras y trabajos
-                            </h2>
-                            <p className="mt-4 text-secondary text-base font-light font-sans leading-relaxed">
-                                Conocé los proyectos en curso y los trabajos realizados en los establecimientos del distrito.
-                            </p>
-                        </div>
-
-                        {/* Tabs */}
-                        <div className="flex gap-1 border-b border-outline-variant/30 mb-8">
-                            <button
-                                onClick={() => setTab('obras')}
-                                className={`px-6 py-3 text-sm font-semibold transition-colors border-b-2 -mb-px ${
-                                    tab === 'obras'
-                                        ? 'border-blue-600 text-blue-600'
-                                        : 'border-transparent text-secondary hover:text-primary'
-                                }`}
-                            >
-                                Obras
-                                <span className={`ml-2 rounded px-2 py-0.5 text-xs font-bold ${
-                                    tab === 'obras' ? 'bg-blue-600/10 text-blue-600' : 'bg-surface-container-highest text-secondary'
-                                }`}>
-                                    {obras.length}
-                                </span>
-                            </button>
-                            <button
-                                onClick={() => setTab('trabajos')}
-                                className={`px-6 py-3 text-sm font-semibold transition-colors border-b-2 -mb-px ${
-                                    tab === 'trabajos'
-                                        ? 'border-blue-600 text-blue-600'
-                                        : 'border-transparent text-secondary hover:text-primary'
-                                }`}
-                            >
-                                Trabajos menores
-                                <span className={`ml-2 rounded px-2 py-0.5 text-xs font-bold ${
-                                    tab === 'trabajos' ? 'bg-blue-600/10 text-blue-600' : 'bg-surface-container-highest text-secondary'
-                                }`}>
-                                    {trabajosMenores.length}
-                                </span>
-                            </button>
-                        </div>
-
-                        {/* Carrusel obras destacadas */}
-                        {tab === 'obras' && (
-                            obrasDestacadas.length === 0 ? (
-                                <div className="flex flex-col items-center justify-center rounded-none md:rounded border-2 border-dashed border-outline-variant/30 py-20 text-outline-variant">
-                                    <IconBuilding />
-                                    <p className="mt-3 text-base font-medium font-sans">No hay obras destacadas aún</p>
-                                </div>
-                            ) : (
-                                <InfraCarrusel
-                                    items={obrasDestacadas}
-                                    featuredKey="destacada"
-                                    getHref={obra => `/areas/infraestructura/${obra.id}`}
-                                />
-                            )
-                        )}
-                        {tab === 'obras' && (
-                            <div className="mt-8 flex justify-center">
-                                <Link
-                                    href="/areas/infraestructura/obras"
-                                    className="inline-flex items-center gap-2.5 px-6 py-3 bg-brand-blue-700 text-white text-sm font-semibold rounded-lg hover:bg-brand-blue-800 transition-all duration-200 shadow-sm"
-                                >
-                                    <IconBuilding />
-                                    Ver todas las obras
-                                    <span className="ml-1 rounded-full bg-white/20 px-2 py-0.5 text-xs font-bold">{obras.length}</span>
-                                </Link>
+                            <div className="max-w-xl mb-10">
+                                <p className="font-serif text-xs font-bold text-blue-600 tracking-[0.2em] uppercase mb-4">Gestión</p>
+                                <h2 className="font-serif text-3xl md:text-5xl text-primary font-bold md:font-medium tracking-tight mb-3 md:mb-4">
+                                    {hasObras && hasTrabajos ? 'Obras y trabajos' : hasObras ? 'Obras' : 'Trabajos menores'}
+                                </h2>
+                                <p className="mt-4 text-secondary text-base font-light font-sans leading-relaxed">
+                                    Conocé los proyectos en curso y los trabajos realizados en los establecimientos del distrito.
+                                </p>
                             </div>
-                        )}
 
-                        {/* Carrusel trabajos menores destacados */}
-                        {tab === 'trabajos' && (
-                            trabajosDestacados.length === 0 ? (
-                                <div className="flex flex-col items-center justify-center rounded-none md:rounded border-2 border-dashed border-outline-variant/30 py-20 text-outline-variant">
-                                    <IconWrench />
-                                    <p className="mt-3 text-base font-medium font-sans">No hay trabajos menores destacados aún</p>
+                            {/* Tabs — solo si hay ambos */}
+                            {hasObras && hasTrabajos && (
+                                <div className="flex gap-1 border-b border-outline-variant/30 mb-8">
+                                    <button
+                                        onClick={() => setTab('obras')}
+                                        className={`px-6 py-3 text-sm font-semibold transition-colors border-b-2 -mb-px ${
+                                            tab === 'obras'
+                                                ? 'border-blue-600 text-blue-600'
+                                                : 'border-transparent text-secondary hover:text-primary'
+                                        }`}
+                                    >
+                                        Obras
+                                        <span className={`ml-2 rounded px-2 py-0.5 text-xs font-bold ${
+                                            tab === 'obras' ? 'bg-blue-600/10 text-blue-600' : 'bg-surface-container-highest text-secondary'
+                                        }`}>
+                                            {obras.length}
+                                        </span>
+                                    </button>
+                                    <button
+                                        onClick={() => setTab('trabajos')}
+                                        className={`px-6 py-3 text-sm font-semibold transition-colors border-b-2 -mb-px ${
+                                            tab === 'trabajos'
+                                                ? 'border-blue-600 text-blue-600'
+                                                : 'border-transparent text-secondary hover:text-primary'
+                                        }`}
+                                    >
+                                        Trabajos menores
+                                        <span className={`ml-2 rounded px-2 py-0.5 text-xs font-bold ${
+                                            tab === 'trabajos' ? 'bg-blue-600/10 text-blue-600' : 'bg-surface-container-highest text-secondary'
+                                        }`}>
+                                            {trabajosMenores.length}
+                                        </span>
+                                    </button>
                                 </div>
-                            ) : (
-                                <InfraCarrusel
-                                    items={trabajosDestacados}
-                                    featuredKey="destacado"
-                                />
-                            )
-                        )}
-                        {tab === 'trabajos' && (
-                            <div className="mt-8 flex justify-center">
-                                <Link
-                                    href="/areas/infraestructura/trabajos"
-                                    className="inline-flex items-center gap-2.5 px-6 py-3 bg-brand-blue-700 text-white text-sm font-semibold rounded-lg hover:bg-brand-blue-800 transition-all duration-200 shadow-sm"
-                                >
-                                    <IconWrench />
-                                    Ver todos los trabajos menores
-                                    <span className="ml-1 rounded-full bg-white/20 px-2 py-0.5 text-xs font-bold">{trabajosMenores.length}</span>
-                                </Link>
-                            </div>
-                        )}
-                    </div>
-                </section>
+                            )}
+
+                            {/* Obras */}
+                            {hasObras && (!hasTrabajos || tab === 'obras') && (
+                                <>
+                                    {obrasDestacadas.length === 0 ? (
+                                        <div className="flex flex-col items-center justify-center rounded-none md:rounded border-2 border-dashed border-outline-variant/30 py-20 text-outline-variant">
+                                            <IconBuilding />
+                                            <p className="mt-3 text-base font-medium font-sans">No hay obras destacadas aún</p>
+                                        </div>
+                                    ) : (
+                                        <InfraCarrusel
+                                            items={obrasDestacadas}
+                                            featuredKey="destacada"
+                                            getHref={obra => `/areas/infraestructura/${obra.id}`}
+                                        />
+                                    )}
+                                    <div className="mt-8 flex justify-center">
+                                        <Link
+                                            href="/areas/infraestructura/obras"
+                                            className="inline-flex items-center gap-2.5 px-6 py-3 bg-brand-blue-700 text-white text-sm font-semibold rounded-lg hover:bg-brand-blue-800 transition-all duration-200 shadow-sm"
+                                        >
+                                            <IconBuilding />
+                                            Ver todas las obras
+                                            <span className="ml-1 rounded-full bg-white/20 px-2 py-0.5 text-xs font-bold">{obras.length}</span>
+                                        </Link>
+                                    </div>
+                                </>
+                            )}
+
+                            {/* Trabajos menores */}
+                            {hasTrabajos && (!hasObras || tab === 'trabajos') && (
+                                <>
+                                    {trabajosDestacados.length === 0 ? (
+                                        <div className="flex flex-col items-center justify-center rounded-none md:rounded border-2 border-dashed border-outline-variant/30 py-20 text-outline-variant">
+                                            <IconWrench />
+                                            <p className="mt-3 text-base font-medium font-sans">No hay trabajos menores destacados aún</p>
+                                        </div>
+                                    ) : (
+                                        <InfraCarrusel
+                                            items={trabajosDestacados}
+                                            featuredKey="destacado"
+                                        />
+                                    )}
+                                    <div className="mt-8 flex justify-center">
+                                        <Link
+                                            href="/areas/infraestructura/trabajos"
+                                            className="inline-flex items-center gap-2.5 px-6 py-3 bg-brand-blue-700 text-white text-sm font-semibold rounded-lg hover:bg-brand-blue-800 transition-all duration-200 shadow-sm"
+                                        >
+                                            <IconWrench />
+                                            Ver todos los trabajos menores
+                                            <span className="ml-1 rounded-full bg-white/20 px-2 py-0.5 text-xs font-bold">{trabajosMenores.length}</span>
+                                        </Link>
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    </section>
+                )}
 
                 {/* ══════ DOCUMENTOS PDF ══════ */}
                 {documentos.length > 0 && (

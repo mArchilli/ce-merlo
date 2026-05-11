@@ -21,12 +21,13 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             AutoridadSeeder::class,
             AreaSeeder::class,
-            ObrasSeeder::class,
-            TrabajosMenoresSeeder::class,
-            DescentralizadosSeeder::class,
-            NovedadSeeder::class,
+            // ObrasSeeder::class,
+            // TrabajosMenoresSeeder::class,
+            // DescentralizadosSeeder::class,
+            // NovedadSeeder::class,
             OrganismoVinculadoSeeder::class,
             PreguntaFrecuenteSeeder::class,
+            AreaCorreoSeeder::class,
         ]);
     }
 }

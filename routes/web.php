@@ -41,10 +41,16 @@ Route::get('/', function () {
         ->orderByDesc('id')
         ->get();
 
+    $areas = \App\Models\Area::with('correosActivos')
+        ->whereHas('correosActivos')
+        ->orderBy('nombre')
+        ->get();
+
     return Inertia::render('Welcome', [
         'canLogin'    => Route::has('login'),
         'autoridades' => $autoridades,
         'novedades'   => $novedades,
+        'areas'       => $areas,
     ]);
 })->name('home');
 
@@ -66,11 +72,16 @@ Route::get('/areas/descentralizados/trabajos/{trabajoMenor}', [PublicDescentrali
 Route::get('/contacto', function () {
     $organismos = \App\Models\OrganismoVinculado::orderBy('orden')->orderBy('id')->get();
     $faqs       = \App\Models\PreguntaFrecuente::orderBy('orden')->orderBy('id')->get();
+    $areas      = \App\Models\Area::with('correosActivos')
+                    ->whereHas('correosActivos')
+                    ->orderBy('nombre')
+                    ->get();
 
     return Inertia::render('Contacto', [
         'canLogin'   => Route::has('login'),
         'organismos' => $organismos,
         'faqs'       => $faqs,
+        'areas'      => $areas,
     ]);
 })->name('contacto');
 

@@ -214,33 +214,28 @@ export default function Patrimonio({ items, correos }) {
                 </section>
 
                 {/* ══════ DOCUMENTOS ══════ */}
-                <section className="py-16 sm:py-20 bg-surface-container-low">
-                    <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+                {items.length > 0 && (
+                    <section className="py-16 sm:py-20 bg-surface-container-low">
+                        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
 
-                        <div className="max-w-xl mb-10">
-                            <p className="font-serif text-xs font-bold text-amber-600 tracking-[0.2em] uppercase mb-4">Documentos</p>
-                            <h2 className="font-serif text-3xl md:text-5xl text-primary font-bold md:font-medium tracking-tight mb-3 md:mb-4">
-                                Documentación patrimonial
-                            </h2>
-                            <p className="mt-4 text-secondary text-base font-light font-sans leading-relaxed">
-                                Documentos y resoluciones vigentes del área de Patrimonio.
-                            </p>
-                        </div>
-
-                        {items.length === 0 ? (
-                            <div className="flex flex-col items-center justify-center rounded-none md:rounded border-2 border-dashed border-outline-variant/30 bg-surface-container-lowest py-20 text-outline-variant">
-                                <IconPdf />
-                                <p className="mt-3 text-base font-medium font-sans">No hay documentos publicados aún</p>
+                            <div className="max-w-xl mb-10">
+                                <p className="font-serif text-xs font-bold text-amber-600 tracking-[0.2em] uppercase mb-4">Documentos</p>
+                                <h2 className="font-serif text-3xl md:text-5xl text-primary font-bold md:font-medium tracking-tight mb-3 md:mb-4">
+                                    Documentación patrimonial
+                                </h2>
+                                <p className="mt-4 text-secondary text-base font-light font-sans leading-relaxed">
+                                    Documentos y resoluciones vigentes del área de Patrimonio.
+                                </p>
                             </div>
-                        ) : (
+
                             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                                 {items.map((item) => (
                                     <PatrimonioCard key={item.id} item={item} />
                                 ))}
                             </div>
-                        )}
-                    </div>
-                </section>
+                        </div>
+                    </section>
+                )}
 
                 {/* ══════ CONTACTO ══════ */}
                 <section className="relative">

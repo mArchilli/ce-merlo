@@ -27,7 +27,7 @@ class AutoridadSeeder extends Seeder
             ['nombre' => 'Sergio Arias',     'cargo' => 'Vocal', 'tipo' => 'vocal', 'area' => 'SAE / Compras',        'orden' => 3],
             ['nombre' => 'Juan Carlos Ojeda','cargo' => 'Vocal', 'tipo' => 'vocal', 'area' => 'Cooperación Escolar',  'orden' => 4],
             ['nombre' => 'Yésica Costas',    'cargo' => 'Vocal', 'tipo' => 'vocal', 'area' => 'Patrimonio',           'orden' => 5],
-            ['nombre' => 'Noelias Delgado',  'cargo' => 'Vocal', 'tipo' => 'vocal', 'area' => 'Descentralizados',     'orden' => 6],
+            ['nombre' => 'Noelia Delgado',  'cargo' => 'Vocal', 'tipo' => 'vocal', 'area' => 'Descentralizados',     'orden' => 6],
         ];
 
         foreach ($autoridades as $data) {

@@ -1,7 +1,11 @@
 import { Link } from '@inertiajs/react';
 import { CROSS_PATTERN_BG } from '@/Components/patterns';
 
-export default function Footer({ scrollTo }) {
+export default function Footer({ scrollTo, areas = [] }) {
+    const mesa   = areas.find(a => a.slug === 'mesa-de-entradas');
+    const mesaWA = mesa?.correos_activos.find(c => c.es_whatsapp && c.telefono)?.telefono ?? null;
+    const waHref = mesaWA ? `https://wa.me/${mesaWA.replace(/\D/g, '')}` : null;
+
     return (
         <footer className="relative overflow-hidden">
             {/* Onda de transición */}
@@ -42,36 +46,56 @@ export default function Footer({ scrollTo }) {
 
                         {/* Cards de contacto rápido */}
                         <div className="grid sm:grid-cols-3 gap-4 lg:w-auto lg:max-w-xl w-full">
-                            {[
-                                {
-                                    label: 'Dirección',
-                                    value: 'Av. Calle Real 208/212',
-                                    icon: 'location_on',
-                                },
-                                {
-                                    label: 'Teléfono',
-                                    value: '0220-482-5836',
-                                    icon: 'call',
-                                },
-                                {
-                                    label: 'Horario',
-                                    value: 'Lun a Vie, 8 a 14 hs',
-                                    icon: 'schedule',
-                                },
-                            ].map((item) => (
-                                <div
-                                    key={item.label}
-                                    className="flex flex-col gap-3 rounded-none md:rounded border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] transition-colors backdrop-blur-sm p-5"
+                            {/* Dirección */}
+                            <div className="flex flex-col gap-3 rounded-none md:rounded border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] transition-colors backdrop-blur-sm p-5">
+                                <div className="w-10 h-10 rounded-none md:rounded bg-primary-container/40 text-tertiary-fixed-dim flex items-center justify-center shrink-0">
+                                    <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 0" }}>location_on</span>
+                                </div>
+                                <div>
+                                    <p className="font-serif text-[10px] font-bold text-tertiary-fixed-dim uppercase tracking-widest mb-1">Dirección</p>
+                                    <p className="font-sans text-sm font-medium text-white leading-snug">Av. Calle Real 208/212</p>
+                                </div>
+                            </div>
+
+                            {/* Teléfono / WhatsApp */}
+                            {waHref ? (
+                                <a
+                                    href={waHref}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="group/wa flex flex-col gap-3 rounded-none md:rounded border border-white/10 bg-white/[0.04] hover:bg-[#25d366]/10 hover:border-[#25d366]/30 transition-colors backdrop-blur-sm p-5"
                                 >
-                                    <div className="w-10 h-10 rounded-none md:rounded bg-primary-container/40 text-tertiary-fixed-dim flex items-center justify-center shrink-0">
-                                        <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 0" }}>{item.icon}</span>
+                                    <div className="w-10 h-10 rounded-none md:rounded bg-primary-container/40 text-tertiary-fixed-dim flex items-center justify-center shrink-0 group-hover/wa:bg-[#25d366]/20 group-hover/wa:text-[#25d366] transition-colors">
+                                        <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>phone_in_talk</span>
                                     </div>
                                     <div>
-                                        <p className="font-serif text-[10px] font-bold text-tertiary-fixed-dim uppercase tracking-widest mb-1">{item.label}</p>
-                                        <p className="font-sans text-sm font-medium text-white leading-snug">{item.value}</p>
+                                        <p className="font-serif text-[10px] font-bold text-tertiary-fixed-dim uppercase tracking-widest mb-1">Teléfono (Solo WhatsApp)</p>
+                                        <p className="font-sans text-sm font-medium text-white group-hover/wa:text-[#25d366] transition-colors leading-snug">{mesaWA}</p>
+                                        <span className="inline-block mt-1 font-sans text-[9px] font-bold text-[#25d366] bg-[#25d366]/10 px-1.5 py-0.5 rounded leading-none">WhatsApp</span>
+                                    </div>
+                                </a>
+                            ) : (
+                                <div className="flex flex-col gap-3 rounded-none md:rounded border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] transition-colors backdrop-blur-sm p-5">
+                                    <div className="w-10 h-10 rounded-none md:rounded bg-primary-container/40 text-tertiary-fixed-dim flex items-center justify-center shrink-0">
+                                        <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 0" }}>call</span>
+                                    </div>
+                                    <div>
+                                        <p className="font-serif text-[10px] font-bold text-tertiary-fixed-dim uppercase tracking-widest mb-1">Teléfono</p>
+                                        <p className="font-sans text-sm font-medium text-white leading-snug">0220-482-5836</p>
                                     </div>
                                 </div>
-                            ))}
+                            )}
+
+                            {/* Horario */}
+                            <div className="flex flex-col gap-3 rounded-none md:rounded border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] transition-colors backdrop-blur-sm p-5">
+                                <div className="w-10 h-10 rounded-none md:rounded bg-primary-container/40 text-tertiary-fixed-dim flex items-center justify-center shrink-0">
+                                    <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 0" }}>schedule</span>
+                                </div>
+                                <div>
+                                    <p className="font-serif text-[10px] font-bold text-tertiary-fixed-dim uppercase tracking-widest mb-1">Horario</p>
+                                    <p className="font-sans text-sm font-medium text-white leading-snug">Lun a Vie, 8 a 15 hs</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

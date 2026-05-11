@@ -13,9 +13,9 @@ class OrganismoVinculadoSeeder extends Seeder
     public function run(): void
     {
         $organismos = [
-            ['titulo' => 'Jefatura Distrital',                                    'responsable' => 'Hugo Rosa',      'cargo' => 'Jefe Distrital',              'direccion' => null, 'orden' => 1],
-            ['titulo' => 'Secretaría de Educación',                               'responsable' => 'Silvana Zahana', 'cargo' => 'Secretaria de Educación',     'direccion' => null, 'orden' => 2],
-            ['titulo' => 'Sede Inspectores de Nivel',                             'responsable' => 'Hugo Rosa',      'cargo' => 'Inspector Jefe Distrital',    'direccion' => null, 'orden' => 3],
+            ['titulo' => 'Jefatura Distrital',                                    'responsable' => 'Hugo Rosa',      'cargo' => 'Jefe Distrital',              'direccion' => 'Av. Calle Real 161, Merlo, Provincia de Buenos Aires.', 'orden' => 1],
+            ['titulo' => 'Secretaría de Educación',                               'responsable' => 'Silvana Zahana', 'cargo' => 'Secretaria de Educación',     'direccion' => 'Riobamba 705, Merlo, Provincia de Buenos Aires.', 'orden' => 2],
+            ['titulo' => 'Sede Inspectores de Nivel',                             'responsable' => 'Hugo Rosa',      'cargo' => 'Inspector Jefe Distrital',    'direccion' => '9 de Julio 365, Merlo, Provincia de Buenos Aires.', 'orden' => 3],
             ['titulo' => 'Dirección Provincial de Infraestructura Escolar (DPIe)','responsable' => 'Karina Morales', 'cargo' => 'Inspectora Regional',         'direccion' => null, 'orden' => 4],
         ];
 

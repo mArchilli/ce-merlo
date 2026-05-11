@@ -4,42 +4,78 @@ import PublicNavbar from '@/Components/PublicNavbar';
 import Footer from '@/Components/Welcome/Footer';
 import { CROSS_PATTERN_BG } from '@/Components/patterns';
 
-/* ─── Datos de contacto ─── */
-const CONTACTO_INFO = [
-    {
-        titulo: 'Dirección',
-        detalle: 'Av. Calle Real 208/212',
-        subtexto: 'Merlo Centro, Buenos Aires',
-        icon: 'location_on',
-    },
-    {
-        titulo: 'Teléfono',
-        detalle: '0220-482-5836',
-        subtexto: 'Línea directa',
-        icon: 'call',
-    },
-    {
-        titulo: 'Horario de atención',
-        detalle: 'Lunes a viernes',
-        subtexto: 'de 8 a 16 hs',
-        icon: 'schedule',
-    },
-    {
-        titulo: 'Correo electrónico',
-        detalle: 'consejoescolarmerlo@abc.gob.ar',
-        subtexto: 'Consultas generales',
-        icon: 'mail',
-    },
-];
 
+
+/* ─── Íconos por slug de área ─── */
+const AREA_ICONS = {
+    'presidencia':         'workspace_premium',
+    'patrimonio':          'inventory_2',
+    'sae':                 'shopping_cart',
+    'recursos-humanos':    'group',
+    'jubilaciones':        'elderly',
+    'mesa-de-entradas':    'inbox',
+    'descentralizados':    'location_city',
+    'infraestructura':     'construction',
+    'cooperacion-escolar': 'school',
+    'guarderia':           'child_care',
+    'correo-oficial':      'verified',
+};
 
 /* ─── Componente principal ─── */
-export default function Contacto({ organismos = [], faqs = [] }) {
-    const [openFaq, setOpenFaq] = useState(null);
+export default function Contacto({ organismos = [], faqs = [], areas = [] }) {
+    const [openFaq, setOpenFaq]       = useState(null);
+    const [copiedEmail, setCopiedEmail] = useState(null);
 
     const toggleFaq = (index) => {
         setOpenFaq(openFaq === index ? null : index);
     };
+
+    const copyEmail = (email) => {
+        navigator.clipboard.writeText(email).then(() => {
+            setCopiedEmail(email);
+            setTimeout(() => setCopiedEmail(null), 2000);
+        });
+    };
+
+    const whatsappHref = (phone) => {
+        const digits = phone.replace(/\D/g, '');
+        return `https://wa.me/${digits}`;
+    };
+
+    const mesa       = areas.find(a => a.slug === 'mesa-de-entradas');
+    const mesaWA     = mesa?.correos_activos.find(c => c.es_whatsapp && c.telefono)?.telefono ?? null;
+    const mesaCorreo = mesa?.correos_activos.find(c => c.correo)?.correo ?? null;
+
+    const CONTACTO_INFO = [
+        {
+            titulo:   'Dirección',
+            detalle:  'Av. Calle Real 208/212',
+            subtexto: 'Merlo Centro, Buenos Aires',
+            icon:     'location_on',
+            href:     null,
+        },
+        {
+            titulo:   'Teléfono',
+            detalle:  mesaWA ?? '—',
+            subtexto: mesaWA ? 'WhatsApp Mesa de Entradas' : 'Sin datos',
+            icon:     'call',
+            href:     mesaWA ? whatsappHref(mesaWA) : null,
+        },
+        {
+            titulo:   'Horario de atención',
+            detalle:  'Lunes a viernes',
+            subtexto: 'de 8 a 15 hs',
+            icon:     'schedule',
+            href:     null,
+        },
+        {
+            titulo:   'Correo electrónico',
+            detalle:  mesaCorreo ?? '—',
+            subtexto: 'Mesa de Entradas',
+            icon:     'mail',
+            href:     mesaCorreo ? `mailto:${mesaCorreo}` : null,
+        },
+    ];
 
     return (
         <>
@@ -101,21 +137,28 @@ export default function Contacto({ organismos = [], faqs = [] }) {
 
                         {/* Cards de contacto */}
                         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                            {CONTACTO_INFO.map((item, i) => (
-                                <div
-                                    key={i}
-                                    className="group flex flex-col items-center text-center gap-4 rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest p-7 hover:bg-surface-container-low hover:border-outline-variant/60 transition-all duration-200"
-                                >
-                                    <div className="w-14 h-14 rounded-none md:rounded bg-primary-container/20 text-primary flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
-                                        <span className="material-symbols-outlined text-[28px]" style={{ fontVariationSettings: "'FILL' 0" }}>{item.icon}</span>
-                                    </div>
-                                    <div>
-                                        <p className="font-sans text-xs font-bold text-tertiary uppercase tracking-wider mb-2">{item.titulo}</p>
-                                        <p className="font-serif font-bold text-primary text-[15px] mb-1">{item.detalle}</p>
-                                        <p className="font-sans text-secondary text-sm">{item.subtexto}</p>
-                                    </div>
-                                </div>
-                            ))}
+                            {CONTACTO_INFO.map((item, i) => {
+                                const Tag = item.href ? 'a' : 'div';
+                                const linkProps = item.href
+                                    ? { href: item.href, target: item.href.startsWith('http') ? '_blank' : undefined, rel: item.href.startsWith('http') ? 'noopener noreferrer' : undefined }
+                                    : {};
+                                return (
+                                    <Tag
+                                        key={i}
+                                        {...linkProps}
+                                        className="group flex flex-col items-center text-center gap-4 rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest p-7 hover:bg-surface-container-low hover:border-outline-variant/60 transition-all duration-200"
+                                    >
+                                        <div className="w-14 h-14 rounded-none md:rounded bg-primary-container/20 text-primary flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
+                                            <span className="material-symbols-outlined text-[28px]" style={{ fontVariationSettings: "'FILL' 0" }}>{item.icon}</span>
+                                        </div>
+                                        <div>
+                                            <p className="font-sans text-xs font-bold text-tertiary uppercase tracking-wider mb-2">{item.titulo}</p>
+                                            <p className="font-serif font-bold text-primary text-[15px] mb-1">{item.detalle}</p>
+                                            <p className="font-sans text-secondary text-sm">{item.subtexto}</p>
+                                        </div>
+                                    </Tag>
+                                );
+                            })}
                         </div>
                     </div>
                 </section>
@@ -290,6 +333,136 @@ export default function Contacto({ organismos = [], faqs = [] }) {
                     </div>
                 </section>
 
+                {/* ══════ DIRECTORIO DE CORREOS ══════ */}
+                {areas.length > 0 && (
+                    <section className="py-16 sm:py-20">
+                        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+
+                            {/* Encabezado */}
+                            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-outline-variant/30 pb-8 mb-12">
+                                <div className="max-w-xl">
+                                    <p className="font-serif text-xs font-bold text-tertiary tracking-[0.2em] uppercase mb-4">Comunicación institucional</p>
+                                    <h2 className="font-serif text-3xl md:text-5xl text-primary font-bold md:font-medium tracking-tight mb-3 md:mb-4">
+                                        Directorio de correos
+                                    </h2>
+                                    <p className="mt-2 text-secondary text-base font-light font-sans leading-relaxed">
+                                        Escribinos directamente al área que corresponda a tu consulta.
+                                    </p>
+                                </div>
+                                <div className="hidden md:flex items-center justify-center w-20 h-20 rounded-full bg-surface-container-low border border-outline-variant/20 shrink-0">
+                                    <span className="material-symbols-outlined text-4xl text-primary" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200" }}>
+                                        contact_mail
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Grid de áreas */}
+                            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                                {areas.map((area) => (
+                                    <div
+                                        key={area.id}
+                                        className="rounded-none md:rounded border border-outline-variant/20 shadow-[0_8px_32px_rgba(18,53,83,0.06)] md:shadow-[0_4px_24px_rgba(18,53,83,0.04)] bg-surface-container-lowest overflow-hidden"
+                                    >
+                                        {/* Cabecera del área */}
+                                        <div className="flex items-center gap-3 px-5 py-4 border-b border-outline-variant/20 bg-primary/[0.03]">
+                                            <div className="w-9 h-9 rounded-none md:rounded bg-primary-container/20 text-primary flex items-center justify-center shrink-0">
+                                                <span
+                                                    className="material-symbols-outlined text-[18px]"
+                                                    style={{ fontVariationSettings: "'FILL' 0" }}
+                                                >
+                                                    {AREA_ICONS[area.slug] ?? 'mail'}
+                                                </span>
+                                            </div>
+                                            <p className="font-serif font-bold text-primary text-[14px] leading-tight">{area.nombre}</p>
+                                        </div>
+
+                                        {/* Lista de contactos */}
+                                        <div className="divide-y divide-outline-variant/10">
+                                            {area.correos_activos.map((item, i) => {
+                                                if (item.telefono && item.es_whatsapp) {
+                                                    return (
+                                                        <a
+                                                            key={i}
+                                                            href={whatsappHref(item.telefono)}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="group/wa w-full flex items-center gap-3 px-5 py-3.5 hover:bg-[#25d366]/[0.06] transition-colors duration-150"
+                                                        >
+                                                            <span
+                                                                className="material-symbols-outlined text-[17px] shrink-0 text-[#25d366] transition-colors duration-150"
+                                                                style={{ fontVariationSettings: "'FILL' 1" }}
+                                                            >
+                                                                phone_in_talk
+                                                            </span>
+                                                            <div className="min-w-0 flex-1">
+                                                                {item.descripcion && (
+                                                                    <p className="font-sans text-[10px] font-bold text-tertiary uppercase tracking-wider mb-0.5 leading-none">
+                                                                        {item.descripcion}
+                                                                    </p>
+                                                                )}
+                                                                <p className="font-sans text-sm text-secondary group-hover/wa:text-[#25d366] transition-colors truncate">
+                                                                    {item.telefono}
+                                                                </p>
+                                                            </div>
+                                                            <span className="font-sans text-[10px] font-bold text-[#25d366] bg-[#25d366]/10 px-1.5 py-0.5 rounded leading-none shrink-0">
+                                                                WA
+                                                            </span>
+                                                        </a>
+                                                    );
+                                                }
+
+                                                const copied = copiedEmail === item.correo;
+                                                return (
+                                                    <button
+                                                        key={i}
+                                                        type="button"
+                                                        onClick={() => copyEmail(item.correo)}
+                                                        className={`group/email w-full flex items-center gap-3 px-5 py-3.5 text-left transition-colors duration-150 ${
+                                                            copied
+                                                                ? 'bg-tertiary/[0.07]'
+                                                                : 'hover:bg-surface-container-low'
+                                                        }`}
+                                                    >
+                                                        <span
+                                                            className={`material-symbols-outlined text-[17px] shrink-0 transition-colors duration-150 ${
+                                                                copied ? 'text-tertiary' : 'text-outline group-hover/email:text-primary'
+                                                            }`}
+                                                            style={{ fontVariationSettings: copied ? "'FILL' 1" : "'FILL' 0" }}
+                                                        >
+                                                            {copied ? 'check_circle' : 'forward_to_inbox'}
+                                                        </span>
+                                                        <div className="min-w-0 flex-1">
+                                                            {item.descripcion && (
+                                                                <p className="font-sans text-[10px] font-bold text-tertiary uppercase tracking-wider mb-0.5 leading-none">
+                                                                    {item.descripcion}
+                                                                </p>
+                                                            )}
+                                                            <p className={`font-sans text-sm truncate transition-colors duration-150 ${
+                                                                copied ? 'text-tertiary font-medium' : 'text-secondary group-hover/email:text-primary'
+                                                            }`}>
+                                                                {copied ? '¡Copiado!' : item.correo}
+                                                            </p>
+                                                        </div>
+                                                        <span
+                                                            className={`material-symbols-outlined text-[15px] shrink-0 transition-all duration-150 ${
+                                                                copied
+                                                                    ? 'text-tertiary opacity-100'
+                                                                    : 'text-outline opacity-0 group-hover/email:opacity-100'
+                                                            }`}
+                                                        >
+                                                            {copied ? 'done_all' : 'content_copy'}
+                                                        </span>
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                )}
+
                 {/* ══════ CTA ══════ */}
                 <section className="relative">
                     <div className="bg-surface-container-low">
@@ -334,7 +507,7 @@ export default function Contacto({ organismos = [], faqs = [] }) {
                 </section>
 
                 {/* ══════ FOOTER ══════ */}
-                <Footer />
+                <Footer areas={areas} />
 
             </div>
         </>

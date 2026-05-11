@@ -10,7 +10,7 @@ import Autoridades from '@/Components/Welcome/Autoridades';
 import Novedades from '@/Components/Welcome/Novedades';
 
 /* ─── Componente principal ─── */
-export default function Welcome({ autoridades = [], novedades = [] }) {
+export default function Welcome({ autoridades = [], novedades = [], areas = [] }) {
     const scrollTo = (e, href) => {
         e.preventDefault();
         const el = document.querySelector(href);
@@ -28,9 +28,9 @@ export default function Welcome({ autoridades = [], novedades = [] }) {
                 <Funciones />
                 <Areas />
                 <Composicion />
-                <Autoridades autoridades={autoridades} />
+                <Autoridades autoridades={autoridades} areas={areas} />
                 <Novedades novedades={novedades} />
-                <Footer scrollTo={scrollTo} />
+                <Footer scrollTo={scrollTo} areas={areas} />
             </div>
         </>
     );
