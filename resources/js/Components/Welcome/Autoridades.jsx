@@ -58,7 +58,7 @@ export default function Autoridades({ autoridades = [], areas = [] }) {
                                 <article key={a.id ?? i} className={`bg-surface-container-lowest/5 backdrop-blur-xl border border-outline-variant/20 rounded flex flex-col shadow-2xl shadow-black/20 overflow-hidden group hover:bg-surface-container-lowest/10 transition-all duration-300 relative ${a.foto ? 'md:flex-row' : ''}`}>
                                     <div className="absolute top-0 left-0 w-full h-1 md:w-1 md:h-full bg-tertiary scale-x-0 md:scale-y-0 group-hover:scale-x-100 md:group-hover:scale-y-100 transition-transform origin-left md:origin-top duration-300 z-10" />
                                     {a.foto && (
-                                        <div className="w-full h-72 md:h-auto md:w-2/5 md:aspect-auto relative bg-surface-container-lowest/10 flex items-center justify-center border-b border-outline-variant/10 md:border-b-0 md:border-r shrink-0">
+                                        <div className="w-full h-80 md:h-auto md:w-2/5 md:aspect-auto relative bg-surface-container-lowest/10 flex items-center justify-center border-b border-outline-variant/10 md:border-b-0 md:border-r shrink-0">
                                             <img
                                                 src={`/images/${a.foto}`}
                                                 alt={a.nombre}
