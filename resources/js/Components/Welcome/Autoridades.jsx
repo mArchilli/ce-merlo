@@ -62,7 +62,7 @@ export default function Autoridades({ autoridades = [], areas = [] }) {
                                             <img
                                                 src={`/images/${a.foto}`}
                                                 alt={a.nombre}
-                                                className="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-500"
+                                                className="w-full h-full object-contain md:object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-500"
                                             />
                                         </div>
                                     )}
