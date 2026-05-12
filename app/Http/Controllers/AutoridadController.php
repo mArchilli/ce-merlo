@@ -15,7 +15,8 @@ class AutoridadController extends Controller
         $autoridades = Autoridad::orderBy('tipo')->orderBy('orden')->orderBy('id')->get();
 
         return Inertia::render('admin/autoridades/AutoridadesIndex', [
-            'autoridades' => $autoridades,
+            'autoridades'   => $autoridades,
+            'imagesUrlPath' => env('PUBLIC_AUTORIDADES_IMAGES_URL_PATH', 'images'),
         ]);
     }
 
@@ -103,8 +104,8 @@ class AutoridadController extends Controller
 
     private function guardarFoto(\Illuminate\Http\UploadedFile $foto): string
     {
-        $basePath = env('PUBLIC_AUTORIDADES_IMAGES_PATH', 'images');
-        $dir      = public_path($basePath . '/autoridades');
+        $diskPath = env('PUBLIC_AUTORIDADES_IMAGES_PATH', 'images');
+        $dir      = public_path($diskPath . '/autoridades');
 
         if (!is_dir($dir)) {
             mkdir($dir, 0755, true);
@@ -122,8 +123,8 @@ class AutoridadController extends Controller
             return;
         }
 
-        $basePath = env('PUBLIC_AUTORIDADES_IMAGES_PATH', 'images');
-        $fullPath = public_path($basePath . '/' . $ruta);
+        $diskPath = env('PUBLIC_AUTORIDADES_IMAGES_PATH', 'images');
+        $fullPath = public_path($diskPath . '/' . $ruta);
 
         if (is_file($fullPath)) {
             @unlink($fullPath);

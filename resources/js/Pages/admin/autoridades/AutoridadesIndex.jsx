@@ -31,7 +31,7 @@ const IconUser = () => (
 );
 
 // ─── Modal ────────────────────────────────────────────────────────────────────
-function AutoridadModal({ item, onClose }) {
+function AutoridadModal({ item, onClose, imagesUrlPath }) {
     const isEdit = !!item;
 
     const { data, setData, processing, errors, reset } = useForm({
@@ -48,7 +48,7 @@ function AutoridadModal({ item, onClose }) {
     const [newFile, setNewFile]         = useState(null);
     const fileInputRef                  = useRef(null);
 
-    const fotoActual = item?.foto ? `/images/${item.foto}` : null;
+    const fotoActual = item?.foto ? `/${imagesUrlPath}/${item.foto}` : null;
 
     const handleFile = (e) => {
         const file = e.target.files[0];
@@ -312,13 +312,13 @@ function ConfirmDelete({ item, onClose }) {
 }
 
 // ─── Tarjeta de autoridad ─────────────────────────────────────────────────────
-function AutoridadCard({ autoridad, onEdit, onDelete }) {
+function AutoridadCard({ autoridad, onEdit, onDelete, imagesUrlPath }) {
     return (
         <div className={`flex items-center gap-4 rounded-xl border bg-white p-4 shadow-sm ${!autoridad.activa ? 'opacity-50' : ''}`}>
             {/* Foto o avatar */}
             {autoridad.foto ? (
                 <img
-                    src={`/images/${autoridad.foto}`}
+                    src={`/${imagesUrlPath}/${autoridad.foto}`}
                     alt={autoridad.nombre}
                     className="h-14 w-14 rounded-full object-cover border border-gray-200 shrink-0"
                 />
@@ -369,7 +369,7 @@ function AutoridadCard({ autoridad, onEdit, onDelete }) {
 }
 
 // ─── Página principal ─────────────────────────────────────────────────────────
-export default function AutoridadesIndex({ autoridades }) {
+export default function AutoridadesIndex({ autoridades, imagesUrlPath }) {
     const [modalOpen, setModalOpen]     = useState(false);
     const [editItem, setEditItem]       = useState(null);
     const [deleteItem, setDeleteItem]   = useState(null);
@@ -416,6 +416,7 @@ export default function AutoridadesIndex({ autoridades }) {
                                     autoridad={a}
                                     onEdit={openEdit}
                                     onDelete={setDeleteItem}
+                                    imagesUrlPath={imagesUrlPath}
                                 />
                             ))}
                         </div>
@@ -438,6 +439,7 @@ export default function AutoridadesIndex({ autoridades }) {
                                     autoridad={a}
                                     onEdit={openEdit}
                                     onDelete={setDeleteItem}
+                                    imagesUrlPath={imagesUrlPath}
                                 />
                             ))}
                         </div>
@@ -447,7 +449,7 @@ export default function AutoridadesIndex({ autoridades }) {
 
             {/* Modales */}
             {modalOpen && (
-                <AutoridadModal item={editItem} onClose={closeModal} />
+                <AutoridadModal item={editItem} onClose={closeModal} imagesUrlPath={imagesUrlPath} />
             )}
             {deleteItem && (
                 <ConfirmDelete item={deleteItem} onClose={() => setDeleteItem(null)} />
