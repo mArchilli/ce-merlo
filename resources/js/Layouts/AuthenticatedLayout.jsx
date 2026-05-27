@@ -143,7 +143,7 @@ export default function AuthenticatedLayout({ header, pageTitle, pageSubtitle, p
     ];
 
     return (
-        <div className="flex min-h-screen bg-gray-100">
+        <div className="flex h-screen overflow-hidden bg-gray-100">
             {/* Sidebar */}
             <aside
                 className={`relative flex flex-col transition-all duration-300 ${

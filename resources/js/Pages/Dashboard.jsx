@@ -205,7 +205,7 @@ export default function Dashboard() {
         <AuthenticatedLayout>
             <Head title="Dashboard" />
 
-            <div className="h-full overflow-y-auto">
+            <div>
 
             {/* Banner de bienvenida */}
             <div
