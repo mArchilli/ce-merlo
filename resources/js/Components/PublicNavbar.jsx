@@ -136,7 +136,7 @@ export default function PublicNavbar({ transparent = false }) {
                                     onClick={close}
                                     className="mt-5 px-6 py-2.5 rounded-lg bg-brand-gold-500 hover:bg-brand-gold-600 text-white text-base font-semibold transition-colors w-full text-center"
                                 >
-                                    Panel admin
+                                    Panel de administración
                                 </Link>
                             )}
                         </div>
