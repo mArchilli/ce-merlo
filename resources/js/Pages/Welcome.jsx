@@ -8,6 +8,7 @@ import Areas from '@/Components/Welcome/Areas';
 import Composicion from '@/Components/Welcome/Composicion';
 import Autoridades from '@/Components/Welcome/Autoridades';
 import Novedades from '@/Components/Welcome/Novedades';
+import MunicipioPartner from '@/Components/Welcome/MunicipioPartner';
 
 /* ─── Componente principal ─── */
 export default function Welcome({ autoridades = [], novedades = [], areas = [] }) {
@@ -25,6 +26,7 @@ export default function Welcome({ autoridades = [], novedades = [], areas = [] }
                 <PublicNavbar transparent />
                 <Hero scrollTo={scrollTo} />
                 <Institucional />
+                <MunicipioPartner />
                 <Funciones />
                 <Areas />
                 <Composicion />
