@@ -205,6 +205,8 @@ export default function Dashboard() {
         <AuthenticatedLayout>
             <Head title="Dashboard" />
 
+            <div className="h-full overflow-y-auto">
+
             {/* Banner de bienvenida */}
             <div
                 className="relative overflow-hidden px-8 py-10"
@@ -268,6 +270,8 @@ export default function Dashboard() {
                     </div>
                 ))}
             </div>
+
+            </div>{/* fin h-full overflow-y-auto */}
         </AuthenticatedLayout>
     );
 }

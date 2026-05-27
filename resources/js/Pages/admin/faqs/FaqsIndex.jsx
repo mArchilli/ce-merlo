@@ -3,6 +3,15 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, router, useForm } from '@inertiajs/react';
 import { useState } from 'react';
 import { toast, Toaster } from 'sonner';
+import DOMPurify from 'dompurify';
+
+/** Extrae texto plano a partir de HTML generado por Quill. */
+const stripHtml = (html) => {
+    if (!html) return '';
+    const div = document.createElement('div');
+    div.innerHTML = DOMPurify.sanitize(html);
+    return div.textContent || div.innerText || '';
+};
 
 // ─── Iconos ───────────────────────────────────────────────────────────────────
 const IconPlus = () => (
@@ -176,7 +185,7 @@ function FaqCard({ faq, onEdit, onDelete }) {
                     Pregunta #{faq.orden || '—'}
                 </p>
                 <p className="text-sm font-medium text-gray-800 leading-snug mb-1">{faq.pregunta}</p>
-                <p className="text-xs text-gray-400 line-clamp-2 leading-relaxed">{faq.respuesta}</p>
+                <p className="text-xs text-gray-400 line-clamp-2 leading-relaxed">{stripHtml(faq.respuesta)}</p>
             </div>
 
             <div className="flex items-center gap-2 shrink-0 pt-1">

@@ -1,5 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
 import { useState } from 'react';
+import DOMPurify from 'dompurify';
 import PublicNavbar from '@/Components/PublicNavbar';
 import Footer from '@/Components/Welcome/Footer';
 import { CROSS_PATTERN_BG } from '@/Components/patterns';
@@ -274,11 +275,12 @@ export default function Contacto({ organismos = [], faqs = [], areas = [] }) {
                                             </span>
                                         </button>
                                         <div
-                                            className={`overflow-hidden transition-all duration-300 ${openFaq === i ? 'max-h-60 opacity-100' : 'max-h-0 opacity-0'}`}
+                                            className={`overflow-hidden transition-all duration-300 ${openFaq === i ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'}`}
                                         >
-                                            <p className="px-6 pb-5 text-secondary font-sans text-sm leading-relaxed">
-                                                {item.respuesta}
-                                            </p>
+                                            <div
+                                                className="ql-content px-6 pb-5 text-secondary font-sans text-sm leading-relaxed"
+                                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.respuesta) }}
+                                            />
                                         </div>
                                     </div>
                                 ))}
